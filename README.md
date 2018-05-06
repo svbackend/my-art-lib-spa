@@ -1,10 +1,13 @@
 # My Art Lib
 
-> vuejs SPA Frontend
+> VueJS SPA Frontend
 
 ## Build Setup
 
 ``` bash
+# Setup env params
+cp .env.json.dist .env.json
+
 # install dependencies
 npm install
 

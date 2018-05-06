@@ -1,60 +1,64 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <header>
+      <h1>My Art Lib</h1>
+    </header>
+    <main>
+      <aside class="sidebar">
+      </aside>
+      <div class="content">
+        <div v-for="movie in movies">
+          <div class="movie">
+            <div class="title">{{ movie.title }}</div>
+            <div class="poster">
+              <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  export default {
+    data () {
+      return {
+        movies: [],
+        endpoint: '/movies',
+      }
+    },
+    created() {
+      this.getAllMovies();
+    },
+    methods: {
+      getAllMovies() {
+        this.$http.get(this.endpoint)
+          .then(response => {
+            this.movies = response.data;
+          })
+          .catch(error => {
+            console.log('-----error-------');
+            console.log(error);
+          })
+      }
     }
   }
-}
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  body { background: #f1f1f1; }
 
-h1, h2 {
-  font-weight: normal;
-}
+  .movie {
+    float: left;
+    max-width: 350px;
+    border: 1px solid rgba(0,0,0,.5);
+    .poster {
+      max-width: 100%;
+      img {
+        max-width: 100%;
+      }
+    }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+  }
 </style>
