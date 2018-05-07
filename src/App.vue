@@ -5,16 +5,10 @@
     </header>
     <main>
       <aside class="sidebar">
+        sidebar
       </aside>
       <div class="content">
-        <div v-for="movie in movies">
-          <div class="movie">
-            <div class="title">{{ movie.title }}</div>
-            <div class="poster">
-              <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title" />
-            </div>
-          </div>
-        </div>
+        <router-view></router-view>
       </div>
     </main>
   </div>
@@ -24,41 +18,61 @@
   export default {
     data () {
       return {
-        movies: [],
-        endpoint: '/movies',
+        endpoint: '/guests',
+        guest: {},
+        user: {},
       }
     },
     created() {
-      this.getAllMovies();
+      if (this.loadUser() === false) {
+        this.loadGuestSession();
+      }
+      console.log('guest:');
+      console.log(this.$localStorage.get('guest', {}));
+      console.log('user:');
+      console.log(this.$localStorage.get('user', {}));
     },
     methods: {
-      getAllMovies() {
-        this.$http.get(this.endpoint)
+      loadGuestSession() {
+        let guest = this.$localStorage.get('guest', null);
+
+        if (guest !== null && guest.token !== null) {
+          this.guest = guest;
+          return;
+        }
+
+        this.$http.post(this.endpoint)
           .then(response => {
-            this.movies = response.data;
+            this.guest = response.data;
+            this.$localStorage.set('guest', this.guest);
           })
           .catch(error => {
             console.log('-----error-------');
             console.log(error);
           })
+      },
+      loadUser() {
+        let user = this.$localStorage.get('user', null);
+
+        console.log('user');
+        console.log(user);
+        return true;
+
+        if (user === null) {
+          return false;
+        }
+
+        if (user.apiToken === null || user.apiToken.length < 32) {
+          return false;
+        }
+
+        this.user.apiToken = apiToken;
+        return true;
       }
     }
   }
 </script>
 
 <style lang="scss">
-  body { background: #f1f1f1; }
 
-  .movie {
-    float: left;
-    max-width: 350px;
-    border: 1px solid rgba(0,0,0,.5);
-    .poster {
-      max-width: 100%;
-      img {
-        max-width: 100%;
-      }
-    }
-
-  }
 </style>
