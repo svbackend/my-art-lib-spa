@@ -1,28 +1,38 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-//import Meta from 'vue-meta'
 import App from './App.vue'
 import axios from 'axios'
-import VueLocalStorage from 'vue-localstorage'
 import { apiHost } from './config.js'
+import { sync } from 'vuex-router-sync'
+import store from './storage/storage'
+import VeeValidate from 'vee-validate';
 
 // Components
 import HomePage from './components/HomePage.vue'
 import NotFoundPage from './components/NotFoundPage.vue'
 import MoviePage from './components/MoviePage.vue'
+import LoginPage from './components/LoginPage.vue'
 
 // Configuration
 const axiosConfig = {
   baseURL: apiHost,
-  timeout: 30000
+  timeout: 3000,
+  headers: {
+    'Content-Type': 'application/json',
+  }
 };
+
+if (store.state.user.apiToken) {
+  axiosConfig.params = {
+    api_token: store.state.user.apiToken
+  };
+}
 
 Vue.prototype.$http = axios.create(axiosConfig);
 
 // Modules
 Vue.use(Router);
-Vue.use(VueLocalStorage);
-//Vue.use(Meta)
+Vue.use(VeeValidate);
 
 const router = new Router({
   routes: [
@@ -37,6 +47,11 @@ const router = new Router({
       component: NotFoundPage,
     },
     {
+      path: '/login',
+      name: 'login',
+      component: LoginPage,
+    },
+    {
       path: '/movie/:id',
       name: 'movie',
       component: MoviePage,
@@ -46,23 +61,11 @@ const router = new Router({
   mode: 'history'
 });
 
+sync(store, router);
+
 new Vue({
   el: '#app',
   render: h => h(App),
   router,
-  localStorage: {
-    guest: {
-      type: Object,
-      default: {
-        id: 0,
-        token1: null
-      }
-    },
-    user: {
-      type: Object,
-      default: {
-        apiToken2: null
-      }
-    }
-  }
+  store
 });

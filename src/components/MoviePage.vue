@@ -41,7 +41,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .post {
+  .movie {
     position: relative;
     max-width: 500px;
     margin: 0 auto;

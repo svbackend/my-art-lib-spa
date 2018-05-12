@@ -14,6 +14,9 @@
         <div class="poster">
           <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title"/>
         </div>
+        <div class="actions">
+            <a class="link" @click.once="addToLibrary(movie.id, $event)">Add to library</a>
+        </div>
       </div>
     </div>
   </div>
@@ -40,24 +43,36 @@
             console.log('-----error-------');
             console.log(error);
           })
+      },
+      addToLibrary(movieId, event) {
+        event.target.text = '...';
+
+        let endpoint = '/guests/{token}/watchedMovies';
+
+        if (this.$store.state.isUserLoggedIn === true) {
+          endpoint = '/users/watchedMovies';
+        }
+
+        endpoint = endpoint.replace('{token}', this.$store.state.guest.token);
+
+        this.$http.post(endpoint, {movie: {
+          id: movieId,
+          tmdbId: null,
+          vote: null,
+          watchedAt: null,
+        }})
+          .then(response => {
+            event.target.text = 'Added';
+          })
+          .catch(error => {
+            console.log('-----error-------');
+            console.log(error);
+          })
       }
     }
   }
 </script>
 
 <style lang="scss">
-  body { background: #f1f1f1; }
 
-  .movie {
-    float: left;
-    max-width: 350px;
-    border: 1px solid rgba(0,0,0,.5);
-    .poster {
-      max-width: 100%;
-      img {
-        max-width: 100%;
-      }
-    }
-
-  }
 </style>

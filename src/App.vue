@@ -5,7 +5,12 @@
     </header>
     <main>
       <aside class="sidebar">
-        sidebar
+          <router-link class="login-button" :to="{ name: 'login' }">
+              Login
+          </router-link>
+          <router-link class="registration-button" :to="{ name: 'registration' }">
+              Registration
+          </router-link>
       </aside>
       <div class="content">
         <router-view></router-view>
@@ -27,24 +32,25 @@
       if (this.loadUser() === false) {
         this.loadGuestSession();
       }
-      console.log('guest:');
-      console.log(this.$localStorage.get('guest', {}));
-      console.log('user:');
-      console.log(this.$localStorage.get('user', {}));
+      console.log(this.guest.id);
     },
     methods: {
       loadGuestSession() {
-        let guest = this.$localStorage.get('guest', null);
+        let guest = this.$store.state.guest;
 
-        if (guest !== null && guest.token !== null) {
+        if (guest.token !== null) {
+            console.log('guestToken: ' + guest.token);
+            console.log('guestId: ' + guest.id);
           this.guest = guest;
           return;
         }
 
         this.$http.post(this.endpoint)
           .then(response => {
+              console.log('request end: ');
+              console.log(response.data);
             this.guest = response.data;
-            this.$localStorage.set('guest', this.guest);
+            this.$store.dispatch('setGuest', this.guest);
           })
           .catch(error => {
             console.log('-----error-------');
@@ -52,21 +58,17 @@
           })
       },
       loadUser() {
-        let user = this.$localStorage.get('user', null);
+        let user = this.$store.state.user;
 
-        console.log('user');
-        console.log(user);
-        return true;
-
-        if (user === null) {
+        if (typeof user === 'undefined' || user === null) {
           return false;
         }
 
-        if (user.apiToken === null || user.apiToken.length < 32) {
+        if (typeof user.apiToken  === 'undefined' || user.apiToken === null || user.apiToken.length < 32) {
           return false;
         }
 
-        this.user.apiToken = apiToken;
+        this.user.apiToken = user.apiToken;
         return true;
       }
     }
@@ -74,5 +76,18 @@
 </script>
 
 <style lang="scss">
+  body { background: #f1f1f1; }
 
+  .movie {
+    float: left;
+    max-width: 350px;
+    border: 1px solid rgba(0,0,0,.5);
+    .poster {
+      max-width: 100%;
+      img {
+        max-width: 100%;
+      }
+    }
+
+  }
 </style>
