@@ -14,8 +14,9 @@
         <div class="poster">
           <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title"/>
         </div>
-        <div class="actions">
-            <a class="link" @click.once="addToLibrary(movie.id, $event)">Add to library</a>
+        <div v-if="isUserLoggedIn == true" class="actions">
+            <a v-if="movie.isWatched == false" class="link" @click.once="addToLibrary(movie.id, $event)">Add to library</a>
+            <a v-else class="link">Added</a>
         </div>
       </div>
     </div>
@@ -28,10 +29,12 @@
       return {
         movies: [],
         endpoint: '/movies',
+        isUserLoggedIn: false,
       }
     },
     created() {
       this.getAllMovies();
+      this.isUserLoggedIn = this.$store.state.isUserLoggedIn;
     },
     methods: {
       getAllMovies() {

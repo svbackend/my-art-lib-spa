@@ -5,12 +5,19 @@
     </header>
     <main>
       <aside class="sidebar">
+        <div v-if="this.$store.state.isUserLoggedIn" class="user-buttons">
+          <a class="logout-button" @click="logout()">
+            Logout
+          </a>
+        </div>
+        <div v-else class="guest-buttons">
           <router-link class="login-button" :to="{ name: 'login' }">
-              Login
+            Login
           </router-link>
           <router-link class="registration-button" :to="{ name: 'registration' }">
-              Registration
+            Registration
           </router-link>
+        </div>
       </aside>
       <div class="content">
         <router-view></router-view>
@@ -70,6 +77,15 @@
 
         this.user.apiToken = user.apiToken;
         return true;
+      },
+      logout() {
+        this.$store.dispatch('logout');
+        this.$router.go({
+          path: this.$router.path,
+          query: {
+            t: + new Date()
+          }
+        })
       }
     }
   }

@@ -36,6 +36,13 @@ export default new Vuex.Store({
           state.user.username = user.username;
           state.user.email = user.email;
         },
+        logout(state) {
+          state.user.apiToken = null;
+          state.isUserLoggedIn = false;
+          if (!state.guest.token) {
+            // todo refresh guest session
+          }
+        },
     },
     actions: {
         setApiToken({commit}, apiToken) {
@@ -46,6 +53,9 @@ export default new Vuex.Store({
         },
         setUser({commit}, user) {
           commit('setUser', user);
+        },
+        logout({commit}) {
+          commit('logout');
         }
     }
 });
