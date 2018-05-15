@@ -1,8 +1,6 @@
 <template>
-  <div class="movies">
-    <h4>Movies</h4>
-    <div v-for="movie in movies">
-      <div class="movie">
+  <div class="movies columns">
+      <div class="movie column" v-for="movie in movies">
         <div class="title">
           <router-link
             active-class="is-active"
@@ -14,13 +12,12 @@
         <div class="poster">
           <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title"/>
         </div>
-        <div v-if="isUserLoggedIn == true" class="actions">
-            <a v-if="movie.isWatched == false" class="link" @click.once="addToLibrary(movie.id, $event)">Add to library</a>
+        <div v-if="isUserLoggedIn" class="actions">
+            <a v-if="!movie.isWatched" class="link" @click.once="addToLibrary(movie.id, $event)">Add to library</a>
             <a v-else class="link">Added</a>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>

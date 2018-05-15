@@ -1,24 +1,29 @@
 <template>
   <div id="app">
-    <header>
-      <h1>My Art Lib</h1>
-    </header>
+    <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <router-link class="navbar-item" :to="{ name: 'home' }">
+          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+        </router-link>
+      </div>
+      <a v-if="this.$store.state.isUserLoggedIn" class="navbar-item" @click="logout()">
+        Logout
+      </a>
+      <router-link v-if="!this.$store.state.isUserLoggedIn" class="navbar-item" :to="{ name: 'login' }">
+        Login
+      </router-link>
+      <router-link v-if="!this.$store.state.isUserLoggedIn" class="navbar-item" :to="{ name: 'registration' }">
+        Registration
+      </router-link>
+
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </nav>
+
     <main>
-      <aside class="sidebar">
-        <div v-if="this.$store.state.isUserLoggedIn" class="user-buttons">
-          <a class="logout-button" @click="logout()">
-            Logout
-          </a>
-        </div>
-        <div v-else class="guest-buttons">
-          <router-link class="login-button" :to="{ name: 'login' }">
-            Login
-          </router-link>
-          <router-link class="registration-button" :to="{ name: 'registration' }">
-            Registration
-          </router-link>
-        </div>
-      </aside>
       <div class="content">
         <router-view></router-view>
       </div>

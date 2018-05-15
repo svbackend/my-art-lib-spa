@@ -1,71 +1,26 @@
 import Vue from 'vue'
-import Router from 'vue-router'
 import App from './App.vue'
-import axios from 'axios'
-import { apiHost } from './config.js'
+import axios from './extensions/axios'
 import { sync } from 'vuex-router-sync'
-import store from './storage/storage'
-import VeeValidate from 'vee-validate';
+import store from './extensions/storage'
+import VeeValidate from 'vee-validate'
+import router from './extensions/router'
+import RouterComponent from 'vue-router'
+import Buefy from 'buefy'
 
-// Components
-import HomePage from './components/HomePage.vue'
-import NotFoundPage from './components/NotFoundPage.vue'
-import MoviePage from './components/MoviePage.vue'
-import LoginPage from './components/LoginPage.vue'
+import 'buefy/lib/buefy.css'
+require('./assets/sass/main.scss');
 
-// Configuration
-const axiosConfig = {
-  baseURL: apiHost,
-  timeout: 3000,
-  headers: {
-    'Content-Type': 'application/json',
-  }
-};
+Vue.prototype.$http = axios
+Vue.use(RouterComponent)
+Vue.use(VeeValidate)
+Vue.use(Buefy)
 
-if (store.state.user.apiToken) {
-  axiosConfig.params = {
-    api_token: store.state.user.apiToken
-  };
-}
-
-Vue.prototype.$http = axios.create(axiosConfig);
-
-// Modules
-Vue.use(Router);
-Vue.use(VeeValidate);
-
-const router = new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomePage,
-    },
-    {
-      path: '/404',
-      name: '404',
-      component: NotFoundPage,
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: LoginPage,
-    },
-    {
-      path: '/movie/:id',
-      name: 'movie',
-      component: MoviePage,
-      props: true,
-    },
-  ],
-  mode: 'history'
-});
-
-sync(store, router);
+sync(store, router)
 
 new Vue({
   el: '#app',
   render: h => h(App),
   router,
   store
-});
+})
