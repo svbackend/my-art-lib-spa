@@ -1,13 +1,47 @@
+// Icons
+$fa-font-path: "~font-awesome/fonts/";
+@import "~font-awesome/scss/font-awesome";
+
+// Navbar
+$navbar-item-color: #fff;
+$navbar-item-hover-color: #fff;
+$navbar-item-hover-background-color: rgba(255,255,255,.03);
+
 @import '~bulma/bulma';
 
 #app {
-  background: linear-gradient(#109AF5, #FFF);
-}
-
-.navbar {
-  background-color: transparent;
+  // background: linear-gradient(#ff957e, #FFF);
+  background-color: $dark;
 }
 
 .content {
   background-color: transparent;
+}
+
+.movie {
+  float: left;
+  max-width: 350px;
+  border: 1px solid rgba(0,0,0,.5);
+  .poster {
+    max-width: 100%;
+    img {
+      max-width: 100%;
+    }
+  }
+}
+
+input.search-field-withResults {
+  border-bottom-left-radius: 0;
+}
+
+.search-results__movieBox {
+  width: calc(100% - 1px);
+  padding: .75rem;
+  border-radius: 0;
+}
+
+.search-results__movie:last-of-type {
+  .search-results__movieBox {
+    border-radius: 0 0 6px 6px;
+  }
 }

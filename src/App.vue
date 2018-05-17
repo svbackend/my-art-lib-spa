@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <router-link class="navbar-item" :to="{ name: 'home' }">
           <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
@@ -23,11 +23,11 @@
       </a>
     </nav>
 
-    <main>
-      <div class="content">
+    <section class="section">
+      <div class="container">
         <router-view></router-view>
       </div>
-    </main>
+    </section>
   </div>
 </template>
 
@@ -95,20 +95,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  body { background: #f1f1f1; }
-
-  .movie {
-    float: left;
-    max-width: 350px;
-    border: 1px solid rgba(0,0,0,.5);
-    .poster {
-      max-width: 100%;
-      img {
-        max-width: 100%;
-      }
-    }
-
-  }
-</style>
