@@ -43,8 +43,8 @@
     </div>
 
     <!-- Movies -->
-    <div class="movies columns">
-      <div class="movie column" v-for="movie in movies">
+    <div class="movies columns is-multiline">
+      <div class="movie column is-4" v-for="movie in movies">
         <div class="title">
           <router-link
               active-class="is-active"
@@ -85,7 +85,7 @@
       getAllMovies() {
         this.$http.get(this.endpoint)
           .then(response => {
-            this.movies = response.data;
+            this.movies = response.data.data;
           })
           .catch(error => {
             console.log('-----error-------');
@@ -124,7 +124,7 @@
           query: this.searchQuery
         })
           .then(response => {
-            this.searchResults = response.data;
+            this.searchResults = response.data.data;
             this.searchShowResults = true;
           })
           .catch(error => {

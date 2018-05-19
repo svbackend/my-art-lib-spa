@@ -1,8 +1,7 @@
 <template lang="html">
   <div class="movie" v-if="movie.title">
     <h1 class="movie__title">{{ movie.title }}</h1>
-    <p class="movie__body">{{ movie.overview }}</p>
-    <p  class="movie__id">{{ movie.id }}</p>
+    <p class="movie__body">{{ movie.overview }} / {{ movie.id }} / {{ movie.tmdb.id }}</p>
   </div>
 </template>
 
