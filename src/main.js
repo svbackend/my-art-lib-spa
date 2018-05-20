@@ -5,8 +5,8 @@ import { sync } from 'vuex-router-sync'
 import store from './extensions/storage'
 import router from './extensions/router'
 import RouterComponent from 'vue-router'
-// import VeeValidate from 'vee-validate'
 import Vuelidate from 'vuelidate'
+import Meta from 'vue-meta'
 import { VueExtendLayout, layout } from 'vue-extend-layout'
 
 require('./assets/sass/main.scss')

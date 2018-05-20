@@ -10,7 +10,7 @@
         </div>
       </section>
 
-      <section class="container">
+      <section class="container main-content">
         <router-view></router-view>
       </section>
 

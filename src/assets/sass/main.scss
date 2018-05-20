@@ -11,6 +11,7 @@ $navbar-item-hover-background-color: rgba(255,255,255,.03);
 
 // Custom variables
 $content-width: 800px;
+$vertical-form-width: 480px;
 
 @mixin centered() {
   margin: 0 auto;
@@ -24,6 +25,12 @@ $content-width: 800px;
 
 .content {
   background-color: transparent;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .movie {
@@ -65,7 +72,11 @@ section.search-field {
 .form-login {
   @include centered;
   @include tablet {
-    max-width: $content-width;
+    max-width: $vertical-form-width;
+  }
+
+  p.help {
+    text-align: left;
   }
 }
 
@@ -135,12 +146,17 @@ html,body {
 .is-shady:hover {
   box-shadow: 0 10px 16px rgba(0, 0, 0, .13), 0 6px 6px rgba(0, 0, 0, .19);
 }
-/*adds font awesome stars*/
-footer li:before {
-  content: '\f1b2';
-  font-family: 'FontAwesome';
-  float: left;
-  margin-left: -1.5em;
-  color: #147efb;
+
+section.body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
+
+.main-content {
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
+}
+
 /* Bulma template end */
