@@ -1,6 +1,8 @@
 ## Frontend / [Backend](https://github.com/svbackend/my-art-lib)
 
-> VueJS SPA Frontend
+VueJS Web App for sharing watched movies
+
+![Screen of the homepage](http://i.imgur.com/FUUUM8t.png)
 
 ## Build Setup
 
