@@ -1,10 +1,9 @@
 <script>
   export default {
     metaInfo: {
-      title: 'My Watched Movies',
-      titleTemplate: '%s | My Art Lib',
+      title: 'Default Title',
+      titleTemplate: '%s | My Awesome Webapp',
       meta: [
-        { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
       ]
     },

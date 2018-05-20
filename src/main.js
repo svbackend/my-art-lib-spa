@@ -13,9 +13,9 @@ require('./assets/sass/main.scss')
 
 Vue.prototype.$http = axios
 Vue.use(RouterComponent)
-//Vue.use(VeeValidate)
 Vue.use(Vuelidate)
 Vue.use(VueExtendLayout)
+Vue.use(Meta)
 
 sync(store, router)
 

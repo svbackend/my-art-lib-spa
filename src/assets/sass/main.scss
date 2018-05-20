@@ -11,7 +11,8 @@ $navbar-item-hover-background-color: rgba(255,255,255,.03);
 
 // Custom variables
 $content-width: 800px;
-$vertical-form-width: 480px;
+$vertical-form-width: 100%;
+$vertical-form-max-width: 520px;
 
 @mixin centered() {
   margin: 0 auto;
@@ -71,8 +72,12 @@ section.search-field {
 
 .form-login {
   @include centered;
-  @include tablet {
-    max-width: $vertical-form-width;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  max-width: $vertical-form-max-width;
+
+  @include tablet-only {
+    max-width: $vertical-form-max-width;
   }
 
   p.help {
@@ -157,6 +162,10 @@ section.body {
   width: 100%;
   max-width: 100%;
   margin: auto;
+}
+
+footer.footer {
+  padding: 1.5rem 1.5rem 1.5rem;
 }
 
 /* Bulma template end */
