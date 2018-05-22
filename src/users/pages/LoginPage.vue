@@ -2,6 +2,7 @@
   <div class="form-login">
 
     <div class="field">
+      <label class="label has-text-left">Username</label>
       <p class="control has-icons-left has-icons-right">
         <input class="input" :class="{ 'is-success': $v.username.$dirty && !$v.username.$error, 'is-danger': $v.username.$dirty && $v.username.$error }" type="text" placeholder="Email or username" v-model.trim="username" @blur="$v.username.$touch()">
         <span class="icon is-small is-left">
@@ -20,6 +21,7 @@
     </div>
 
     <div class="field">
+      <label class="label has-text-left">Password</label>
       <p class="control has-icons-left has-icons-right">
         <input class="input" :class="{ 'is-success': $v.password.$dirty && !$v.password.$error, 'is-danger': $v.password.$dirty && $v.password.$error }" type="password" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
         <span class="icon is-small is-left">
@@ -37,18 +39,17 @@
       </p>
     </div>
 
-    <div class="column is-12">
-      <p class="control">
-        <button @click="validateAndSubmit" class="button is-primary" type="submit">
-          Login
-          <span v-if="submitStatus">
+    <p class="control">
+      <button @click="validateAndSubmit" class="button is-primary" type="submit">
+        Login
+        <span v-if="submitStatus">
             &nbsp;
             <i v-if="submitStatus === 'PENDING'" class="fa fa-spin fa-spinner"></i>
             <i v-if="submitStatus === 'OK'" class="fa fa-check"></i>
           </span>
-        </button>
-      </p>
-    </div>
+      </button>
+    </p>
+
   </div>
 </template>
 
