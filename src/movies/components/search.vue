@@ -13,7 +13,6 @@
     <div class="field has-addons">
       <div class="control has-icons-left is-large is-clearfix is-expanded">
         <input v-model="searchQuery"
-               @keyup="setSearchQuery"
                type="search"
                placeholder="Search..."
                class="input is-large is-fullwidth"
