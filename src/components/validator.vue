@@ -5,10 +5,6 @@
     }),
     methods: {
       validatorHasError(field, errorName) {
-        console.log('validatorHasError');
-        console.log(field);
-        console.log(errorName);
-
         if (this.$v[field].$dirty && !this.$v[field][errorName]) {
           return true;
         }

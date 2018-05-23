@@ -96,7 +96,8 @@
             password: this.password,
           }
         }).then(response => {
-          validator.validatorClearErrors();
+          this.validatorClearErrors();
+          this.$v.$touch()
           this.submitStatus = 'OK'
           this.signIn(response.data.api_token);
         }).catch(error => {
@@ -104,7 +105,7 @@
             return this.showServerError();
           }
           return this.showErrors(error.response.data);
-        });
+        })
       },
       signIn(apiToken) {
         this.$store.dispatch('setApiToken', apiToken);
@@ -112,11 +113,8 @@
       },
       showErrors(errors) {
         this.submitStatus = ''
-        console.log('Some errors:');
-        console.log(errors);
         this.validatorAddError('password', '_incorrect');
         this.$v.$touch()
-        console.log(this.validatorErrors);
       },
       showServerError() {
         this.submitStatus = ''
