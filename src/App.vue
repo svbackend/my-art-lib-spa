@@ -56,15 +56,6 @@
 
         this.user.apiToken = user.apiToken;
         return true;
-      },
-      logout() {
-        this.$store.dispatch('logout');
-        this.$router.go({
-          path: this.$router.path,
-          query: {
-            t: + new Date()
-          }
-        })
       }
     }
   }

@@ -37,7 +37,18 @@
 
 <script>
   export default {
-    name: "navigation"
+    name: "navigation",
+    methods: {
+      logout() {
+        this.$store.dispatch('logout');
+        this.$router.go({
+          path: this.$router.path,
+          query: {
+            t: +new Date()
+          }
+        })
+      }
+    }
   }
 </script>
 

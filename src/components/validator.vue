@@ -4,6 +4,9 @@
       validatorErrors: {},
     }),
     methods: {
+      isDirty(field) {
+        return this.$v[field].$dirty;
+      },
       validatorHasError(field, errorName) {
         if (this.$v[field].$dirty && !this.$v[field][errorName]) {
           return true;
@@ -70,7 +73,6 @@
       let fields = Object.keys(this.$v.$params);
       let field;
       for (field of fields) {
-        console.log(field);
         this.validatorErrors[field] = {};
       }
     }

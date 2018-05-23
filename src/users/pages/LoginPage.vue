@@ -4,40 +4,37 @@
     <div class="field">
       <label class="label has-text-left">Username</label>
       <p class="control has-icons-left has-icons-right">
-        <input class="input" :class="{ 'is-success': $v.username.$dirty && !$v.username.$error, 'is-danger': $v.username.$dirty && $v.username.$error }" type="text" placeholder="Email or username" v-model.trim="username" @blur="$v.username.$touch()">
+        <input class="input" :class="{ 'is-success': isDirty('username') && !validatorHasAnyError('username'), 'is-danger': isDirty('username') && validatorHasAnyError('username') }" type="text" placeholder="Email or username" v-model.trim="username" @blur="$v.username.$touch()">
         <span class="icon is-small is-left">
           <i class="fa fa-envelope"></i>
         </span>
         <span class="icon is-small is-right">
-          <i v-if="$v.username.$dirty && $v.username.$error" class="fa fa-times has-text-danger"></i>
-          <i v-if="$v.username.$dirty && !$v.username.$error" class="fa fa-check has-text-success"></i>
+          <i v-if="isDirty('username') && validatorHasAnyError('username')" class="fa fa-times has-text-danger"></i>
+          <i v-if="isDirty('username') && !validatorHasAnyError('username')" class="fa fa-check has-text-success"></i>
         </span>
       </p>
-      <!-- Example of success message: <p v-if="$v.username.$dirty && !$v.username.$error" class="help is-success">This username is available</p> -->
-      <p v-if="$v.username.$dirty && $v.username.$error" class="help is-danger">
-        <span v-if="!$v.username.required">This field is required</span>
-        <span v-if="!$v.username.minLength">Username is too short</span>
+      <p v-if="isDirty('username') && validatorHasAnyError('username')" class="help is-danger">
+        <span v-if="validatorHasError('username', 'required')">This field is required</span>
+        <span v-if="validatorHasError('username', 'minLength')">Username is too short</span>
       </p>
     </div>
 
     <div class="field">
       <label class="label has-text-left">Password</label>
       <p class="control has-icons-left has-icons-right">
-        <input class="input" :class="{ 'is-success': $v.password.$dirty && !$v.password.$error, 'is-danger': $v.password.$dirty && $v.password.$error }" type="password" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
+        <input class="input" :class="{ 'is-success': isDirty('password') && !validatorHasAnyError('password'), 'is-danger': isDirty('password') && validatorHasAnyError('password') }" type="password" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
         <span class="icon is-small is-left">
           <i class="fa fa-lock"></i>
         </span>
         <span class="icon is-small is-right">
-          <i v-if="$v.password.$dirty && $v.password.$error" class="fa fa-times has-text-danger"></i>
-          <i v-if="$v.password.$dirty && !$v.password.$error" class="fa fa-check has-text-success"></i>
+          <i v-if="isDirty('password') && validatorHasAnyError('password')" class="fa fa-times has-text-danger"></i>
+          <i v-if="isDirty('password') && !validatorHasAnyError('password')" class="fa fa-check has-text-success"></i>
         </span>
       </p>
-      <p v-if="validatorHasAnyError('password')" class="help is-danger">
-        hello
-        <span v-if="!$v.password.required">This field is required</span>
-        <span v-if="!$v.password.minLength">Password is too short</span>
-        <span v-if="validatorErrors.password._incorrect">Username or password is not correct</span>
-        <span class="has-text-success" v-if="!validatorErrors.password._incorrect">Password is correct</span>
+      <p v-if="isDirty('password') && validatorHasAnyError('password')" class="help is-danger">
+        <span v-if="validatorHasError('password', 'required')">This field is required</span>
+        <span v-if="validatorHasError('password', 'minLength')">Password is too short</span>
+        <span v-if="validatorHasError('password', '_incorrect')">Username or password is not correct</span>
       </p>
     </div>
 
