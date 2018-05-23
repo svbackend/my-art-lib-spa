@@ -19,10 +19,10 @@
       </p>
     </div>
 
-    <div class="field">
-      <label class="label has-text-left">Password</label>
-      <p class="control has-icons-left has-icons-right">
-        <input class="input" :class="{ 'is-success': isDirty('password') && !validatorHasAnyError('password'), 'is-danger': isDirty('password') && validatorHasAnyError('password') }" type="password" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
+    <label class="label has-text-left">Password</label>
+    <div class="field has-addons">
+      <p class="control is-expanded has-icons-left has-icons-right">
+        <input class="input" :class="{ 'is-success': isDirty('password') && !validatorHasAnyError('password'), 'is-danger': isDirty('password') && validatorHasAnyError('password') }" :type="passwordInputType" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
         <span class="icon is-small is-left">
           <i class="fa fa-lock"></i>
         </span>
@@ -31,12 +31,18 @@
           <i v-if="isDirty('password') && !validatorHasAnyError('password')" class="fa fa-check has-text-success"></i>
         </span>
       </p>
-      <p v-if="isDirty('password') && validatorHasAnyError('password')" class="help is-danger">
-        <span v-if="validatorHasError('password', 'required')">This field is required</span>
-        <span v-if="validatorHasError('password', 'minLength')">Password is too short</span>
-        <span v-if="validatorHasError('password', '_incorrect')">Username or password is not correct</span>
+
+      <p class="control">
+        <a class="button" :class="{'is-dark': this.passwordInputType === 'password', 'is-black': this.passwordInputType === 'text'}" @click="switchPasswordInputType">
+          <i class="fa fa-eye"></i>
+        </a>
       </p>
     </div>
+    <p v-if="isDirty('password') && validatorHasAnyError('password')" class="help help-underField is-danger">
+      <span v-if="validatorHasError('password', 'required')">This field is required</span>
+      <span v-if="validatorHasError('password', 'minLength')">Password is too short</span>
+      <span v-if="validatorHasError('password', '_incorrect')">Username or password is not correct</span>
+    </p>
 
     <p class="control">
       <button @click="validateAndSubmit" class="button is-primary" type="submit">
@@ -63,6 +69,7 @@
       submitStatus: '',
       username: '',
       password: '',
+      passwordInputType: 'password',
     }),
     validations: {
       username: {
@@ -116,6 +123,9 @@
       showServerError() {
         this.submitStatus = ''
         // todo 500 error handling
+      },
+      switchPasswordInputType() {
+        this.passwordInputType = this.passwordInputType === 'password' ? 'text' : 'password';
       }
     }
   };
