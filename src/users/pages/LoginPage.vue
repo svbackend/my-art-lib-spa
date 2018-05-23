@@ -32,10 +32,12 @@
           <i v-if="$v.password.$dirty && !$v.password.$error" class="fa fa-check has-text-success"></i>
         </span>
       </p>
-      <p v-if="$v.password.$dirty && $v.password.$error" class="help is-danger">
+      <p v-if="validatorHasAnyError('password')" class="help is-danger">
+        hello
         <span v-if="!$v.password.required">This field is required</span>
         <span v-if="!$v.password.minLength">Password is too short</span>
-        <span v-if="!$v.password.serverSaidOK">Username or password is not correct</span>
+        <span v-if="validatorErrors.password._incorrect">Username or password is not correct</span>
+        <span class="has-text-success" v-if="!validatorErrors.password._incorrect">Password is correct</span>
       </p>
     </div>
 
@@ -55,17 +57,13 @@
 
 <script>
   import {required, minLength} from 'vuelidate/lib/validators'
-
-  const validateFromServer = getter => function (value) {
-    console.log("validateFromServer(%o,%o)", getter, this.validationPromise)
-    return this.validationPromise ? this.validationPromise.then(getter) : true
-  }
+  import validator from '@/components/validator'
 
   export default {
     name: 'form-login',
+    extends: validator,
     data: () => ({
       submitStatus: '',
-      validationPromise: null,
       username: '',
       password: '',
     }),
@@ -77,7 +75,7 @@
       password: {
         required,
         minLength: minLength(4),
-        //serverSaidOK: validateFromServer(R.path(['validation','text']))
+        _incorrect: false
       }
     },
     methods: {
@@ -92,14 +90,14 @@
         this.sendRequest();
       },
       sendRequest() {
-        this.validationPromise = this.$http.post('/auth/login', {
+        this.$http.post('/auth/login', {
           credentials: {
             username: this.username,
             password: this.password,
           }
         }).then(response => {
+          validator.validatorClearErrors();
           this.submitStatus = 'OK'
-          this.$v.password.isCorrect = true
           this.signIn(response.data.api_token);
         }).catch(error => {
           if (error.response.status === 500) {
@@ -116,15 +114,14 @@
         this.submitStatus = ''
         console.log('Some errors:');
         console.log(errors);
-        this.$v.password.isCorrect = false;
+        this.validatorAddError('password', '_incorrect');
+        this.$v.$touch()
+        console.log(this.validatorErrors);
       },
       showServerError() {
         this.submitStatus = ''
         // todo 500 error handling
       }
-    },
-    created() {
-      this.$v.password.isCorrect = true;
     }
   };
 </script>
