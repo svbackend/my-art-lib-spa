@@ -8,6 +8,7 @@ import RouterComponent from 'vue-router'
 import Vuelidate from 'vuelidate'
 import Meta from 'vue-meta'
 import { VueExtendLayout, layout } from 'vue-extend-layout'
+import i18n from './translations'
 
 require('./assets/sass/main.scss')
 
@@ -24,5 +25,6 @@ new Vue({
   render: h => h(App),
   router,
   store,
+  i18n,
   ...layout
 })

@@ -1,10 +1,12 @@
 <template>
   <div class="form-login">
 
+    <p>{{ $t("message.hello") }}</p>
+
     <div class="field">
       <label class="label has-text-left">Username</label>
       <p class="control has-icons-left has-icons-right">
-        <input class="input" :class="{ 'is-success': isDirty('username') && !validatorHasAnyError('username'), 'is-danger': isDirty('username') && validatorHasAnyError('username') }" type="text" placeholder="Email or username" v-model.trim="username" @blur="$v.username.$touch()">
+        <input autofocus="autofocus" class="input" :class="{ 'is-success': isDirty('username') && !validatorHasAnyError('username'), 'is-danger': isDirty('username') && validatorHasAnyError('username') }" type="text" placeholder="Email or username" v-model.trim="username" @blur="$v.username.$touch()">
         <span class="icon is-small is-left">
           <i class="fa fa-envelope"></i>
         </span>
