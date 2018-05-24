@@ -7,6 +7,13 @@
       isDirty(field) {
         return this.$v[field].$dirty;
       },
+      validatorShowError(field, errorName) {
+        let path = 'validation.' + errorName
+        let params = this.$v[field].$params[errorName]
+        params.fieldName = this.$t('fields.' + field);
+        console.log(params);
+        return { 'path': path, args: params }
+      },
       validatorHasError(field, errorName) {
         if (this.$v[field].$dirty && !this.$v[field][errorName]) {
           return true;

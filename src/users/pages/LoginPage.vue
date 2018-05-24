@@ -1,8 +1,5 @@
 <template>
   <div class="form-login">
-
-    <p>{{ $t("message.hello") }}</p>
-
     <div class="field">
       <label class="label has-text-left">Username</label>
       <p class="control has-icons-left has-icons-right">
@@ -16,8 +13,8 @@
         </span>
       </p>
       <p v-if="isDirty('username') && validatorHasAnyError('username')" class="help is-danger">
-        <span v-if="validatorHasError('username', 'required')">This field is required</span>
-        <span v-if="validatorHasError('username', 'minLength')">Username is too short</span>
+        <span v-if="validatorHasError('username', 'required')" v-t="validatorShowError('username', 'required')"></span>
+        <span v-if="validatorHasError('username', 'minLength')" v-t="validatorShowError('username', 'minLength')"></span>
       </p>
     </div>
 
