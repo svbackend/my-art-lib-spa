@@ -9,9 +9,9 @@
       },
       validatorShowError(field, errorName) {
         let path = 'validation.' + errorName
-        let params = this.$v[field].$params[errorName]
+        let params = this.$v[field].$params[errorName] || {}
         params.fieldName = this.$t('fields.' + field);
-        console.log(params);
+        //console.log(params);
         return { 'path': path, args: params }
       },
       validatorHasError(field, errorName) {

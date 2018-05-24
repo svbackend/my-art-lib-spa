@@ -1,7 +1,7 @@
 <template>
   <div class="form-login">
     <div class="field">
-      <label class="label has-text-left">Username</label>
+      <label class="label has-text-left" v-t="'fields.username'"></label>
       <p class="control has-icons-left has-icons-right">
         <input autofocus="autofocus" class="input" :class="{ 'is-success': isDirty('username') && !validatorHasAnyError('username'), 'is-danger': isDirty('username') && validatorHasAnyError('username') }" type="text" placeholder="Email or username" v-model.trim="username" @blur="$v.username.$touch()">
         <span class="icon is-small is-left">
@@ -18,7 +18,7 @@
       </p>
     </div>
 
-    <label class="label has-text-left">Password</label>
+    <label class="label has-text-left" v-t="'fields.password'"></label>
     <div class="field has-addons">
       <p class="control is-expanded has-icons-left has-icons-right">
         <input class="input" :class="{ 'is-success': isDirty('password') && !validatorHasAnyError('password'), 'is-danger': isDirty('password') && validatorHasAnyError('password') }" :type="passwordInputType" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
@@ -38,14 +38,14 @@
       </p>
     </div>
     <p v-if="isDirty('password') && validatorHasAnyError('password')" class="help help-underField is-danger">
-      <span v-if="validatorHasError('password', 'required')">This field is required</span>
-      <span v-if="validatorHasError('password', 'minLength')">Password is too short</span>
-      <span v-if="validatorHasError('password', '_incorrect')">Username or password is not correct</span>
+      <span v-if="validatorHasError('password', 'required')" v-t="validatorShowError('password', 'required')"></span>
+      <span v-if="validatorHasError('password', 'minLength')" v-t="validatorShowError('password', 'minLength')"></span>
+      <span v-if="validatorHasError('password', '_incorrect')" v-t="validatorShowError('password', '_incorrect')"></span>
     </p>
 
     <p class="control">
       <button @click="validateAndSubmit" class="button is-primary" type="submit">
-        Login
+        <span v-t="'loginPage.authorize'"></span>
         <span v-if="submitStatus">
             &nbsp;
             <i v-if="submitStatus === 'PENDING'" class="fa fa-spin fa-spinner"></i>
@@ -73,11 +73,11 @@
     validations: {
       username: {
         required,
-        minLength: minLength(3)
+        minLength: minLength(4)
       },
       password: {
         required,
-        minLength: minLength(4),
+        minLength: minLength(6),
         _incorrect: false
       }
     },

@@ -74,9 +74,12 @@ section.search-field {
   @include centered;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  max-width: $vertical-form-max-width;
 
-  @include tablet-only {
+  @include until($tablet) {
+    width: 100%;
+  }
+
+  @include desktop {
     max-width: $vertical-form-max-width;
   }
 
