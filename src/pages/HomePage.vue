@@ -14,7 +14,7 @@
         <div class="poster">
           <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title"/>
         </div>
-        <div v-if="isUserLoggedIn" class="actions">
+        <div class="actions">
           <a v-if="!movie.isWatched" class="link" @click.once="addToLibrary(movie.id, $event)">Add to library</a>
           <a v-else class="link">Added</a>
         </div>
@@ -47,6 +47,34 @@
             console.log(error);
           })
       },
+      addToLibrary(movieId, event) {
+        event.target.text = '...';
+
+        let endpoint = '';
+
+        if (this.$store.state.isUserLoggedIn === true) {
+          endpoint = '/users/watchedMovies';
+        } else {
+          endpoint = '/guests/{token}/watchedMovies';
+          endpoint = endpoint.replace('{token}', this.$store.state.guest.token);
+        }
+
+        this.$http.post(endpoint, {
+          movie: {
+            id: movieId,
+            tmdbId: null,
+            vote: null,
+            watchedAt: null,
+          }
+        })
+          .then(response => {
+            event.target.text = 'Added';
+          })
+          .catch(error => {
+            console.log('-----error-------');
+            console.log(error);
+          })
+      }
     }
   }
 </script>

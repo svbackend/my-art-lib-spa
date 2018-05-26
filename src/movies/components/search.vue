@@ -50,33 +50,6 @@
       }
     },
     methods: {
-      addToLibrary(movieId, event) {
-        event.target.text = '...';
-
-        let endpoint = '/guests/{token}/watchedMovies';
-
-        if (this.$store.state.isUserLoggedIn === true) {
-          endpoint = '/users/watchedMovies';
-        }
-
-        endpoint = endpoint.replace('{token}', this.$store.state.guest.token);
-
-        this.$http.post(endpoint, {
-          movie: {
-            id: movieId,
-            tmdbId: null,
-            vote: null,
-            watchedAt: null,
-          }
-        })
-          .then(response => {
-            event.target.text = 'Added';
-          })
-          .catch(error => {
-            console.log('-----error-------');
-            console.log(error);
-          })
-      },
       findMovies() {
         this.$http.post('/movies/search', {
           query: this.searchQuery

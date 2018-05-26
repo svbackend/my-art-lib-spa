@@ -38,10 +38,12 @@ export default new Vuex.Store({
         },
         logout(state) {
           state.user.apiToken = null;
+          state.user.id = 0;
+
+          state.guest.token = null;
+          state.guest.id = 0;
+
           state.isUserLoggedIn = false;
-          if (!state.guest.token) {
-            // todo refresh guest session
-          }
         },
     },
     actions: {

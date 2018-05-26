@@ -32,9 +32,11 @@
 </template>
 
 <script>
-  import Navigation from "@/components/navigation";
+  import Navigation from "@/components/navigation"
+  import App from "@/App"
   export default {
     name: 'default',
+    extends: App,
     components: {Navigation},
   }
 </script>

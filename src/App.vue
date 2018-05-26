@@ -9,7 +9,6 @@
     },
     data () {
       return {
-        endpoint: '/guests',
         guest: {},
         user: {},
       }
@@ -18,23 +17,18 @@
       if (this.loadUser() === false) {
         this.loadGuestSession();
       }
-      console.log(this.guest.id);
     },
     methods: {
       loadGuestSession() {
         let guest = this.$store.state.guest;
 
         if (guest.token !== null) {
-            console.log('guestToken: ' + guest.token);
-            console.log('guestId: ' + guest.id);
           this.guest = guest;
           return;
         }
 
-        this.$http.post(this.endpoint)
+        this.$http.post('/guests')
           .then(response => {
-              console.log('request end: ');
-              console.log(response.data);
             this.guest = response.data;
             this.$store.dispatch('setGuest', this.guest);
           })

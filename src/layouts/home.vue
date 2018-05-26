@@ -35,10 +35,12 @@
 </template>
 
 <script>
-  import Navigation from "@/components/navigation";
+  import Navigation from "@/components/navigation"
   import Search from "@/movies/components/search"
+  import App from "@/App"
   export default {
     name: 'home',
+    extends: App,
     components: {Navigation, Search},
   }
 </script>

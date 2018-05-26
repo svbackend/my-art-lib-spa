@@ -1,2 +1,2 @@
 import env from '../.env.json';
-export var apiHost = env.baseUrl;
+export const apiHost = env.baseUrl;
