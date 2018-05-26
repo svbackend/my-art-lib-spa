@@ -14,4 +14,8 @@ export default {
   loginPage: {
     authorize: 'Авторизуватись',
   },
+  movie: {
+    addToWatchedMovies: 'Додати в колекцію',
+    addedToWatchedMovies: 'Переглянуто',
+  },
 }

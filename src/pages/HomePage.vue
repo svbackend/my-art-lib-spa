@@ -15,8 +15,8 @@
           <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title"/>
         </div>
         <div class="actions">
-          <a v-if="!movie.isWatched" class="link" @click.once="addToLibrary(movie.id, $event)">Add to library</a>
-          <a v-else class="link">Added</a>
+          <a v-if="!movie.isWatched" class="link" @click.once="addToLibrary(movie.id, $event)" v-t="'movie.addToWatchedMovies'"></a>
+          <a v-else class="link" v-t="'movie.addedToWatchedMovies'"></a>
         </div>
       </div>
     </div>
@@ -48,6 +48,7 @@
           })
       },
       addToLibrary(movieId, event) {
+        // Todo move to movie component but learn more about events before
         event.target.text = '...';
 
         let endpoint = '';
