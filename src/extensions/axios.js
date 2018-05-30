@@ -4,7 +4,7 @@ import { apiHost } from './../config.js'
 
 let axiosConfig = {
   baseURL: apiHost,
-  timeout: 3000,
+  timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
   }
