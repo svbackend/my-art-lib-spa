@@ -4,6 +4,12 @@
       validatorErrors: {},
     }),
     methods: {
+      isSuccess(field) {
+        return this.isDirty(field) && !this.validatorHasAnyError(field);
+      },
+      isDanger(field) {
+        return this.isDirty(field) && this.validatorHasAnyError(field);
+      },
       isDirty(field) {
         return this.$v[field].$dirty;
       },
