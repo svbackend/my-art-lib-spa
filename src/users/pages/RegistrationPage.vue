@@ -119,6 +119,33 @@
       }
     },
     methods: {
+      sendRequest() {
+        this.$http.post('/users', {
+          registration: {
+            email: this.email,
+            username: this.username,
+            password: this.password,
+          }
+        }).then(response => {
+          this.validatorClearErrors();
+          this.$v.$touch()
+          this.submitStatus = 'OK'
+          this.$router.push({name: 'login'});
+        }).catch(error => {
+          if (error.response.status === 500) {
+            return this.showServerError();
+          }
+          return this.showErrors(error.response.data);
+        })
+      },
+      showErrors(errors) {
+        this.submitStatus = ''
+
+        console.log(errors);
+        this.validatorLoadServerErrors(errors.errors);
+
+        this.$v.$touch()
+      },
       blurEmail() {
         this.$v.email.$touch();
         if (this.validatorHasAnyError('email')) {
@@ -130,34 +157,28 @@
           this.blurUsername();
         }
 
-        let self = this;
         this.$http.get('/users/email/' + this.email)
-          .then(function (response) {
-            self.validatorAddError('email', '_isUniqueError');
+          .then(response => {
+            this.validatorAddError('email', '_isUniqueError');
           })
-          .catch(function (error) {
-            self.validatorRemoveError('email', '_isUniqueError');
-          });
+          .catch(error => {
+            this.validatorRemoveError('email', '_isUniqueError');
+          }).finally(e => {
+          this.$v.email.$touch();
+        });
       },
       blurUsername() {
-        console.log('blurUsername');
-        //this.$v.username.$touch();
-
-        //if (this.validatorHasAnyError('username') && this.validatorHasError('username', '_isUniqueError') === false) {
-          //return;
-        //}
         this.usernameIsLoading = true;
 
-        let self = this;
         this.$http.get('/users/username/' + this.username)
-          .then(function (response) {
-            self.validatorAddError('username', '_isUniqueError');
+          .then(response => {
+            this.validatorAddError('username', '_isUniqueError');
           })
-          .catch(function (error) {
-            self.validatorRemoveError('username', '_isUniqueError');
-          }).finally(function () {
-          self.usernameIsLoading = false;
-          self.$v.username.$touch();
+          .catch(error => {
+            this.validatorRemoveError('username', '_isUniqueError');
+          }).finally(e => {
+          this.usernameIsLoading = false;
+          this.$v.username.$touch();
         });
       },
       validateAndSubmit() {
@@ -168,7 +189,7 @@
         }
 
         this.submitStatus = 'PENDING'
-        //this.sendRequest();
+        this.sendRequest();
       },
       switchPasswordInputType() {
         this.passwordInputType = this.passwordInputType === 'password' ? 'text' : 'password';

@@ -89,6 +89,19 @@
         return {
           'message': message
         };
+      },
+      validatorLoadServerErrors(errors) {
+        if (!errors.length) return;
+
+        let error;
+        for (error of errors) {
+          if (error.path.contains('[') === true) {
+            this.validatorAddServerError(error);
+          }
+        }
+      },
+      validatorAddServerError(error) {
+        // todo server error processing (mapping to the actual data fields)
       }
     },
     created() {
