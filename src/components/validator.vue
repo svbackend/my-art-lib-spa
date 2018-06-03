@@ -72,6 +72,15 @@
 
         this.validatorErrors[field][errorName] = this.createErrorObject(errorName, customMessage)
       },
+      validatorRemoveError(field, errorName) {
+        if (typeof this.validatorErrors[field] === 'undefined') {
+          this.validatorErrors[field] = {};
+        }
+
+        if (typeof this.validatorErrors[field][errorName] !== 'undefined') {
+          delete this.validatorErrors[field][errorName];
+        }
+      },
       createErrorObject(errorName, message) {
         if (message === null) {
           message = 'This value is invalid'

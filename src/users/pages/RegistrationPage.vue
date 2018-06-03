@@ -128,12 +128,13 @@
           this.blurUsername();
         }
 
+        let self = this;
         this.$http.get('/users/email/' + this.email)
           .then(function (response) {
-            this.validatorAddError('email', '_isUniqueError');
+            self.validatorAddError('email', '_isUniqueError');
           })
           .catch(function (error) {
-            this.validatorClearErrors('email');
+            self.validatorRemoveError('email', '_isUniqueError');
           });
       },
       blurUsername() {
@@ -143,12 +144,13 @@
           return;
         }
 
+        let self = this;
         this.$http.get('/users/username/' + this.username)
           .then(function (response) {
-            this.validatorAddError('username', '_isUniqueError');
+            self.validatorAddError('username', '_isUniqueError');
           })
           .catch(function (error) {
-            this.validatorClearErrors('username');
+            self.validatorRemoveError('username', '_isUniqueError');
           });
       },
       validateAndSubmit() {
