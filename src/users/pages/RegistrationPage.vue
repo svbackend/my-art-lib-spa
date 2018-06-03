@@ -27,8 +27,9 @@
           <i class="fa fa-envelope"></i>
         </span>
         <span class="icon is-small is-right">
-          <i v-if="isSuccess('username')" class="fa fa-check has-text-success"></i>
-          <i v-if="isDanger('username')" class="fa fa-times has-text-danger"></i>
+          <i v-if="usernameIsLoading === false && isSuccess('username')" class="fa fa-check has-text-success"></i>
+          <i v-if="usernameIsLoading === false && isDanger('username')" class="fa fa-times has-text-danger"></i>
+          <i v-if="usernameIsLoading === true" class="fa fa-spin fa-spinner has-text-dark"></i>
         </span>
       </p>
       <p v-if="isSuccess('username')" class="help is-success">
@@ -95,6 +96,7 @@
       submitStatus: '',
       email: '',
       username: '',
+      usernameIsLoading: false,
       password: '',
       passwordInputType: 'password',
     }),
@@ -138,11 +140,13 @@
           });
       },
       blurUsername() {
-        this.$v.username.$touch();
+        console.log('blurUsername');
+        //this.$v.username.$touch();
 
-        if (this.validatorHasAnyError('username')) {
-          return;
-        }
+        //if (this.validatorHasAnyError('username') && this.validatorHasError('username', '_isUniqueError') === false) {
+          //return;
+        //}
+        this.usernameIsLoading = true;
 
         let self = this;
         this.$http.get('/users/username/' + this.username)
@@ -151,7 +155,10 @@
           })
           .catch(function (error) {
             self.validatorRemoveError('username', '_isUniqueError');
-          });
+          }).finally(function () {
+          self.usernameIsLoading = false;
+          self.$v.username.$touch();
+        });
       },
       validateAndSubmit() {
         this.$v.$touch()
