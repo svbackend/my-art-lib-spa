@@ -128,8 +128,13 @@
           this.blurUsername();
         }
 
-        // todo check is email not registered yet
-        this.validatorAddError('email', '_isUniqueError');
+        this.$http.get('/users/email/' + this.email)
+          .then(function (response) {
+            this.validatorAddError('email', '_isUniqueError');
+          })
+          .catch(function (error) {
+            this.validatorClearErrors('email');
+          });
       },
       blurUsername() {
         this.$v.username.$touch();
@@ -138,8 +143,13 @@
           return;
         }
 
-        // todo check is username available
-        this.validatorAddError('username', '_isUniqueError');
+        this.$http.get('/users/username/' + this.username)
+          .then(function (response) {
+            this.validatorAddError('username', '_isUniqueError');
+          })
+          .catch(function (error) {
+            this.validatorClearErrors('username');
+          });
       },
       validateAndSubmit() {
         this.$v.$touch()
