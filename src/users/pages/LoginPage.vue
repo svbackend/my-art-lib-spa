@@ -3,31 +3,31 @@
     <div class="field">
       <label class="label has-text-left" v-t="'fields.username'"></label>
       <p class="control has-icons-left has-icons-right">
-        <input autofocus="autofocus" class="input" :class="{ 'is-success': isDirty('username') && !validatorHasAnyError('username'), 'is-danger': isDirty('username') && validatorHasAnyError('username') }" type="text" placeholder="Email or username" v-model.trim="username" @blur="$v.username.$touch()">
+        <input autofocus="autofocus" class="input" :class="{ 'is-success': this.validator.isSuccess('username'), 'is-danger': this.validator.isDanger('username') }" type="text" placeholder="Email or username" v-model.trim="username" @blur="$v.username.$touch()">
         <span class="icon is-small is-left">
           <i class="fa fa-envelope"></i>
         </span>
         <span class="icon is-small is-right">
-          <i v-if="isDirty('username') && validatorHasAnyError('username')" class="fa fa-times has-text-danger"></i>
-          <i v-if="isDirty('username') && !validatorHasAnyError('username')" class="fa fa-check has-text-success"></i>
+          <i v-if="this.validator.isSuccess('username')" class="fa fa-check has-text-success"></i>
+          <i v-if="this.validator.isDanger('username')" class="fa fa-times has-text-danger"></i>
         </span>
       </p>
-      <p v-if="isDirty('username') && validatorHasAnyError('username')" class="help is-danger">
-        <span v-if="validatorHasError('username', 'required')" v-t="validatorShowError('username', 'required')"></span>
-        <span v-if="validatorHasError('username', 'minLength')" v-t="validatorShowError('username', 'minLength')"></span>
+      <p v-if="this.validator.hasAnyError()" class="help is-danger">
+        <span v-if="this.validator.hasError('username', 'required')" v-t="this.validator.getErrorMessage('username', 'required')"></span>
+        <span v-if="this.validator.hasError('username', 'minLength')" v-t="this.validator.getErrorMessage('username', 'minLength')"></span>
       </p>
     </div>
 
     <label class="label has-text-left" v-t="'fields.password'"></label>
     <div class="field has-addons">
       <p class="control is-expanded has-icons-left has-icons-right">
-        <input class="input" :class="{ 'is-success': isDirty('password') && !validatorHasAnyError('password'), 'is-danger': isDirty('password') && validatorHasAnyError('password') }" :type="passwordInputType" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
+        <input class="input" :class="{ 'is-success': this.validator.isSuccess('password'), 'is-danger': this.validator.isDanger('password') }" :type="passwordInputType" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
         <span class="icon is-small is-left">
           <i class="fa fa-lock"></i>
         </span>
         <span class="icon is-small is-right">
-          <i v-if="isDirty('password') && validatorHasAnyError('password')" class="fa fa-times has-text-danger"></i>
-          <i v-if="isDirty('password') && !validatorHasAnyError('password')" class="fa fa-check has-text-success"></i>
+          <i v-if="this.validator.isSuccess('password')" class="fa fa-check has-text-success"></i>
+          <i v-if="this.validator.isDanger('password')" class="fa fa-times has-text-danger"></i>
         </span>
       </p>
 
@@ -37,10 +37,10 @@
         </a>
       </p>
     </div>
-    <p v-if="isDirty('password') && validatorHasAnyError('password')" class="help help-underField is-danger">
-      <span v-if="validatorHasError('password', 'required')" v-t="validatorShowError('password', 'required')"></span>
-      <span v-if="validatorHasError('password', 'minLength')" v-t="validatorShowError('password', 'minLength')"></span>
-      <span v-if="validatorHasError('password', '_incorrect')" v-t="validatorShowError('password', '_incorrect')"></span>
+    <p v-if="this.validator.isDanger('password')" class="help help-underField is-danger">
+      <span v-if="this.validator.hasError('password', 'required')" v-t="this.validator.getErrorMessage('password', 'required')"></span>
+      <span v-if="this.validator.hasError('password', 'minLength')" v-t="this.validator.getErrorMessage('password', 'minLength')"></span>
+      <span v-if="this.validator.hasError('password', '_incorrect')" v-t="this.validator.getErrorMessage('password', '_incorrect')"></span>
     </p>
 
     <p class="control">
@@ -63,7 +63,9 @@
 
   export default {
     name: 'form-login',
-    extends: validator,
+    components: {
+      validator
+    },
     data: () => ({
       submitStatus: '',
       username: '',
@@ -84,7 +86,7 @@
     methods: {
       validateAndSubmit() {
         this.$v.$touch()
-        if (this.$v.$invalid) {
+        if (this.validator.hasAnyError()) {
           this.submitStatus = 'ERROR'
           return;
         }
@@ -99,7 +101,7 @@
             password: this.password,
           }
         }).then(response => {
-          this.validatorClearErrors();
+          this.removeAllErrors();
           this.$v.$touch()
           this.submitStatus = 'OK'
           this.signIn(response.data.api_token);
@@ -116,7 +118,7 @@
       },
       showErrors(errors) {
         this.submitStatus = ''
-        this.validatorAddError('password', '_incorrect');
+        this.validator.addError('password', '_incorrect');
         this.$v.$touch()
       },
       showServerError() {
@@ -126,6 +128,11 @@
       switchPasswordInputType() {
         this.passwordInputType = this.passwordInputType === 'password' ? 'text' : 'password';
       }
-    }
+    },
+    created() {
+      console.log('created');
+      //console.log(validator.hasAnyError());
+      console.log(validator.methods.hasAnyError());
+    },
   };
 </script>

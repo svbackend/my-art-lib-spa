@@ -1,26 +1,26 @@
 <script>
   export default {
+    name: 'validator',
     data: () => ({
       validatorErrors: {},
     }),
     methods: {
       isSuccess(field) {
-        return this.isDirty(field) && !this.validatorHasAnyError(field);
+        return this.isDirty(field) && !this.hasAnyError(field);
       },
       isDanger(field) {
-        return this.isDirty(field) && this.validatorHasAnyError(field);
+        return this.isDirty(field) && this.hasAnyError(field);
       },
       isDirty(field) {
         return this.$v[field].$dirty;
       },
-      validatorShowError(field, errorName) {
+      getErrorMessage(field, errorName) {
         let path = 'validation.' + errorName
         let params = this.$v[field].$params[errorName] || {}
         params.fieldName = this.$t('fields.' + field);
-        //console.log(params);
         return { 'path': path, args: params }
       },
-      validatorHasError(field, errorName) {
+      hasError(field, errorName) {
         if (this.$v[field].$dirty && !this.$v[field][errorName]) {
           return true;
         }
@@ -32,7 +32,7 @@
 
         return false;
       },
-      validatorHasAnyError(field = null) {
+      hasAnyError(field = null) {
         if (field === null) {
 
           if (this.$v.$invalid) {
@@ -52,7 +52,7 @@
 
         return Object.keys(this.validatorErrors[field]).length > 0;
       },
-      validatorClearErrors(field = null) {
+      removeAllErrors(field = null) {
         if (field === null) {
           this.validatorErrors = {};
           return;
@@ -60,7 +60,7 @@
 
         this.validatorErrors[field] = {};
       },
-      validatorAddError(field, errorName, customMessage = null) {
+      addError(field, errorName, customMessage = null) {
         if (typeof this.validatorErrors[field] === 'undefined') {
           this.validatorErrors[field] = {};
         }
@@ -70,9 +70,9 @@
           return;
         }
 
-        this.validatorErrors[field][errorName] = this.createErrorObject(errorName, customMessage)
+        this.validatorErrors[field][errorName] = this._createErrorObject(errorName, customMessage)
       },
-      validatorRemoveError(field, errorName) {
+      removeError(field, errorName) {
         if (typeof this.validatorErrors[field] === 'undefined') {
           this.validatorErrors[field] = {};
         }
@@ -81,7 +81,7 @@
           delete this.validatorErrors[field][errorName];
         }
       },
-      createErrorObject(errorName, message) {
+      _createErrorObject(errorName, message) {
         if (message === null) {
           message = 'This value is invalid'
         }
@@ -90,17 +90,17 @@
           'message': message
         };
       },
-      validatorLoadServerErrors(errors) {
+      loadServerErrors(errors) {
         if (!errors.length) return;
 
         let error;
         for (error of errors) {
           if (error.path.contains('[') === true) {
-            this.validatorAddServerError(error);
+            this._addServerError(error);
           }
         }
       },
-      validatorAddServerError(error) {
+      _addServerError(error) {
         // todo server error processing (mapping to the actual data fields)
       }
     },
