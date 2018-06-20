@@ -111,6 +111,7 @@
         })
       },
       signIn(apiToken) {
+        this.mergeGuestMovies();
         this.$store.dispatch('setApiToken', apiToken);
         this.$router.push({name: 'home'});
       },

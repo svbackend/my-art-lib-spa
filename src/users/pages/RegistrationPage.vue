@@ -128,6 +128,7 @@
           }
         }).then(response => {
           this.sendAuthRequest();
+          this.mergeGuestMovies();
           this.validatorClearErrors();
           this.$v.$touch()
           this.submitStatus = 'OK'
@@ -153,6 +154,18 @@
           }
           return this.showErrors(error.response.data);
         })
+      },
+      mergeGuestMovies() {
+        if (this.$store.state.guest.token) {
+          let guestSessionToken = this.$store.state.guest.token;
+          this.$http.post('/users/mergeWatchedMovies', {
+            token: guestSessionToken
+          }).then(response => {
+            // I think nothing should be here
+          }).catch(error => {
+            // todo
+          })
+        }
       },
       showErrors(errors) {
         this.submitStatus = ''
