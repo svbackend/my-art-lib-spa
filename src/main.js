@@ -20,7 +20,7 @@ Vue.use(Meta)
 
 sync(store, router)
 
-new Vue({
+export default new Vue({
   el: '#app',
   render: h => h(App),
   router,

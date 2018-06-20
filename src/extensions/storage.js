@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import VueInstance from '@/main'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
+import { mergeGuestMovies } from '@/movies/helpers/index'
 
 Vue.use(Vuex);
 
@@ -26,6 +28,11 @@ export default new Vuex.Store({
         setApiToken(state, apiToken) {
           state.user.apiToken = apiToken;
           state.isUserLoggedIn = !!(apiToken);
+
+          delete VueInstance.$http.defaults.params.guest_api_token;
+          VueInstance.$http.defaults.params.api_token = apiToken;
+
+          mergeGuestMovies();
         },
         setGuest(state, guestSession) {
           state.guest.id = guestSession.id;

@@ -86,6 +86,7 @@
   import { required, minLength, maxLength, email} from 'vuelidate/lib/validators'
   import { regex } from 'vuelidate/lib/validators/common'
   import validator from '@/components/validator'
+
   // All these weird UTF codes here to support characters from Polish and Ukrainian languages as "ę", "ą", "є", "ї" etc.
   const validUsername = regex('alpha', /^[\-_0-9a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*$/)
 
@@ -128,7 +129,6 @@
           }
         }).then(response => {
           this.sendAuthRequest();
-          this.mergeGuestMovies();
           this.validatorClearErrors();
           this.$v.$touch()
           this.submitStatus = 'OK'
@@ -154,18 +154,6 @@
           }
           return this.showErrors(error.response.data);
         })
-      },
-      mergeGuestMovies() {
-        if (this.$store.state.guest.token) {
-          let guestSessionToken = this.$store.state.guest.token;
-          this.$http.post('/users/mergeWatchedMovies', {
-            token: guestSessionToken
-          }).then(response => {
-            // I think nothing should be here
-          }).catch(error => {
-            // todo
-          })
-        }
       },
       showErrors(errors) {
         this.submitStatus = ''

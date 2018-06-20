@@ -111,21 +111,9 @@
         })
       },
       signIn(apiToken) {
-        this.mergeGuestMovies();
         this.$store.dispatch('setApiToken', apiToken);
+
         this.$router.push({name: 'home'});
-      },
-      mergeGuestMovies() {
-        if (this.$store.state.guest.token) {
-          let guestSessionToken = this.$store.state.guest.token;
-          this.$http.post('/users/mergeWatchedMovies', {
-            token: guestSessionToken
-          }).then(response => {
-            // I think nothing should be here
-          }).catch(error => {
-            // todo
-          })
-        }
       },
       showErrors(errors) {
         this.submitStatus = ''
