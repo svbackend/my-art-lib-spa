@@ -127,10 +127,26 @@
             password: this.password,
           }
         }).then(response => {
+          this.sendAuthRequest();
           this.validatorClearErrors();
           this.$v.$touch()
           this.submitStatus = 'OK'
-          this.$router.push({name: 'login'});
+          this.$router.push({name: 'home'});
+        }).catch(error => {
+          if (error.response.status === 500) {
+            return this.showServerError();
+          }
+          return this.showErrors(error.response.data);
+        })
+      },
+      sendAuthRequest() {
+        this.$http.post('/auth/login', {
+          credentials: {
+            username: this.username,
+            password: this.password,
+          }
+        }).then(response => {
+          this.$store.dispatch('setApiToken', response.data.api_token);
         }).catch(error => {
           if (error.response.status === 500) {
             return this.showServerError();
