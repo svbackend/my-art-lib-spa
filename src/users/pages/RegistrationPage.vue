@@ -3,57 +3,57 @@
     <div class="field">
       <label class="label has-text-left" v-t="'fields.email'"></label>
       <p class="control has-icons-left has-icons-right">
-        <input autofocus="autofocus" class="input" :class="{ 'is-success': isSuccess('email'), 'is-danger': isDanger('email') }" type="text" placeholder="Email" v-model.trim="email" @blur="blurEmail">
+        <input autofocus="autofocus" class="input" :class="{ 'is-success': $validator.isSuccess('email'), 'is-danger': $validator.isDanger('email') }" type="text" placeholder="Email" v-model.trim="email" @blur="blurEmail">
         <span class="icon is-small is-left">
           <i class="fa fa-envelope"></i>
         </span>
         <span class="icon is-small is-right">
-          <i v-if="isSuccess('email')" class="fa fa-check has-text-success"></i>
-          <i v-if="isDanger('email')" class="fa fa-times has-text-danger"></i>
+          <i v-if="$validator.isSuccess('email')" class="fa fa-check has-text-success"></i>
+          <i v-if="$validator.isDanger('email')" class="fa fa-times has-text-danger"></i>
         </span>
       </p>
-      <p v-if="isDanger('email')" class="help is-danger">
-        <span v-if="validatorHasError('email', 'required')" v-t="validatorShowError('email', 'required')"></span>
-        <span v-if="validatorHasError('email', 'email')" v-t="validatorShowError('email', 'email')"></span>
-        <span v-if="validatorHasError('email', '_isUniqueError')" v-t="validatorShowError('email', '_isUniqueError')"></span>
+      <p v-if="$validator.isDanger('email')" class="help is-danger">
+        <span v-if="$validator.hasError('email', 'required')" v-t="$validator.showError('email', 'required')"></span>
+        <span v-if="$validator.hasError('email', 'email')" v-t="$validator.showError('email', 'email')"></span>
+        <span v-if="$validator.hasError('email', '_isUniqueError')" v-t="$validator.showError('email', '_isUniqueError')"></span>
       </p>
     </div>
 
     <div class="field">
       <label class="label has-text-left" v-t="'fields.username'"></label>
       <p class="control has-icons-left has-icons-right">
-        <input autofocus="autofocus" class="input" :class="{ 'is-success': isSuccess('username'), 'is-danger': isDanger('username') }" type="text" :placeholder="$t('fields.usernamePlaceholder')" v-model.trim="username" @blur="blurUsername">
+        <input autofocus="autofocus" class="input" :class="{ 'is-success': $validator.isSuccess('username'), 'is-danger': $validator.isDanger('username') }" type="text" :placeholder="$t('fields.usernamePlaceholder')" v-model.trim="username" @blur="blurUsername">
         <span class="icon is-small is-left">
           <i class="fa fa-envelope"></i>
         </span>
         <span class="icon is-small is-right">
-          <i v-if="usernameIsLoading === false && isSuccess('username')" class="fa fa-check has-text-success"></i>
-          <i v-if="usernameIsLoading === false && isDanger('username')" class="fa fa-times has-text-danger"></i>
+          <i v-if="usernameIsLoading === false && $validator.isSuccess('username')" class="fa fa-check has-text-success"></i>
+          <i v-if="usernameIsLoading === false && $validator.isDanger('username')" class="fa fa-times has-text-danger"></i>
           <i v-if="usernameIsLoading === true" class="fa fa-spin fa-spinner has-text-dark"></i>
         </span>
       </p>
-      <p v-if="isSuccess('username')" class="help is-success">
+      <p v-if="$validator.isSuccess('username')" class="help is-success">
         {{ profileUrl }}
       </p>
-      <p v-if="isDanger('username')" class="help is-danger">
-        <span v-if="validatorHasError('username', 'required')" v-t="validatorShowError('username', 'required')"></span>
-        <span v-if="validatorHasError('username', 'minLength')" v-t="validatorShowError('username', 'minLength')"></span>
-        <span v-if="validatorHasError('username', 'maxLength')" v-t="validatorShowError('username', 'maxLength')"></span>
-        <span v-if="validatorHasError('username', 'validUsername')" v-t="validatorShowError('username', 'validUsername')"></span>
-        <span v-if="validatorHasError('username', '_isUniqueError')" v-t="validatorShowError('username', '_isUniqueError')"></span>
+      <p v-if="$validator.isDanger('username')" class="help is-danger">
+        <span v-if="$validator.hasError('username', 'required')" v-t="$validator.showError('username', 'required')"></span>
+        <span v-if="$validator.hasError('username', 'minLength')" v-t="$validator.showError('username', 'minLength')"></span>
+        <span v-if="$validator.hasError('username', 'maxLength')" v-t="$validator.showError('username', 'maxLength')"></span>
+        <span v-if="$validator.hasError('username', 'validUsername')" v-t="$validator.showError('username', 'validUsername')"></span>
+        <span v-if="$validator.hasError('username', '_isUniqueError')" v-t="$validator.showError('username', '_isUniqueError')"></span>
       </p>
     </div>
 
     <label class="label has-text-left" v-t="'fields.password'"></label>
     <div class="field has-addons">
       <p class="control is-expanded has-icons-left has-icons-right">
-        <input class="input" :class="{ 'is-success': isSuccess('password'), 'is-danger': isDanger('password') }" :type="passwordInputType" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
+        <input class="input" :class="{ 'is-success': $validator.isSuccess('password'), 'is-danger': $validator.isDanger('password') }" :type="passwordInputType" placeholder="Password" v-model.trim="password" @blur="$v.password.$touch()">
         <span class="icon is-small is-left">
           <i class="fa fa-lock"></i>
         </span>
         <span class="icon is-small is-right">
-          <i v-if="isSuccess('password')" class="fa fa-check has-text-success"></i>
-          <i v-if="isDanger('password')" class="fa fa-times has-text-danger"></i>
+          <i v-if="$validator.isSuccess('password')" class="fa fa-check has-text-success"></i>
+          <i v-if="$validator.isDanger('password')" class="fa fa-times has-text-danger"></i>
         </span>
       </p>
 
@@ -63,9 +63,9 @@
         </a>
       </p>
     </div>
-    <p v-if="isDanger('password')" class="help help-underField is-danger">
-      <span v-if="validatorHasError('password', 'required')" v-t="validatorShowError('password', 'required')"></span>
-      <span v-if="validatorHasError('password', 'minLength')" v-t="validatorShowError('password', 'minLength')"></span>
+    <p v-if="$validator.isDanger('password')" class="help help-underField is-danger">
+      <span v-if="$validator.hasError('password', 'required')" v-t="$validator.showError('password', 'required')"></span>
+      <span v-if="$validator.hasError('password', 'minLength')" v-t="$validator.showError('password', 'minLength')"></span>
     </p>
 
     <p class="control">
@@ -127,7 +127,7 @@
           }
         }).then(response => {
           this.sendAuthRequest();
-          this.validatorClearErrors();
+          this.$validator.clearErrors();
           this.$v.$touch()
           this.submitStatus = 'OK'
           this.$router.push({name: 'home'});
@@ -157,13 +157,13 @@
         this.submitStatus = ''
 
         console.log(errors);
-        this.validatorLoadServerErrors(errors.errors);
+        this.$validator.loadServerErrors(errors.errors);
 
         this.$v.$touch()
       },
       blurEmail() {
         this.$v.email.$touch();
-        if (this.validatorHasAnyError('email')) {
+        if (this.$validator.hasAnyError('email')) {
           return;
         }
 
@@ -174,10 +174,10 @@
 
         this.$http.get('/users/email/' + this.email)
           .then(response => {
-            this.validatorAddError('email', '_isUniqueError');
+            this.$validator.addError('email', '_isUniqueError');
           })
           .catch(error => {
-            this.validatorRemoveError('email', '_isUniqueError');
+            this.$validator.removeError('email', '_isUniqueError');
           }).finally(e => {
           this.$v.email.$touch();
         });
@@ -187,10 +187,10 @@
 
         this.$http.get('/users/username/' + this.username)
           .then(response => {
-            this.validatorAddError('username', '_isUniqueError');
+            this.$validator.addError('username', '_isUniqueError');
           })
           .catch(error => {
-            this.validatorRemoveError('username', '_isUniqueError');
+            this.$validator.removeError('username', '_isUniqueError');
           }).finally(e => {
           this.usernameIsLoading = false;
           this.$v.username.$touch();

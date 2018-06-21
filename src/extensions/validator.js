@@ -2,6 +2,9 @@ import Vue from 'vue'
 
 Vue.mixin({
   created() {
+    // todo idk what is going on here but this method called multiple times
+    // and the problem here is that sometimes this.$v or $t are not defined
+    // so I need to check these params in setters in order to not overwrite property by undefined value
     console.log('created called');
     Validator.setVuelidate(this.$v)
     Validator.setI18n(this.$t)
@@ -17,6 +20,7 @@ const Validator = {
     }
   },
   setI18n(I18n) {
+    // todo I hope I will find the way to remove this
     try {
       I18n('path')
     } catch (e) {
