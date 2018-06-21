@@ -23,6 +23,7 @@
         let guest = this.$store.state.guest;
 
         if (guest.token !== null) {
+          //todo somehow check is guest session not expired yet and maybe load new one
           this.guest = guest;
           return;
         }
