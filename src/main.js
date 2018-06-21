@@ -9,10 +9,12 @@ import Vuelidate from 'vuelidate'
 import Meta from 'vue-meta'
 import { VueExtendLayout, layout } from 'vue-extend-layout'
 import i18n from './translations'
+import validator from '@/extensions/validator'
 
 require('./assets/sass/main.scss')
 
 Vue.prototype.$http = axios
+Vue.prototype.$validator = validator
 Vue.use(RouterComponent)
 Vue.use(Vuelidate)
 Vue.use(VueExtendLayout)
@@ -26,5 +28,6 @@ export default new Vue({
   router,
   store,
   i18n,
+  validator,
   ...layout
 })
