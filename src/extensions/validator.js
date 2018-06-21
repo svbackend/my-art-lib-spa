@@ -2,8 +2,7 @@ import Vue from 'vue'
 
 Vue.mixin({
   created() {
-    console.log('set vuelidate')
-    console.log(this.$v)
+    console.log('created called');
     Validator.setVuelidate(this.$v)
     Validator.setI18n(this.$t)
   }
@@ -11,16 +10,20 @@ Vue.mixin({
 
 const Validator = {
   $v: null,
-  $t: null,
+  $t: function (path) { return path; },
   setVuelidate(Vuelidate) {
     if (Vuelidate) {
       this.$v = Vuelidate;
     }
   },
   setI18n(I18n) {
-    if (I18n) {
-      this.$t = I18n;
+    try {
+      I18n('path')
+    } catch (e) {
+      return;
     }
+
+    this.$t = I18n;
   },
   // Properties
   validatorErrors: {},
@@ -38,7 +41,6 @@ const Validator = {
     let path = 'validation.' + errorName
     let params = this.$v[field].$params[errorName] || {}
     params.fieldName = this.$t('fields.' + field);
-    //console.log(params);
     return { 'path': path, args: params }
   },
   hasError(field, errorName) {
@@ -71,7 +73,8 @@ const Validator = {
       return true;
     }
 
-    return Object.keys(this.validatorErrors[field]).length > 0;
+
+    return typeof this.validatorErrors[field] !== 'undefined' && Object.keys(this.validatorErrors[field]).length > 0;
   },
   clearErrors(field = null) {
     if (field === null) {

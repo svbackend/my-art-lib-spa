@@ -85,14 +85,12 @@
 <script>
   import { required, minLength, maxLength, email} from 'vuelidate/lib/validators'
   import { regex } from 'vuelidate/lib/validators/common'
-  import validator from '@/components/validator'
 
   // All these weird UTF codes here to support characters from Polish and Ukrainian languages as "ę", "ą", "є", "ї" etc.
   const validUsername = regex('alpha', /^[\-_0-9a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*$/)
 
   export default {
     name: 'form-login',
-    extends: validator,
     data: () => ({
       submitStatus: '',
       email: '',
