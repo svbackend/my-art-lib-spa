@@ -1,8 +1,14 @@
 <template>
   <section class="wrapper">
+    <pagination
+        :current="currentPage"
+        :total="totalMovies"
+        :per-page="perPage"
+        @page-changed="getAllMovies"
+    ></pagination>
     <!-- Movies -->
     <div class="movies columns is-multiline">
-      <div class="column-movie column is-3-tablet is-2-desktop is-half-mobile" v-for="movie in movies">
+      <div class="column-movie column is-3-tablet is-3-desktop is-half-mobile" v-for="movie in movies">
         <div class="movie">
           <div class="poster">
             <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title"/>
@@ -33,12 +39,17 @@
 </template>
 
 <script>
+  import Pagination from '@/components/pagination'
   export default {
+    components: {Pagination},
     data() {
       return {
         movies: [],
         endpoint: '/movies',
         isUserLoggedIn: false,
+        totalMovies: 0,
+        perPage: 20,
+        currentPage: 1
       }
     },
     created() {
@@ -46,10 +57,17 @@
       this.isUserLoggedIn = this.$store.state.isUserLoggedIn;
     },
     methods: {
-      getAllMovies() {
-        this.$http.get(this.endpoint)
+      getAllMovies(page = null) {
+        this.movies = [];
+        if (page !== null) {
+          this.currentPage = page;
+        }
+        let offset = (this.currentPage * this.perPage) - this.perPage;
+        let limit = this.perPage;
+        this.$http.get(this.endpoint, {params: {offset: offset, limit: limit}})
           .then(response => {
             this.movies = response.data.data;
+            this.totalMovies = response.data.paging.total;
           })
           .catch(error => {
             console.log('-----error-------');
