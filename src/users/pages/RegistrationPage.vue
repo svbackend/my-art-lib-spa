@@ -126,7 +126,7 @@
             password: this.password,
           }
         }).then(response => {
-          this.sendAuthRequest();
+          this.sendAuthRequest(response);
           this.$validator.clearErrors();
           this.$v.$touch()
           this.submitStatus = 'OK'
@@ -138,13 +138,14 @@
           return this.showErrors(error.response.data);
         })
       },
-      sendAuthRequest() {
+      sendAuthRequest(registrationResponse) {
         this.$http.post('/auth/login', {
           credentials: {
             username: this.username,
             password: this.password,
           }
         }).then(response => {
+          this.$store.dispatch('setUser', response.data);
           this.$store.dispatch('setApiToken', response.data.api_token);
         }).catch(error => {
           if (error.response.status === 500) {

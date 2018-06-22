@@ -19,13 +19,16 @@
                 <router-link :to="{ name: 'home' }">Home</router-link>
               </li>
               <li v-if="this.$store.state.isUserLoggedIn">
-                <a @click="logout()">Logout</a>
+                <router-link :to="{ name: 'library', params: {username: this.$store.state.user.username} }" v-t="'users.my_library'"></router-link>
+              </li>
+              <li v-if="this.$store.state.isUserLoggedIn">
+                <a @click="logout()" v-t="'users.logout'"></a>
               </li>
               <li v-if="!this.$store.state.isUserLoggedIn">
-                <router-link :to="{ name: 'login' }">Login</router-link>
+                <router-link :to="{ name: 'login' }" v-t="'users.login'"></router-link>
               </li>
               <li v-if="!this.$store.state.isUserLoggedIn">
-                <router-link :to="{ name: 'registration' }">Registration</router-link>
+                <router-link :to="{ name: 'registration' }" v-t="'users.registration'"></router-link>
               </li>
             </ul>
           </div>

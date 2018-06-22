@@ -100,7 +100,7 @@
           this.$validator.clearErrors();
           this.$v.$touch()
           this.submitStatus = 'OK'
-          this.signIn(response.data.api_token);
+          this.signIn(response.data.api_token, response.data.user_id);
         }).catch(error => {
           if (error.response.status === 500) {
             return this.showServerError();
@@ -108,10 +108,16 @@
           return this.showErrors(error.response.data);
         })
       },
-      signIn(apiToken) {
-        this.$store.dispatch('setApiToken', apiToken);
-
-        this.$router.push({name: 'home'});
+      signIn(apiToken, userId) {
+        this.saveUser(userId)
+        this.$store.dispatch('setApiToken', apiToken)
+        this.$router.push({name: 'home'})
+      },
+      saveUser(userId) {
+        this.$http.get('/users/' + userId)
+          .then(response => {
+            this.$store.dispatch('setUser', response.data)
+        })
       },
       showErrors(errors) {
         this.submitStatus = ''

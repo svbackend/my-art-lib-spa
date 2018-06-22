@@ -11,6 +11,12 @@ export default {
     username: 'Username',
     password: 'Password',
   },
+  users: {
+    logout: 'Logout',
+    login: 'Login',
+    registration: 'Registration',
+    my_library: 'My Library',
+  },
   loginPage: {
     authorize: 'Sign In',
   },
