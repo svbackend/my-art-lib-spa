@@ -34,14 +34,34 @@ $vertical-form-max-width: 520px;
   padding-bottom: 1rem;
 }
 
-.movie {
+.column-movie {
+  padding: 0;
   float: left;
-  max-width: 350px;
-  border: 1px solid rgba(0,0,0,.5);
+}
+
+.movie {
+  height: 100%;
+  float: left;
+  padding: 0;
+  margin: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgba(0,0,0,.1);
   .poster {
+    position: relative;
     max-width: 100%;
     img {
       max-width: 100%;
+    }
+    .actions {
+      position: absolute;
+      right: 0.5rem;
+      bottom: 1rem;
+    }
+  }
+  .information {
+    padding: 0.3rem;
+    .title {
+      font-size: 1rem;
     }
   }
 }
@@ -172,6 +192,20 @@ footer.footer {
 }
 
 /* Bulma template end */
+
+.wrapper {
+  padding: 2rem 5rem;
+
+  @include mobile {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @include tablet-only {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
 
 p.help-underField {
   margin-top: -0.5rem;
