@@ -1,7 +1,7 @@
 <template>
   <section class="wrapper">
     <pagination
-        :current="currentPage"
+        :current="page"
         :total="totalMovies"
         :per-page="perPage"
         @page-changed="getAllMovies"
@@ -17,7 +17,8 @@
                  @click.once="addToLibrary(movie.id, $event)">
                 <span class="icon is-medium"><i class="fa fa-plus"></i></span>
               </a>
-              <a v-else class="button is-danger is-small">
+              <a v-else class="button is-danger is-small"
+                 @click.once="removeFromLibrary(movie.id, $event)">
                 <span class="icon is-medium"><i class="fa fa-times"></i></span>
               </a>
             </div>
@@ -42,6 +43,12 @@
   import Pagination from '@/components/pagination'
   export default {
     components: {Pagination},
+    props: {
+      page: {
+        default: 1,
+        type: Number
+      }
+    },
     data() {
       return {
         movies: [],
@@ -53,7 +60,8 @@
       }
     },
     created() {
-      this.getAllMovies();
+      this.currentPage = this.page;
+      this.getAllMovies(this.page);
       this.isUserLoggedIn = this.$store.state.isUserLoggedIn;
     },
     methods: {
@@ -95,6 +103,31 @@
             watchedAt: null,
           }
         })
+          .then(response => {
+            event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-plus"></i></span>';
+          })
+          .catch(error => {
+            event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-times"></i></span>';
+            console.log('-----error-------');
+            console.log(error);
+          })
+      },
+      removeFromLibrary(movieId, event) {
+        // Todo move to movie component but learn more about events before
+        event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-spin fa-spinner"></i></span>';
+
+        let endpoint = '';
+
+        if (this.$store.state.isUserLoggedIn === true) {
+          endpoint = '/users/{user}/watchedMovies/{movie}';
+          endpoint = endpoint.replace('{user}', this.$store.state.user.id);
+        } else {
+          endpoint = '/guests/{token}/watchedMovies/{movie}';
+          endpoint = endpoint.replace('{token}', this.$store.state.guest.token);
+        }
+        endpoint = endpoint.replace('{movie}', movieId);
+
+        this.$http.delete(endpoint)
           .then(response => {
             event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-times"></i></span>';
           })

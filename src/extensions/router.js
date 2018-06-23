@@ -15,7 +15,10 @@ export default new Router({
       component: HomePage,
       meta: {
         layout: 'home'
-      }
+      },
+      props: (route) => ({
+        page: Number(route.query.page)
+      })
     },
     {
       path: '/404',

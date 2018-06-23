@@ -77,6 +77,7 @@
         return this.current < this.totalPages
       },
       changePage: function(page) {
+        this.$router.push({ query: { ...this.$route.query, page: page }})
         this.$emit('page-changed', page)
       }
     }
