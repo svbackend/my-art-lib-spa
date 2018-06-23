@@ -17,7 +17,7 @@ export default new Router({
         layout: 'home'
       },
       props: (route) => ({
-        page: Number(route.query.page)
+        page: route.query.page ? Number(route.query.page) : 1
       })
     },
     {
