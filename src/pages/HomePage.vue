@@ -8,17 +8,19 @@
     ></pagination>
     <!-- Movies -->
     <div class="movies columns is-multiline">
-      <div class="column-movie column is-3-tablet is-3-desktop is-half-mobile" v-for="movie in movies">
+      <div class="column-movie column is-3-tablet is-2-desktop is-half-mobile" v-for="movie in movies">
         <div class="movie">
           <div class="poster">
             <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title"/>
             <div class="actions buttons">
-              <a v-if="!movie.isWatched" class="button is-success is-small"
-                 @click.once="addToLibrary(movie.id, $event)">
+              <a v-if="!movie.isWatched" class="addToLibrary button is-success is-small"
+                 @click="addToLibrary(movie, $event)">Add to library
+                &nbsp;
                 <span class="icon is-medium"><i class="fa fa-plus"></i></span>
               </a>
-              <a v-else class="button is-danger is-small"
-                 @click.once="removeFromLibrary(movie.id, $event)">
+              <a v-else class="removeFromLibrary button is-danger is-small"
+                 @click="removeFromLibrary(movie, $event)">Remove from library
+                &nbsp;
                 <span class="icon is-medium"><i class="fa fa-times"></i></span>
               </a>
             </div>
@@ -82,9 +84,11 @@
             console.log(error);
           })
       },
-      addToLibrary(movieId, event) {
+      addToLibrary(movie, event) {
+        let movieId = movie.id
         // Todo move to movie component but learn more about events before
-        event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-spin fa-spinner"></i></span>';
+        let oldInnerHtml = event.target.innerHTML
+        //event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-spin fa-spinner"></i></span>'
 
         let endpoint = '';
 
@@ -104,17 +108,22 @@
           }
         })
           .then(response => {
-            event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-plus"></i></span>';
+            movie.isWatched = true
           })
           .catch(error => {
-            event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-times"></i></span>';
-            console.log('-----error-------');
-            console.log(error);
+
           })
+          .finally(() => {
+          //event.target.innerHTML = oldInnerHtml
+        })
       },
-      removeFromLibrary(movieId, event) {
-        // Todo move to movie component but learn more about events before
-        event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-spin fa-spinner"></i></span>';
+      removeFromLibrary(movie, event) {
+        console.log(movie)
+        let movieId = movie.id
+
+        if (movie.userWatchedMovie && typeof movie.userWatchedMovie.id !== 'undefined') {
+          movieId = movie.userWatchedMovie.id;
+        }
 
         let endpoint = '';
 
@@ -129,7 +138,7 @@
 
         this.$http.delete(endpoint)
           .then(response => {
-            event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-times"></i></span>';
+            movie.isWatched = false
           })
           .catch(error => {
             console.log('-----error-------');
