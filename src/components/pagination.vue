@@ -1,15 +1,17 @@
 <template>
-  <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-    <a v-if="hasPrev()" @click.prevent="changePage(prevPage)" class="pagination-previous">Previous</a>
-    <a v-if="hasNext()" @click.prevent="changePage(nextPage)" class="pagination-next">Next page</a>
-    <ul class="pagination-list">
-      <li v-for="page in pages">
-        <a href="#!" @click.prevent="changePage(page)" :class="{ 'is-current': current === page }" class="pagination-link">
-          {{ page }}
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <div class="pagination is-clearfix">
+    <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">
+      <a v-if="hasPrev()" @click.prevent="changePage(prevPage)" class="pagination-previous">Previous</a>
+      <a v-if="hasNext()" @click.prevent="changePage(nextPage)" class="pagination-next">Next page</a>
+      <ul class="pagination-list">
+        <li v-for="page in pages">
+          <a href="#!" @click.prevent="changePage(page)" :class="{ 'is-current': current === page }" class="pagination-link">
+            {{ page }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </template>
 
 <script>

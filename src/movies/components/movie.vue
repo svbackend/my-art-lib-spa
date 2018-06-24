@@ -1,7 +1,7 @@
 <template>
   <div class="movie">
     <div class="poster">
-      <img :src="movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl" :alt="movie.title"/>
+      <img :src="getPosterUrl(movie)" :alt="movie.title"/>
       <div class="actions buttons">
         <a v-if="!movie.isWatched" class="addToLibrary button is-success is-small"
            @click="addToLibrary(movie, $event)">Add to library
@@ -40,6 +40,14 @@
       return {}
     },
     methods: {
+      getPosterUrl(movie) {
+        let posterUrl = movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl
+        if (posterUrl === 'https://image.tmdb.org/t/p/original') {
+          posterUrl = 'http://placehold.it/320x480'
+        }
+
+        return posterUrl
+      },
       addToLibrary(movie, event) {
         let movieId = movie.id
         // Todo move to movie component but learn more about events before

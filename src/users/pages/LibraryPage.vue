@@ -1,18 +1,17 @@
 <template lang="html">
-  <section class="wrapper">
-    <section>
-      <pagination
-          :current="page"
-          :total="totalMovies"
-          :per-page="perPage"
-          @page-changed="getUserWatchedMovies"
-      ></pagination>
-    </section>
-    <div class="movies columns is-multiline">
+  <section class="section wrapper">
+    <div class="movies columns is-multiline is-flex">
       <div class="column-movie column is-3-tablet is-2-desktop is-half-mobile" v-for="movie in movies">
         <movie :movie="movie"></movie>
       </div>
     </div>
+
+    <pagination
+        :current="currentPage"
+        :total="totalMovies"
+        :per-page="perPage"
+        @page-changed="getUserWatchedMovies"
+    ></pagination>
   </section>
 </template>
 
@@ -21,7 +20,7 @@
   import Pagination from '@/components/pagination'
   export default {
     components: {Pagination, Movie},
-    props: ['username', 'page'],
+    props: ['username'],
     data() {
       return {
         user: {},
@@ -32,19 +31,25 @@
       }
     },
     methods: {
-      getUserWatchedMovies(id = null) {
-        let page = this.page
-        if (id === null) {
+      getUserWatchedMovies(page = null) {
+        let id;
+
+        if (this.username === this.$store.state.user.username) {
           id = this.$store.state.user.id
+        } else {
+          id = this.username
         }
 
         this.movies = [];
+
         if (page !== null) {
           this.currentPage = page;
         }
+
         let offset = (this.currentPage * this.perPage) - this.perPage;
         let limit = this.perPage;
         let endpoint = '/users/{id}/watchedMovies'
+
         this.$http.get(endpoint.replace('{id}', id), {params: {offset: offset, limit: limit}})
           .then(response => {
             this.movies = response.data.data
@@ -59,23 +64,13 @@
       }
     },
     created() {
-      // todo if username !== current user username then load use by it
-      console.log(this.username);
-      console.log(this.username);
-      console.log(this.username);
-      console.log(this.username);
-      console.log(this.username);
-      console.log(this.username);
-      console.log(this.username);
+      this.currentPage = this.$router.currentRoute.query.page ? Number(this.$router.currentRoute.query.page) : 1;
       this.getUserWatchedMovies();
     },
     watch: {
       '$route'() {
-        if (this.username === this.$store.state.user.username) {
-          this.getUserWatchedMovies(this.$store.state.user.id)
-        } else {
-          this.getUserWatchedMovies(this.username)
-        }
+        this.currentPage = this.$router.currentRoute.query.page ? Number(this.$router.currentRoute.query.page) : 1;
+        this.getUserWatchedMovies()
       }
     }
   }

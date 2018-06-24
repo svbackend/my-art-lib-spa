@@ -1,17 +1,18 @@
 <template>
   <section class="wrapper">
+    <div class="movies columns is-multiline is-flex">
+      <div class="column-movie column is-fullheight is-3-tablet is-2-desktop is-half-mobile" v-for="movie in movies">
+        <movie :movie="movie"></movie>
+      </div>
+    </div>
+
     <pagination
-        :current="page"
+        :current="currentPage"
         :total="totalMovies"
         :per-page="perPage"
         @page-changed="getAllMovies"
     ></pagination>
-    <!-- Movies -->
-    <div class="movies columns is-multiline">
-      <div class="column-movie column is-3-tablet is-2-desktop is-half-mobile" v-for="movie in movies">
-        <movie :movie="movie"></movie>
-      </div>
-    </div>
+
   </section>
 </template>
 
