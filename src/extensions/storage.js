@@ -27,12 +27,17 @@ export default new Vuex.Store({
     mutations: {
         setApiToken(state, apiToken) {
           state.user.apiToken = apiToken;
-          state.isUserLoggedIn = !!(apiToken);
+          state.isUserLoggedIn = apiToken ? true : false;
 
-          delete VueInstance.$http.defaults.params.guest_api_token;
-          VueInstance.$http.defaults.params.api_token = apiToken;
+          if (state.isUserLoggedIn) {
+            delete VueInstance.$http.defaults.params.guest_api_token;
+            VueInstance.$http.defaults.params.api_token = apiToken;
+            mergeGuestMovies();
+          } else {
+            delete VueInstance.$http.defaults.params.api_token;
+            // todo reload VueInstance.$http.defaults.params.guest_api_token
+          }
 
-          mergeGuestMovies();
         },
         setGuest(state, guestSession) {
           state.guest.id = guestSession.id;

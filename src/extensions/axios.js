@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from './storage'
 import { apiHost } from './../config.js'
+import VueInstance from '@/main'
 
 let axiosConfig = {
   baseURL: apiHost,
@@ -22,4 +23,19 @@ if (store.state.user.apiToken !== null) {
   };
 }
 
-export default axios.create(axiosConfig);
+let axiosInstance = axios.create(axiosConfig);
+
+axiosInstance.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (401 === error.response.status) {
+    // user need to re-login so we need to clear api token and redirect him to Sign In page
+    VueInstance.$store.dispatch('setApiToken', '')
+    // todo redirect instead of alert
+    alert('You need to Sign In again')
+  }
+
+  return Promise.reject(error);
+});
+
+export default axiosInstance;
