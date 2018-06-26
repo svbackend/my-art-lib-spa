@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(function (response) {
 }, function (error) {
   if (401 === error.response.status) {
     // user need to re-login so we need to clear api token and redirect him to Sign In page
-    VueInstance.$store.dispatch('setApiToken', '')
+    VueInstance.$store.dispatch('setApiToken', null)
     // todo redirect instead of alert
     alert('You need to Sign In again')
   }
