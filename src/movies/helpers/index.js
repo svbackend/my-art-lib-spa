@@ -32,10 +32,12 @@ export function getUserVoteForMovie(movie) {
 
 export function setUserVoteForMovie(movie, vote) {
   if (Vue.$store.state.isUserLoggedIn === true && movie.userWatchedMovie) {
+    let watchedAt = null
+
     let patchData = {
       movie: {
         vote: vote,
-        watchedAt: movie.userWatchedMovie.watchedAt
+        watchedAt: movie.userWatchedMovie.hasOwnProperty('watchedAt') ? movie.userWatchedMovie.watchedAt : watchedAt
       }
     }
     let endpoint = '/users/{userId}/watchedMovies/'

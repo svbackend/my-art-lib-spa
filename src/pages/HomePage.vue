@@ -77,9 +77,21 @@
       getUserVoteForMovie,
       setUserVoteForMovie,
       updateVote(vote) {
+        console.log(vote)
+        setUserVoteForMovie(this.modalMovie, vote)
         if (this.$store.state.isUserLoggedIn === true) {
+
+          if (this.movies[this.modalMovieIndex].userWatchedMovie === null) {
+            this.movies[this.modalMovieIndex].userWatchedMovie = {};
+          }
+
           this.movies[this.modalMovieIndex].userWatchedMovie.vote = vote;
         } else {
+
+          if (this.movies[this.modalMovieIndex].guestWatchedMovie === null) {
+            this.movies[this.modalMovieIndex].guestWatchedMovie = {};
+          }
+
           this.movies[this.modalMovieIndex].guestWatchedMovie.vote = vote;
         }
       },
