@@ -12,3 +12,42 @@ export function mergeGuestMovies() {
     })
   }
 }
+
+export function getUserVoteForMovie(movie) {
+  let vote = 0;
+
+  if (Vue.$store.state.isUserLoggedIn === true) {
+    if (movie.userWatchedMovie) {
+      vote = movie.userWatchedMovie.vote
+    }
+    return vote;
+  }
+
+  if (movie.guestWatchedMovie) {
+    vote = movie.guestWatchedMovie.vote
+  }
+
+  return vote;
+}
+
+export function setUserVoteForMovie(movie, vote) {
+  if (Vue.$store.state.isUserLoggedIn === true && movie.userWatchedMovie) {
+    let patchData = {
+      movie: {
+        vote: vote,
+        watchedAt: movie.userWatchedMovie.watchedAt
+      }
+    }
+    let endpoint = '/users/{userId}/watchedMovies/'
+    endpoint = endpoint.replace('{userId}', Vue.$store.state.user.id)
+    if (movie.userWatchedMovie.id) {
+      Vue.$http.patch(endpoint + movie.userWatchedMovie.id, patchData)
+      return;
+    }
+    endpoint = endpoint + 'movie/' + movie.id
+    Vue.$http.patch(endpoint, patchData)
+    return;
+  }
+
+  //todo guest vote
+}

@@ -38,12 +38,16 @@
 </template>
 
 <script>
+  import {getUserVoteForMovie} from '@/movies/helpers/index'
+  import {setUserVoteForMovie} from '@/movies/helpers/index'
+
   export default {
     name: "movie",
     props: {
       movie: {
         type: Object
-      }
+      },
+      index: Number
     },
     data() {
       return {}
@@ -57,20 +61,6 @@
 
         return posterUrl
       },
-      getVote(movie) {
-        let vote = 0;
-        if (this.$store.state.isUserLoggedIn === true) {
-          if (movie.userWatchedMovie) {
-            vote = movie.userWatchedMovie.vote
-          }
-          return vote;
-        }
-
-        if (movie.guestWatchedMovie) {
-          vote = movie.guestWatchedMovie.vote
-        }
-        return vote;
-      },
       addToLibrary(movie, event) {
         let movieId = movie.id
 
@@ -82,7 +72,6 @@
           endpoint = '/guests/{token}/watchedMovies';
           endpoint = endpoint.replace('{token}', this.$store.state.guest.token);
         }
-
         this.$http.post(endpoint, {
           movie: {
             id: movieId,
@@ -123,8 +112,11 @@
             console.log(error);
           })
       },
-      openRateModal: function(movie) {
-        this.$emit('openRateModal', movie)
+      openRateModal(movie) {
+        this.$emit('openRateModal', movie, this.index)
+      },
+      getVote(movie) {
+        return getUserVoteForMovie(movie)
       }
     }
   }

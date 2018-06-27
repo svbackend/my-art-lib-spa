@@ -1,8 +1,8 @@
 <template>
   <section class="wrapper">
     <div class="movies columns is-multiline is-flex">
-      <div class="column-movie column is-fullheight is-3-tablet is-2-desktop is-half-mobile" v-for="movie in movies">
-        <movie :movie="movie" @openRateModal="openModal"></movie>
+      <div class="column-movie column is-fullheight is-3-tablet is-2-desktop is-half-mobile" v-for="(movie, index) in movies">
+        <movie :movie="movie" :index="index" @openRateModal="openModal"></movie>
       </div>
     </div>
 
@@ -12,12 +12,13 @@
         :per-page="perPage"
         @page-changed="getAllMovies"
     ></pagination>
-    <!-- TODO rating actual value of modalMovie -->
-    <rate-modal v-if="modalIsActive === true" @close="closeModal()" :rating="3"></rate-modal>
+    <rate-modal v-if="modalIsActive === true" @close="closeModal()" @updateVote="updateVote" :rating="getUserVoteForMovie(modalMovie)"></rate-modal>
   </section>
 </template>
 
 <script>
+  import {getUserVoteForMovie} from '@/movies/helpers/index'
+  import {setUserVoteForMovie} from '@/movies/helpers/index'
   import Pagination from '@/components/pagination'
   import Movie from '@/movies/components/movie'
   import rateModal from '@/movies/components/rateModal'
@@ -64,13 +65,23 @@
             console.log(error);
           })
       },
-      openModal(movie) {
+      openModal(movie, index) {
+        this.modalMovieIndex = index
         this.modalMovie = movie
         this.modalIsActive = true
       },
       closeModal() {
         this.modalMovie = {}
         this.modalIsActive = false
+      },
+      getUserVoteForMovie,
+      setUserVoteForMovie,
+      updateVote(vote) {
+        if (this.$store.state.isUserLoggedIn === true) {
+          this.movies[this.modalMovieIndex].userWatchedMovie.vote = vote;
+        } else {
+          this.movies[this.modalMovieIndex].guestWatchedMovie.vote = vote;
+        }
       },
     }
   }

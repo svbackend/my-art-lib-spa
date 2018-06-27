@@ -2,7 +2,7 @@
   <div class="star-rating">
     <label class="star-rating__star" v-for="rating in ratings"
            :class="{'is-selected': ((tempValue >= rating) && tempValue != null), 'is-disabled': disabled}"
-           v-on:click="set(rating)" v-on:mouseover="star_over(rating)" v-on:mouseout="star_out">
+           @click="set(rating)" @mouseover="star_over(rating)" @mouseout="star_out">
       <input class="star-rating star-rating__checkbox" type="radio" :value="rating" :name="name"
              v-model="actual_value" :disabled="disabled"/>★</label></div>
 </template>
@@ -42,7 +42,7 @@
       },
       set: function(value) {
         if (!this.disabled) {
-          // todo emit event
+          this.$emit('updateValue', value)
           this.temp_value = value;
         }
       }

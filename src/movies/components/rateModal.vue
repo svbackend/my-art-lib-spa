@@ -8,8 +8,8 @@
           <button @click="close" class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-          Lorem Ipsum Sit Doler Amet
-          <stars :value="rating ? rating : null"></stars>
+          Your vote for this movie?
+          <stars :value="rating ? rating : null" @updateValue="updateVote"></stars>
         </section>
         <footer class="modal-card-foot">
           <button @click="close" class="button">Close</button>
@@ -35,6 +35,9 @@
     methods: {
       close: function () {
         this.$emit('close')
+      },
+      updateVote(value) {
+        this.$emit('updateVote', value)
       }
     }
   }
