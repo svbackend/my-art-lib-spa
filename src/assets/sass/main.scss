@@ -19,6 +19,8 @@ $vertical-form-max-width: 520px;
   text-align: center;
 }
 
+@import "stars/index";
+
 #app {
   // background: linear-gradient(#ff957e, #FFF);
   background: #EFF3F4;
@@ -223,4 +225,20 @@ p.help-underField {
 .pagination {
   margin-top: .5rem;
   margin-bottom: .1rem;
+}
+
+/* ANIMATION */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
