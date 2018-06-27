@@ -56,8 +56,14 @@ $vertical-form-max-width: 520px;
     }
     .actions {
       position: absolute;
-      right: 0.5rem;
       bottom: 1rem;
+      float: left;
+      &.right {
+        right: 0.5rem;
+      }
+      &.left {
+        left: 0.5rem;
+      }
     }
   }
   .information {

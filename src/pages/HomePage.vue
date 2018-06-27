@@ -2,7 +2,7 @@
   <section class="wrapper">
     <div class="movies columns is-multiline is-flex">
       <div class="column-movie column is-fullheight is-3-tablet is-2-desktop is-half-mobile" v-for="movie in movies">
-        <movie :movie="movie"></movie>
+        <movie :movie="movie" @openRateModal="openModal"></movie>
       </div>
     </div>
 
@@ -13,14 +13,16 @@
         @page-changed="getAllMovies"
     ></pagination>
 
+    <rate-modal v-if="modalIsActive === true" @close="closeModal()" :movie="modalMovie"></rate-modal>
   </section>
 </template>
 
 <script>
   import Pagination from '@/components/pagination'
   import Movie from '@/movies/components/movie'
+  import rateModal from '@/movies/components/rateModal'
   export default {
-    components: {Pagination, Movie},
+    components: {rateModal, Pagination, Movie},
     props: {
       page: {
         default: 1,
@@ -34,7 +36,9 @@
         isUserLoggedIn: false,
         totalMovies: 0,
         perPage: 20,
-        currentPage: 1
+        currentPage: 1,
+        modalMovie: {},
+        modalIsActive: false,
       }
     },
     created() {
@@ -60,7 +64,14 @@
             console.log(error);
           })
       },
-
+      openModal(movie) {
+        this.modalMovie = movie
+        this.modalIsActive = true
+      },
+      closeModal() {
+        this.modalMovie = {}
+        this.modalIsActive = false
+      },
     }
   }
 </script>

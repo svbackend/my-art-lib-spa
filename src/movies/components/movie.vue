@@ -2,7 +2,7 @@
   <div class="movie">
     <div class="poster">
       <img :src="getPosterUrl(movie)" :alt="movie.title"/>
-      <div class="actions buttons">
+      <div class="actions right">
         <a v-if="!movie.isWatched" class="addToLibrary button is-success is-small"
            @click="addToLibrary(movie, $event)">Add to library
           &nbsp;
@@ -14,6 +14,15 @@
           <span class="icon is-medium"><i class="fa fa-times"></i></span>
         </a>
       </div>
+      <div class="actions left">
+        <a v-show="movie.isWatched" class="addToLibrary button is-small"
+           @click="openRateModal(movie, $event)">
+          <span v-if="getVote(movie) > 0">{{ getVote(movie) }}</span>
+          <span v-else>Rate</span>
+          <span class="icon is-medium"><i class="fa fa-star has-text-danger"></i></span>
+        </a>
+      </div>
+
     </div>
     <div class="information">
       <div class="title">
@@ -42,17 +51,28 @@
     methods: {
       getPosterUrl(movie) {
         let posterUrl = movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl
-        if (posterUrl === 'https://image.tmdb.org/t/p/original') {
+        if (posterUrl === 'https://image.tmdb.org/t/p/original' || posterUrl === 'http://placehold.it/480x320') {
           posterUrl = 'http://placehold.it/320x480'
         }
 
         return posterUrl
       },
+      getVote(movie) {
+        let vote = 0;
+        if (this.$store.state.isUserLoggedIn === true) {
+          if (movie.userWatchedMovie) {
+            vote = movie.userWatchedMovie.vote
+          }
+          return vote;
+        }
+
+        if (movie.guestWatchedMovie) {
+          vote = movie.guestWatchedMovie.vote
+        }
+        return vote;
+      },
       addToLibrary(movie, event) {
         let movieId = movie.id
-        // Todo move to movie component but learn more about events before
-        let oldInnerHtml = event.target.innerHTML
-        //event.target.innerHTML = '<span class="icon is-medium"><i class="fa fa-spin fa-spinner"></i></span>'
 
         let endpoint = '';
 
@@ -73,12 +93,6 @@
         })
           .then(response => {
             movie.isWatched = true
-          })
-          .catch(error => {
-
-          })
-          .finally(() => {
-            //event.target.innerHTML = oldInnerHtml
           })
       },
       removeFromLibrary(movie, event) {
@@ -108,6 +122,9 @@
             console.log('-----error-------');
             console.log(error);
           })
+      },
+      openRateModal: function(movie) {
+        this.$emit('openRateModal', movie)
       }
     }
   }
