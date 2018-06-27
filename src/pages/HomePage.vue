@@ -12,8 +12,8 @@
         :per-page="perPage"
         @page-changed="getAllMovies"
     ></pagination>
-
-    <rate-modal v-if="modalIsActive === true" @close="closeModal()" :movie="modalMovie"></rate-modal>
+    <!-- TODO rating actual value of modalMovie -->
+    <rate-modal v-if="modalIsActive === true" @close="closeModal()" :rating="3"></rate-modal>
   </section>
 </template>
 

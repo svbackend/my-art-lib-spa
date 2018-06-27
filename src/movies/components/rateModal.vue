@@ -9,7 +9,7 @@
         </header>
         <section class="modal-card-body">
           Lorem Ipsum Sit Doler Amet
-          <stars></stars>
+          <stars :value="rating ? rating : null"></stars>
         </section>
         <footer class="modal-card-foot">
           <button @click="close" class="button">Close</button>
@@ -25,8 +25,8 @@
     name: "rateModal",
     components: {Stars},
     props: {
-      movie: {
-        type: Object
+      rating: {
+        type: Number
       }
     },
     data() {

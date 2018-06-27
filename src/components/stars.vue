@@ -49,6 +49,7 @@
     },
     created() {
       this.actual_value = this.value;
+      this.temp_value = this.value;
     }
   }
 </script>
