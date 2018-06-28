@@ -5,13 +5,13 @@
         <router-link :to="{ name: 'home' }" class="navbar-item">
           <img src="http://bulma.io/images/bulma-type-white.png" alt="Logo">
         </router-link>
-        <span class="navbar-burger burger" data-target="navbarMenu">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </span>
+        <span class="navbar-burger burger" :class="{'is-active': menuIsOpen}" data-target="navbarMenu" @click="menuIsOpen = !menuIsOpen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
       </div>
-      <div id="navbarMenu" class="navbar-menu">
+      <div id="navbarMenu" class="navbar-menu" :class="{'is-active': menuIsOpen}">
         <div class="navbar-end">
           <div class="tabs is-right">
             <ul>
@@ -41,6 +41,11 @@
 <script>
   export default {
     name: "navigation",
+    data() {
+      return {
+        menuIsOpen: false,
+      }
+    },
     methods: {
       logout() {
         this.$store.dispatch('logout');
