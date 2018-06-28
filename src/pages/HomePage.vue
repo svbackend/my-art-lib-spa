@@ -1,29 +1,20 @@
 <template>
   <section class="wrapper">
-    <div class="movies columns is-multiline is-flex">
-      <div class="column-movie column is-fullheight is-3-tablet is-2-desktop is-half-mobile" v-for="(movie, index) in movies">
-        <movie :movie="movie" :index="index" @openRateModal="openModal"></movie>
-      </div>
-    </div>
-
+    <movies-list :movies="movies"></movies-list>
     <pagination
         :current="currentPage"
         :total="totalMovies"
         :per-page="perPage"
         @page-changed="getAllMovies"
     ></pagination>
-    <rate-modal v-if="modalIsActive === true" @close="closeModal()" @updateVote="updateVote" :rating="getUserVoteForMovie(modalMovie)"></rate-modal>
   </section>
 </template>
 
 <script>
-  import {getUserVoteForMovie} from '@/movies/helpers/index'
-  import {setUserVoteForMovie} from '@/movies/helpers/index'
   import Pagination from '@/components/pagination'
-  import Movie from '@/movies/components/movie'
-  import rateModal from '@/movies/components/rateModal'
+  import moviesList from '@/movies/components/moviesList'
   export default {
-    components: {rateModal, Pagination, Movie},
+    components: {moviesList, Pagination},
     props: {
       page: {
         default: 1,
@@ -64,36 +55,6 @@
             console.log('-----error-------');
             console.log(error);
           })
-      },
-      openModal(movie, index) {
-        this.modalMovieIndex = index
-        this.modalMovie = movie
-        this.modalIsActive = true
-      },
-      closeModal() {
-        this.modalMovie = {}
-        this.modalIsActive = false
-      },
-      getUserVoteForMovie,
-      setUserVoteForMovie,
-      updateVote(vote) {
-        console.log(vote)
-        setUserVoteForMovie(this.modalMovie, vote)
-        if (this.$store.state.isUserLoggedIn === true) {
-
-          if (this.movies[this.modalMovieIndex].userWatchedMovie === null) {
-            this.movies[this.modalMovieIndex].userWatchedMovie = {};
-          }
-
-          this.movies[this.modalMovieIndex].userWatchedMovie.vote = vote;
-        } else {
-
-          if (this.movies[this.modalMovieIndex].guestWatchedMovie === null) {
-            this.movies[this.modalMovieIndex].guestWatchedMovie = {};
-          }
-
-          this.movies[this.modalMovieIndex].guestWatchedMovie.vote = vote;
-        }
       },
     }
   }

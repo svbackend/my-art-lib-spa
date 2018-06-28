@@ -1,11 +1,6 @@
-<template lang="html">
+<template>
   <section class="section wrapper">
-    <div class="movies columns is-multiline is-flex">
-      <div class="column-movie column is-3-tablet is-2-desktop is-half-mobile" v-for="movie in movies">
-        <movie :movie="movie"></movie>
-      </div>
-    </div>
-
+    <movies-list :movies="movies"></movies-list>
     <pagination
         :current="currentPage"
         :total="totalMovies"
@@ -16,10 +11,10 @@
 </template>
 
 <script>
-  import Movie from '@/movies/components/movie'
+  import MoviesList from '@/movies/components/moviesList'
   import Pagination from '@/components/pagination'
   export default {
-    components: {Pagination, Movie},
+    components: {MoviesList, Pagination},
     props: ['username'],
     data() {
       return {
