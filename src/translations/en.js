@@ -1,6 +1,6 @@
 export default {
-  message: {
-    hello: 'Hello, world!'
+  common: {
+    close: 'Close'
   },
   validation: {
     required: 'This field is required!',
@@ -31,7 +31,13 @@ export default {
   },
   movie: {
     addToWatchedMovies: 'Add to library',
+    addToWatchedMoviesShort: 'Add',
     removeFromWatchedMovies: 'Remove from library',
+    removeFromWatchedMoviesShort: 'Remove',
     addedToWatchedMovies: 'Added',
+    rate: 'Rate',
   },
+  rateModal: {
+    yourVote: 'Your vote for this movie?',
+  }
 }

@@ -18,7 +18,7 @@
         <a v-show="movie.isWatched" class="addToLibrary button is-small"
            @click="openRateModal(movie, $event)">
           <span v-if="getVote(movie) > 0">{{ getVote(movie) }}</span>
-          <span v-else>Rate</span>
+          <span v-else>{{ $t('movie.rate') }}</span>
           <span class="icon is-medium"><i class="fa fa-star has-text-danger"></i></span>
         </a>
       </div>
@@ -39,7 +39,6 @@
 
 <script>
   import {getUserVoteForMovie} from '@/movies/helpers/index'
-  import {setUserVoteForMovie} from '@/movies/helpers/index'
 
   export default {
     name: "movie",
@@ -61,7 +60,7 @@
 
         return posterUrl
       },
-      addToLibrary(movie, event) {
+      addToLibrary(movie) {
         let movieId = movie.id
 
         let endpoint = '';
