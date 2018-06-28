@@ -4,12 +4,12 @@
       <img :src="getPosterUrl(movie)" :alt="movie.title"/>
       <div class="actions right">
         <a v-if="!movie.isWatched" class="addToLibrary button is-success is-small"
-           @click="addToLibrary(movie, $event)">Add to library
+           @click="addToLibrary(movie, $event)">{{ $t('movie.addToWatchedMovies') }}
           &nbsp;
           <span class="icon is-medium"><i class="fa fa-plus"></i></span>
         </a>
         <a v-else class="removeFromLibrary button is-danger is-small"
-           @click="removeFromLibrary(movie, $event)">Remove from library
+           @click="removeFromLibrary(movie, $event)">{{ $t('movie.removeFromWatchedMovies') }}
           &nbsp;
           <span class="icon is-medium"><i class="fa fa-times"></i></span>
         </a>
