@@ -1,6 +1,12 @@
 export default {
+  app: {
+    name: 'My Art Lib',
+    shortDescription: 'Collect your own library of watched movies',
+  },
   common: {
-    close: 'Close'
+    close: 'Close',
+    search: 'Search',
+    searchNoResults: 'Looks like we have not found any movies by your query "{query}"',
   },
   validation: {
     required: 'This field is required!',

@@ -3,10 +3,10 @@
 
     <div class="container has-text-centered">
       <h1 class="title">
-        My Art Lib
+        {{ $t('app.name') }}
       </h1>
       <h2 class="subtitle">
-        Collect your own library of watched movies
+        {{ $t('app.shortDescription') }}
       </h2>
     </div>
 
@@ -14,13 +14,13 @@
       <div class="control has-icons-left is-large is-clearfix is-expanded">
         <input v-model="searchQuery"
                type="search"
-               placeholder="Search..."
+               :placeholder="$t('common.search') + '...'"
                class="input is-large is-fullwidth"
                v-bind:class="{'search-field-withResults':(searchShowResults === true && searchResults.length > 0)}">
 
         <div v-if="searchShowResults" class="search-results columns is-gapless is-multiline">
           <div v-if="!searchResults.length" class="search-results-empty">
-            Looks like we have'nt found any movies by your query "{{ searchQuery }}"
+            {{ $t('common.searchNoResults', { 'query': searchQuery }) }}
           </div>
           <div v-else v-for="movie in searchResults" class="search-results__movie column is-12">
             <div class="box search-results__movieBox">
@@ -33,7 +33,7 @@
         <span class="icon is-left"><i class="fa fa-search fa-lg"></i></span>
       </div>
       <p class="control">
-        <button @click="findMovies()" class="button is-primary is-large">Search</button>
+        <button @click="findMovies()" class="button is-primary is-large">{{ $t('common.search') }}</button>
       </p>
     </div>
   </section>
