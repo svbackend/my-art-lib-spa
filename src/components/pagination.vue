@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination is-clearfix">
+  <div class="pagination is-clearfix" v-if="totalPages > 1">
     <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">
       <a v-if="hasPrev()" @click.prevent="changePage(prevPage)" class="pagination-previous">Previous</a>
       <a v-if="hasNext()" @click.prevent="changePage(nextPage)" class="pagination-next">Next page</a>
