@@ -10,6 +10,7 @@ import Meta from 'vue-meta'
 import { VueExtendLayout, layout } from 'vue-extend-layout'
 import i18n from './translations'
 import validator from '@/extensions/validator'
+import moment from 'moment'
 
 require('./assets/sass/main.scss')
 
@@ -21,6 +22,24 @@ Vue.use(VueExtendLayout)
 Vue.use(Meta)
 
 sync(store, router)
+
+Vue.filter('year', function(value) {
+  if (value) {
+    return moment(String(value)).format('YYYY')
+  }
+})
+
+Vue.filter('date', function(value) {
+  if (value) {
+    return moment(String(value)).format('DD.MM.YYYY')
+  }
+})
+
+Vue.filter('datetime', function(value) {
+  if (value) {
+    return moment(String(value)).format('DD.MM.YYYY hh:mm')
+  }
+})
 
 export default new Vue({
   el: '#app',

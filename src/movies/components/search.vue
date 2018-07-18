@@ -32,7 +32,7 @@
                   <i class="fa fa-times has-text-danger"></i>
                 </a>
 
-              {{ movie.title }}
+              {{ movie.title }} ({{ movie.releaseDate | year }})
             </div>
           </div>
         </div>
