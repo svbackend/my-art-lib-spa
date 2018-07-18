@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import {getUserVoteForMovie} from '@/movies/helpers/index'
+  import {getUserVoteForMovie, addToLibrary, removeFromLibrary} from '@/movies/helpers/index'
 
   export default {
     name: "movie",
@@ -54,69 +54,21 @@
     methods: {
       getPosterUrl(movie) {
         let posterUrl = movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl
+        // todo remove when backend will provide own urls to images
         if (posterUrl === 'https://image.tmdb.org/t/p/original' || posterUrl === 'http://placehold.it/480x320') {
           posterUrl = 'http://placehold.it/320x480'
         }
 
         return posterUrl
       },
-      addToLibrary(movie) {
-        let movieId = movie.id
-
-        let endpoint = '';
-
-        if (this.$store.state.isUserLoggedIn === true) {
-          endpoint = '/users/watchedMovies';
-        } else {
-          endpoint = '/guests/{token}/watchedMovies';
-          endpoint = endpoint.replace('{token}', this.$store.state.guest.token);
-        }
-        this.$http.post(endpoint, {
-          movie: {
-            id: movieId,
-            tmdbId: null,
-            vote: null,
-            watchedAt: null,
-          }
-        })
-          .then(response => {
-            movie.isWatched = true
-          })
-      },
-      removeFromLibrary(movie, event) {
-        console.log(movie)
-        let movieId = movie.id
-
-        if (movie.userWatchedMovie && typeof movie.userWatchedMovie.id !== 'undefined') {
-          movieId = movie.userWatchedMovie.id;
-        }
-
-        let endpoint = '';
-
-        if (this.$store.state.isUserLoggedIn === true) {
-          endpoint = '/users/{user}/watchedMovies/{movie}';
-          endpoint = endpoint.replace('{user}', this.$store.state.user.id);
-        } else {
-          endpoint = '/guests/{token}/watchedMovies/{movie}';
-          endpoint = endpoint.replace('{token}', this.$store.state.guest.token);
-        }
-        endpoint = endpoint.replace('{movie}', movieId);
-
-        this.$http.delete(endpoint)
-          .then(response => {
-            movie.isWatched = false
-          })
-          .catch(error => {
-            console.log('-----error-------');
-            console.log(error);
-          })
-      },
       openRateModal(movie) {
         this.$emit('openRateModal', movie, this.index)
       },
       getVote(movie) {
         return getUserVoteForMovie(movie)
-      }
+      },
+      addToLibrary(movie, e) { return addToLibrary(movie, e) },
+      removeFromLibrary(movie, e) { return removeFromLibrary(movie, e) },
     }
   }
 </script>

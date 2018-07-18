@@ -24,7 +24,14 @@
           </div>
           <div v-else v-for="movie in searchResults" class="search-results__movie column is-12">
             <div class="box search-results__movieBox">
-              <i class="fa fa-plus"></i>
+
+                <a v-if="!movie.isWatched" @click="addToLibrary(movie, $event)" :title="$t('movie.addToWatchedMovies')">
+                  <i class="fa fa-plus has-text-success"></i>
+                </a>
+                <a v-else @click="removeFromLibrary(movie, $event)" :title="$t('movie.removeFromWatchedMovies')">
+                  <i class="fa fa-times has-text-danger"></i>
+                </a>
+
               {{ movie.title }}
             </div>
           </div>
@@ -40,6 +47,7 @@
 </template>
 
 <script>
+  import {addToLibrary, removeFromLibrary} from '@/movies/helpers/index'
   export default {
     name: "search",
     data() {
@@ -69,6 +77,8 @@
         }
         this.searchShowResults = false;
       },
+      addToLibrary(movie, e) { return addToLibrary(movie, e) },
+      removeFromLibrary(movie, e) { return removeFromLibrary(movie, e) },
     }
   }
 </script>

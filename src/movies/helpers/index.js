@@ -53,3 +53,56 @@ export function setUserVoteForMovie(movie, vote) {
 
   //todo guest vote
 }
+
+export function addToLibrary(movie) {
+  let movieId = movie.id
+
+  let endpoint = '';
+
+  if (Vue.$store.state.isUserLoggedIn === true) {
+    endpoint = '/users/watchedMovies';
+  } else {
+    endpoint = '/guests/{token}/watchedMovies';
+    endpoint = endpoint.replace('{token}', Vue.$store.state.guest.token);
+  }
+  Vue.$http.post(endpoint, {
+    movie: {
+      id: movieId,
+      tmdbId: null,
+      vote: null,
+      watchedAt: null,
+    }
+  })
+    .then(response => {
+      movie.isWatched = true
+    })
+}
+
+export function removeFromLibrary(movie, event) {
+  console.log(movie)
+  let movieId = movie.id
+
+  if (movie.userWatchedMovie && typeof movie.userWatchedMovie.id !== 'undefined') {
+    movieId = movie.userWatchedMovie.id;
+  }
+
+  let endpoint = '';
+
+  if (Vue.$store.state.isUserLoggedIn === true) {
+    endpoint = '/users/{user}/watchedMovies/{movie}';
+    endpoint = endpoint.replace('{user}', Vue.$store.state.user.id);
+  } else {
+    endpoint = '/guests/{token}/watchedMovies/{movie}';
+    endpoint = endpoint.replace('{token}', Vue.$store.state.guest.token);
+  }
+  endpoint = endpoint.replace('{movie}', movieId);
+
+  Vue.$http.delete(endpoint)
+    .then(response => {
+      movie.isWatched = false
+    })
+    .catch(error => {
+      console.log('-----error-------');
+      console.log(error);
+    })
+}
