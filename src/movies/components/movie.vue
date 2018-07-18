@@ -30,7 +30,7 @@
             active-class="is-active"
             class="link"
             :to="{ name: 'movie', params: { id: movie.id } }">
-          {{ movie.title }}
+          {{ movie.title }} ({{ movie.releaseDate | year }})
         </router-link>
       </div>
     </div>
