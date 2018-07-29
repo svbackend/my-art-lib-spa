@@ -40,7 +40,7 @@
         <span class="icon is-left"><i class="fa fa-search fa-lg"></i></span>
       </div>
       <p class="control">
-        <button @click="findMovies()" class="button is-primary is-large">{{ $t('common.search') }}</button>
+        <button @click="findMovies()" class="button homepage-search-btn is-large">{{ $t('common.search') }}</button>
       </p>
     </div>
   </section>

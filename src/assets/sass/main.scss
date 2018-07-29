@@ -157,7 +157,7 @@ html,body {
   font-weight: 700;
 }
 .card {
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
   margin-bottom: 2rem;
 }
 .intro {
@@ -242,4 +242,8 @@ p.help-underField {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+section.homepage-bg {
+  background-image: linear-gradient(141deg, #1f191a 0%, #191919 71%, #0a0808 100%);
 }

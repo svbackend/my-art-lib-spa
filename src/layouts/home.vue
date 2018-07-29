@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <section class="body">
-      <section class="hero is-info is-medium is-bold">
+      <section class="hero homepage-bg is-medium is-bold">
         <div class="hero-head">
           <navigation></navigation>
         </div>
