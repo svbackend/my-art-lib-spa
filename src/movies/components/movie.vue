@@ -39,7 +39,7 @@
 
 <script>
   import {getUserVoteForMovie, addToLibrary, removeFromLibrary} from '@/movies/helpers/index'
-
+  import { apiHost } from './../../config.js'
   export default {
     name: "movie",
     props: {
@@ -54,12 +54,19 @@
     methods: {
       getPosterUrl(movie) {
         let posterUrl = movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl
+        let newPosterUrl = posterUrl;
         // todo remove when backend will provide own urls to images
         if (posterUrl === 'https://image.tmdb.org/t/p/original' || posterUrl === 'http://placehold.it/480x320') {
-          posterUrl = 'http://placehold.it/320x480'
+          return 'http://placehold.it/320x480'
         }
 
-        return posterUrl
+        if (posterUrl[0] === '/') {
+          newPosterUrl = posterUrl.substring(0, posterUrl.length - 3);
+          newPosterUrl += '320x480.' + posterUrl.substr(posterUrl.length - 3);
+          newPosterUrl = apiHost + newPosterUrl;
+        }
+
+        return newPosterUrl
       },
       openRateModal(movie) {
         this.$emit('openRateModal', movie, this.index)

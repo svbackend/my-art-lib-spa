@@ -5,7 +5,7 @@ import VueInstance from '@/main'
 import router from '@/extensions/router'
 
 let axiosConfig = {
-  baseURL: apiHost,
+  baseURL: apiHost + '/api',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
