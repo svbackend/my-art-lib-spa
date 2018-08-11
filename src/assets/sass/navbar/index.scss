@@ -1,5 +1,36 @@
-.navbar-menu.is-active {
-  .tabs.is-right ul {
-    justify-content: flex-start;
+.navbar-menu {
+  &.is-active {
+    .tabs.is-right ul {
+      justify-content: flex-start;
+      li {
+        a {
+          color: #02253b;
+        }
+      }
+    }
+  }
+  .tabs {
+    ul {
+      li {
+        :after {
+          content: "";
+          right: 0;
+        }
+        a {
+          color: #FFF;
+          opacity: .65;
+          border: none;
+          text-transform: uppercase;
+          font-weight: 700;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+.navbar-burger.burger {
+  span {
+    color: white;
   }
 }

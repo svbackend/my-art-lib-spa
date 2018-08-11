@@ -35,6 +35,8 @@ $vertical-form-max-width: 520px;
   flex: 1;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  max-width: 100%;
+  margin: auto;
 }
 
 .column-movie {
@@ -192,12 +194,6 @@ section.body {
   flex-direction: column;
 }
 
-.main-content {
-  width: 100%;
-  max-width: 100%;
-  margin: auto;
-}
-
 footer.footer {
   padding: 1.5rem 1.5rem 1.5rem;
 }
@@ -245,5 +241,14 @@ p.help-underField {
 }
 
 section.homepage-bg {
-  background-image: linear-gradient(141deg, #1f191a 0%, #191919 71%, #0a0808 100%);
+  // background-image: linear-gradient(141deg, #1f191a 0%, #191919 71%, #0a0808 100%);
+  background-image: linear-gradient(141deg, #022138 0%, #024453 71%, #003541 100%);
+
+  .hero-head {
+    background: none;
+  }
+}
+
+.hero-head {
+  background-image: linear-gradient(141deg, #022138 0%, #024453 71%, #003541 100%);
 }

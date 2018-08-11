@@ -1,7 +1,7 @@
 <template>
   <div class="movies-list">
     <div class="movies columns is-multiline is-flex">
-      <div class="column-movie column is-fullheight is-3-tablet is-2-desktop is-half-mobile" v-for="(movie, index) in movies">
+      <div class="column-movie column is-fullheight is-3-tablet is-3-desktop is-half-mobile" v-for="(movie, index) in movies">
         <movie :movie="movie" :index="index" @openRateModal="openModal"></movie>
       </div>
     </div>
