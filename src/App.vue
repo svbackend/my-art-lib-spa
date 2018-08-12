@@ -2,7 +2,7 @@
   export default {
     metaInfo: {
       title: 'Default Title',
-      titleTemplate: '%s | My Awesome Webapp',
+      titleTemplate: '%s | my-art-lib',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
       ]
@@ -50,6 +50,15 @@
         }
 
         this.user.apiToken = user.apiToken;
+
+        this.$http.get('/users/me')
+          .then(response => {
+            this.$store.dispatch('setUser', response.data);
+          })
+          .catch(error => {
+            console.log('-----error-------');
+            console.log(error);
+          })
         return true;
       }
     }

@@ -24,7 +24,7 @@
       <p class="control has-icons-left has-icons-right">
         <input autofocus="autofocus" class="input" :class="{ 'is-success': $validator.isSuccess('username'), 'is-danger': $validator.isDanger('username') }" type="text" :placeholder="$t('fields.usernamePlaceholder')" v-model.trim="username" @blur="blurUsername">
         <span class="icon is-small is-left">
-          <i class="fa fa-envelope"></i>
+          <i class="fa fa-user"></i>
         </span>
         <span class="icon is-small is-right">
           <i v-if="usernameIsLoading === false && $validator.isSuccess('username')" class="fa fa-check has-text-success"></i>
@@ -164,6 +164,8 @@
       },
       blurEmail() {
         this.$v.email.$touch();
+        this.$validator.removeError('email', '_isUniqueError');
+
         if (this.$validator.hasAnyError('email')) {
           return;
         }
