@@ -109,6 +109,31 @@ export function removeFromLibrary(movie, event) {
     })
 }
 
+export function addRecommendation(originalMovie, recommendedMovie) {
+  if (Vue.$store.state.isUserLoggedIn === false) {
+    return;
+  }
+
+  let originalMovieId = originalMovie.id
+  let recommendedMovieId = recommendedMovie.id
+
+  let endpoint = '/movies/' + originalMovieId + '/recommendations';
+
+  console.log('------DUMP----------');
+  console.log(originalMovie);
+  console.log(recommendedMovie);
+
+  Vue.$http.post(endpoint, {
+    recommendation: {
+      movie_id: recommendedMovieId,
+      tmdb_id: null,
+    }
+  })
+    .then(response => {
+      recommendedMovie.userRecommendedMovie = true
+    })
+}
+
 export function getImageUrl(imageUrl, width = null, height = null) {
   // todo remove when backend will provide own urls to images
   if (imageUrl === 'https://image.tmdb.org/t/p/original') {

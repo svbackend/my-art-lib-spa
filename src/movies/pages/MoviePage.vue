@@ -22,8 +22,33 @@
       <h2 class="title">Recommendations</h2>
       <h3 class="subtitle">You can recommend movies similar to this</h3>
       <div class="movie-recommendations columns is-multiline is-flex">
-        <div class="column-movie column is-fullheight is-3-tablet is-3-desktop is-half-mobile" v-for="(movie, index) in recommendations">
-          <movie :movie="movie" :index="index"></movie>
+        <div class="column-movie column is-fullheight is-3-tablet is-3-desktop is-half-mobile" v-for="(recommendedMovie, index) in recommendations">
+          <div class="movie">
+            <div class="poster">
+              <img :src="posterUrl(recommendedMovie.posterUrl ? recommendedMovie.posterUrl : recommendedMovie.originalPosterUrl, 260, 380)" :alt="recommendedMovie.title"/>
+              <div v-if="$store.state.isUserLoggedIn === true" class="actions right">
+                <a v-if="recommendedMovie.userRecommendedMovie === null" @click="addRecommendation(recommendedMovie)" class="addRecommendation button is-success is-small">{{ $t('movie.addRecommendation') }}
+                  &nbsp;
+                  <span class="icon is-medium"><i class="fa fa-thumbs-up"></i></span>
+                </a>
+                <a v-else class="removeRecommendation button is-danger is-small">{{ $t('movie.removeRecommendation') }}
+                  &nbsp;
+                  <span class="icon is-medium"><i class="fa fa-thumbs-down"></i></span>
+                </a>
+              </div>
+
+            </div>
+            <div class="information">
+              <div class="title">
+                <router-link
+                    active-class="is-active"
+                    class="link"
+                    :to="{ name: 'movie', params: { id: movie.id } }">
+                  {{ recommendedMovie.title }} ({{ recommendedMovie.releaseDate | year }})
+                </router-link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -31,7 +56,7 @@
 </template>
 
 <script>
-  import {getImageUrl} from "@/movies/helpers";
+  import {getImageUrl, addRecommendation} from "@/movies/helpers";
   import Movie from '@/movies/components/movie'
 
   export default {
@@ -89,6 +114,9 @@
         this.getMovie(id);
         this.getActors(id);
         this.getRecommendations(id);
+      },
+      addRecommendation(recommendedMovie) {
+        addRecommendation(this.movie, recommendedMovie)
       }
     },
 

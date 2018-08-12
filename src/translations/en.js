@@ -42,6 +42,8 @@ export default {
     removeFromWatchedMoviesShort: 'Remove',
     addedToWatchedMovies: 'Added',
     rate: 'Rate',
+    addRecommendation: 'Recommend',
+    removeRecommendation: 'Remove recommendation',
   },
   rateModal: {
     yourVote: 'Your vote for this movie?',
