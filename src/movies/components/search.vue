@@ -32,7 +32,12 @@
                   <i class="fa fa-times has-text-danger"></i>
                 </a>
 
-              {{ movie.title }} ({{ movie.releaseDate | year }})
+              <router-link
+                  active-class="is-active"
+                  class="link"
+                  :to="{ name: 'movie', params: { id: movie.id } }">
+                {{ movie.title }} ({{ movie.releaseDate | year }})
+              </router-link>
             </div>
           </div>
         </div>
