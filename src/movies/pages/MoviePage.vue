@@ -21,6 +21,46 @@
     <div class="movie-full">
       <h2 class="title">Recommendations</h2>
       <h3 class="subtitle">You can recommend movies similar to this</h3>
+      <div class="movie-recommendations-search">
+        <div class="field has-addons">
+          <div class="control has-icons-left is-large is-clearfix is-expanded">
+            <input v-model="searchQuery"
+                   type="search"
+                   :placeholder="$t('common.search') + '...'"
+                   class="input is-large is-fullwidth"
+                   :class="{'search-field-withResults':(searchShowResults === true && searchResults.length > 0)}">
+
+            <div v-if="searchShowResults" class="search-results columns is-gapless is-multiline">
+              <div v-if="!searchResults.length" class="search-results-empty">
+                {{ $t('common.searchNoResults', { 'query': searchQuery }) }}
+              </div>
+              <div v-else v-for="foundedMovie in searchResults" class="search-results__movie column is-12">
+                <div class="box search-results__movieBox">
+
+                  <a v-if="foundedMovie.userRecommendedMovie === null" @click="addRecommendation(foundedMovie)" :title="$t('movie.addRecommendation')">
+                    <i class="fa fa-thumbs-up has-text-success"></i>
+                  </a>
+                  <a v-else @click="removeRecommendation(foundedMovie, $event)" :title="$t('movie.removeRecommendation')">
+                    <i class="fa fa-thumbs-down has-text-danger"></i>
+                  </a>
+
+                  <router-link
+                      active-class="is-active"
+                      class="link"
+                      :to="{ name: 'movie', params: { id: foundedMovie.id } }">
+                    {{ foundedMovie.title }} ({{ foundedMovie.releaseDate | year }})
+                  </router-link>
+                </div>
+              </div>
+            </div>
+
+            <span class="icon is-left"><i class="fa fa-search fa-lg"></i></span>
+          </div>
+          <p class="control">
+            <button @click="findMovies()" class="button homepage-search-btn is-large">{{ $t('common.search') }}</button>
+          </p>
+        </div>
+      </div>
       <div class="movie-recommendations columns is-multiline is-flex">
         <div class="column-movie column is-fullheight is-3-tablet is-3-desktop is-half-mobile" v-for="(recommendedMovie, index) in recommendations">
           <div class="movie">
@@ -67,6 +107,9 @@
         movie: {},
         actors: [],
         recommendations: [],
+        searchQuery: '',
+        searchResults: [],
+        searchShowResults: false,
         endpoint: '/movies/',
       }
     },
