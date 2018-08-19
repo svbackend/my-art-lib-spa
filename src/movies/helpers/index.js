@@ -115,7 +115,8 @@ export function addRecommendation(originalMovie, recommendedMovie) {
   }
 
   let originalMovieId = originalMovie.id
-  let recommendedMovieId = recommendedMovie.id
+  let recommendedMovieId = recommendedMovie.id ? recommendedMovie.id : 0
+  let recommendedMovieTmdbId = recommendedMovie.tmdb.id ? recommendedMovie.tmdb.id : 0
 
   let endpoint = '/movies/' + originalMovieId + '/recommendations';
 
@@ -126,7 +127,7 @@ export function addRecommendation(originalMovie, recommendedMovie) {
   Vue.$http.post(endpoint, {
     recommendation: {
       movie_id: recommendedMovieId,
-      tmdb_id: null,
+      tmdb_id: recommendedMovieTmdbId,
     }
   })
     .then(response => {
@@ -140,7 +141,8 @@ export function removeRecommendation(originalMovie, recommendedMovie) {
   }
 
   let originalMovieId = originalMovie.id
-  let recommendedMovieId = recommendedMovie.id
+  let recommendedMovieId = recommendedMovie.id ? recommendedMovie.id : 0
+  let recommendedMovieTmdbId = recommendedMovie.tmdb.id ? recommendedMovie.tmdb.id : 0
 
   let endpoint = '/movies/' + originalMovieId + '/recommendations';
 
@@ -151,7 +153,7 @@ export function removeRecommendation(originalMovie, recommendedMovie) {
   Vue.$http.delete(endpoint, {
     params: {
       movie_id: recommendedMovieId,
-      tmdb_id: 0,
+      tmdb_id: recommendedMovieTmdbId,
     }
   })
     .then(response => {
@@ -166,6 +168,10 @@ export function getImageUrl(imageUrl, width = null, height = null) {
       return 'http://placehold.it/320x480'
     }
     return 'http://placehold.it/' + width + 'x' + height;
+  }
+
+  if (imageUrl.substring(0, 4) === 'http') {
+    return imageUrl;
   }
 
   let newPosterUrl = apiHost + imageUrl;

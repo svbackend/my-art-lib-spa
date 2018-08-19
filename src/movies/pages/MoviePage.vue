@@ -44,12 +44,17 @@
                     <i class="fa fa-thumbs-down has-text-danger"></i>
                   </a>
 
-                  <router-link
-                      active-class="is-active"
-                      class="link"
-                      :to="{ name: 'movie', params: { id: foundedMovie.id } }">
+                  <span v-if="foundedMovie.id !== null">
+                    <router-link
+                        active-class="is-active"
+                        class="link"
+                        :to="{ name: 'movie', params: { id: foundedMovie.id } }">
+                      {{ foundedMovie.title }} ({{ foundedMovie.releaseDate | year }})
+                    </router-link>
+                  </span>
+                  <span v-else>
                     {{ foundedMovie.title }} ({{ foundedMovie.releaseDate | year }})
-                  </router-link>
+                  </span>
                 </div>
               </div>
             </div>
@@ -83,7 +88,7 @@
                 <router-link
                     active-class="is-active"
                     class="link"
-                    :to="{ name: 'movie', params: { id: movie.id } }">
+                    :to="{ name: 'movie', params: { id: recommendedMovie.id } }">
                   {{ recommendedMovie.title }} ({{ recommendedMovie.releaseDate | year }})
                 </router-link>
               </div>
@@ -160,10 +165,32 @@
       },
       addRecommendation(recommendedMovie) {
         addRecommendation(this.movie, recommendedMovie)
+
+        for (let recommendation of this.recommendations) {
+          if (recommendation.tmdb.id === recommendedMovie.tmdb.id) {
+            return;
+          }
+        }
+
+        this.recommendations.splice(-1, 1);
+        this.recommendations.unshift(recommendedMovie);
       },
       removeRecommendation(recommendedMovie) {
         removeRecommendation(this.movie, recommendedMovie)
-      }
+      },
+      findMovies() {
+        this.$http.post('/movies/search', {
+          query: this.searchQuery
+        })
+          .then(response => {
+            this.searchResults = response.data.data;
+            this.searchShowResults = true;
+          })
+          .catch(error => {
+            console.log('-----error-------');
+            console.log(error);
+          })
+      },
     },
 
     created() {
