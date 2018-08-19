@@ -31,7 +31,7 @@
                   &nbsp;
                   <span class="icon is-medium"><i class="fa fa-thumbs-up"></i></span>
                 </a>
-                <a v-else class="removeRecommendation button is-danger is-small">{{ $t('movie.removeRecommendation') }}
+                <a v-else @click="removeRecommendation(recommendedMovie)" class="removeRecommendation button is-danger is-small">{{ $t('movie.removeRecommendation') }}
                   &nbsp;
                   <span class="icon is-medium"><i class="fa fa-thumbs-down"></i></span>
                 </a>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-  import {getImageUrl, addRecommendation} from "@/movies/helpers";
+  import {getImageUrl, addRecommendation, removeRecommendation} from "@/movies/helpers";
   import Movie from '@/movies/components/movie'
 
   export default {
@@ -117,6 +117,9 @@
       },
       addRecommendation(recommendedMovie) {
         addRecommendation(this.movie, recommendedMovie)
+      },
+      removeRecommendation(recommendedMovie) {
+        removeRecommendation(this.movie, recommendedMovie)
       }
     },
 
