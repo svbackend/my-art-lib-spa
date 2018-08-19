@@ -50,12 +50,8 @@ $vertical-form-max-width: 520px;
 }
 
 .movie {
-  height: 100%;
-  float: left;
   padding: 0;
   margin: 0.5rem;
-  border-radius: 0.3rem;
-  border: 1px solid rgba(0,0,0,.1);
   .poster {
     position: relative;
     max-width: 100%;
