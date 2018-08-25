@@ -34,6 +34,7 @@ export default {
     login: 'Login',
     registration: 'Registration',
     my_library: 'My Library',
+    my_recommendations: 'My Recommendations',
   },
   movie: {
     addToWatchedMovies: 'Add to library',

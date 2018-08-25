@@ -5,6 +5,7 @@ import NotFoundPage from './../pages/NotFoundPage.vue'
 import MoviePage from './../movies/pages/MoviePage.vue'
 import LoginPage from './../users/pages/LoginPage.vue'
 import LibraryPage from './../users/pages/LibraryPage.vue'
+import RecommendationsPage from './../users/pages/RecommendationsPage.vue'
 import RegistrationPage from './../users/pages/RegistrationPage.vue'
 
 export default new Router({
@@ -45,6 +46,12 @@ export default new Router({
       path: '/u/:username',
       name: 'library',
       component: LibraryPage,
+      props: true,
+    },
+    {
+      path: '/u/:username/recommendations',
+      name: 'recommendations',
+      component: RecommendationsPage,
       props: true,
     },
   ],
