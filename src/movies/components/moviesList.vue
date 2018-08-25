@@ -25,7 +25,6 @@
     },
     data() {
       return {
-        movies: [],
         isUserLoggedIn: false,
         modalMovie: {},
         modalIsActive: false,
