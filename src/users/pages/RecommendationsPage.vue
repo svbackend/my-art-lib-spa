@@ -11,7 +11,6 @@
 </template>
 
 <script>
-  import {getUserByUsername} from "@/users/helpers";
   import MoviesList from '@/movies/components/moviesList'
   import Pagination from '@/components/pagination'
 
@@ -43,7 +42,7 @@
 
         this.$http.get(endpoint.replace('{id}', id), {params: {offset: offset, limit: limit}})
           .then(response => {
-            this.movies = response.data.data
+            this.movies = response.data.data.filter(m => m.userWatchedMovie === null);
             this.totalMovies = response.data.paging.total
           })
           .catch(error => {
@@ -57,7 +56,7 @@
           return;
         }
 
-        getUserByUsername(this.username)
+        this.$http.get('/users/byUsername/' + this.username)
           .then(response => {
             this.user = response.data;
             this.getUserRecommendations();
