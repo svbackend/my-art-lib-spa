@@ -7,7 +7,7 @@
           <a v-if="movie.isWatched === false" href="#!" @click="addToLibrary" class="button is-success">
             <i class="fa fa-plus"></i>&nbsp;{{ $t('movie.addToWatchedMovies') }}
           </a>
-          <a v-else href="#!" @click="removeFromLibrary" class="button is-danger">
+          <a v-else @click="removeFromLibrary" class="button is-danger">
             <i class="fa fa-times"></i>&nbsp;{{ $t('movie.removeFromWatchedMovies') }}
           </a>
         </div>

@@ -5,7 +5,7 @@
       <a v-if="hasNext()" @click.prevent="changePage(nextPage)" class="pagination-next">Next page</a>
       <ul class="pagination-list">
         <li v-for="page in pages">
-          <a href="#!" @click.prevent="changePage(page)" :class="{ 'is-current': current === page }" class="pagination-link">
+          <a @click.prevent="changePage(page)" :class="{ 'is-current': current === page }" class="pagination-link">
             {{ page }}
           </a>
         </li>
