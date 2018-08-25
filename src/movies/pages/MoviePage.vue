@@ -4,7 +4,12 @@
       <div class="movie-left column is-4">
         <img :src="posterUrl(movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl, 420, 620)" :alt="movie.title">
         <div class="action-buttons">
-          <a href="#!" class="button is-success">Add to my library</a>
+          <a v-if="movie.isWatched === false" href="#!" @click="addToLibrary" class="button is-success">
+            <i class="fa fa-plus"></i>&nbsp;{{ $t('movie.addToWatchedMovies') }}
+          </a>
+          <a v-else href="#!" @click="removeFromLibrary" class="button is-danger">
+            <i class="fa fa-times"></i>&nbsp;{{ $t('movie.removeFromWatchedMovies') }}
+          </a>
         </div>
       </div>
       <div class="movie-right column">
@@ -101,7 +106,7 @@
 </template>
 
 <script>
-  import {getImageUrl, addRecommendation, removeRecommendation} from "@/movies/helpers";
+  import {getImageUrl, addRecommendation, removeRecommendation, addToLibrary, removeFromLibrary} from "@/movies/helpers";
   import Movie from '@/movies/components/movie'
 
   export default {
@@ -191,6 +196,8 @@
             console.log(error);
           })
       },
+      addToLibrary() { return addToLibrary(this.movie); },
+      removeFromLibrary() { return removeFromLibrary(this.movie); }
     },
 
     created() {
