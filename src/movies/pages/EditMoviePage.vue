@@ -58,10 +58,20 @@
         <div class="field">
           <label class="label has-text-left" v-t="'fields.movie.title'"></label>
           <p class="control">
-            <input class="input" :class="{ 'is-success': $validator.isSuccess('translations.' + locale + '.title'), 'is-danger': $validator.isDanger('translations.' + locale + '.title') }" type="text" placeholder="Title" v-model="translations[locale].title" @blur="$v.translations[locale].title.$touch()">
+            <input class="input" :class="{ 'is-success': $validator.isSuccess('translations.' + locale + '.title'), 'is-danger': $validator.isDanger('translations.' + locale + '.title') }" type="text" placeholder="Title" v-model="translations[locale].title" @blur="$v.translations.$touch()">
           </p>
           <p v-if="$validator.isDanger('translations.' + locale + '.title')" class="help is-danger">
             <span v-if="$validator.hasError('translations.' + locale + '.title', 'required')" v-t="$validator.showError('translations.' + locale + '.title', 'required')"></span>
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label has-text-left" v-t="'fields.movie.overview'"></label>
+          <p class="control">
+            <textarea class="textarea" :class="{ 'is-success': $validator.isSuccess('translations.' + locale + '.overview'), 'is-danger': $validator.isDanger('translations.' + locale + '.overview') }" v-model="translations[locale].overview" @blur="$v.translations.$touch()" cols="30" rows="10"></textarea>
+          </p>
+          <p v-if="$validator.isDanger('translations.' + locale + '.overview')" class="help is-danger">
+            <span v-if="$validator.hasError('translations.' + locale + '.overview', 'required')" v-t="$validator.showError('translations.' + locale + '.overview', 'required')"></span>
           </p>
         </div>
 
@@ -75,6 +85,7 @@
             &nbsp;
             <i v-if="submitStatus === 'PENDING'" class="fa fa-spin fa-spinner"></i>
             <i v-if="submitStatus === 'OK'" class="fa fa-check"></i>
+            <i v-if="submitStatus === 'ERROR'" class="fa fa-times"></i>
         </span>
       </button>
     </p>
@@ -82,6 +93,7 @@
 </template>
 
 <script>
+  import moment from 'moment'
   import { locales } from '@/translations/index'
   import { required, minLength, maxLength, numeric } from 'vuelidate/lib/validators'
   export default {
@@ -95,7 +107,7 @@
         runtime: 0,
         budget: 0,
         releaseDate: '',
-        translations: [],
+        translations: {},
         submitStatus: null,
       }
     },
@@ -116,12 +128,11 @@
         numeric,
       },
       releaseDate: {
-
+        minLength: minLength(10),
       },
       translations: {
         $each: {
           title: {
-            required,
             minLength: minLength(2),
             maxLength: maxLength(100),
           },
@@ -133,11 +144,49 @@
     },
     methods: {
       validateAndSubmit() {
-        // todo
+        this.$v.$touch()
+        if (this.$v.$invalid) {
+          this.submitStatus = 'ERROR'
+          return;
+        }
+
+        this.submitStatus = 'PENDING'
+        this.sendRequest();
+      },
+      sendRequest() {
+        this.$http.post('/movies/' + this.id, {
+          movie: {
+            originalTitle: this.originalTitle,
+            imdbId: this.imdbId,
+            runtime: Number(this.runtime),
+            budget: Number(this.budget),
+            releaseDate: this.releaseDate,
+            translations: this.translations,
+          }
+        }).then(response => {
+          this.$validator.clearErrors();
+          this.$v.$touch()
+          this.submitStatus = 'OK'
+          setTimeout(() => {
+            this.submitStatus = null;
+          }, 3000)
+        }).catch(error => {
+          this.submitStatus = 'ERROR'
+          if (error.response.status === 500) {
+            //todo
+          }
+          // todo return this.showErrors(error.response.data);
+        })
       },
       loadData(id) {
         let locale;
         for (locale of locales) {
+          this.translations[locale] = {
+            locale: locale,
+            title: '',
+            overview: '',
+          }
+
           this.$http.get('/movies/' + id + '?language=' + locale)
             .then(response => {
               let data = response.data;
@@ -147,22 +196,18 @@
               this.imdbId = data.imdbId;
               this.runtime = data.runtime;
               this.budget = data.budget;
-              this.releaseDate = data.releaseDate;
+              this.releaseDate = moment(data.releaseDate).format('YYYY-MM-DD');
 
-              this.translations[locale] = {};
-              this.translations[locale].locale = data.locale;
-              this.translations[locale].title = data.title;
-              this.translations[locale].overview = data.overview;
-
-              console.log('TRANSLATED TITLE');
-              console.log(this.translations[locale].title);
+              this.translations[data.locale] = {
+                locale: data.locale,
+                title: data.title,
+                overview: data.overview,
+              };
             })
         }
       },
     },
     created() {
-      console.log('Locales ------------------');
-      console.log(locales);
       this.loadData(this.id)
     },
     watch: {

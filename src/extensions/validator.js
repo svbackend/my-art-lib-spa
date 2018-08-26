@@ -39,16 +39,42 @@ const Validator = {
     return this.isDirty(field) && this.hasAnyError(field);
   },
   isDirty(field) {
-    return this.$v[field].$dirty;
+    return this.getVuelidateObject(field).$dirty;
+  },
+  isInvalid(field) {
+    return this.getVuelidateObject(field).$invalid;
+  },
+  getVuelidateObject(field) {
+    if (field.indexOf('.') === -1) {
+      return this.$v[field];
+    }
+
+    let path = field.split('.');
+    let result = null;
+
+    // add $each as 2nd array value (https://monterail.github.io/vuelidate/#sub-collections-validation)
+    path.unshift('');
+    path[0] = path[1];
+    path[1] = '$each';
+
+    for (let part of path) {
+      if (result === null) {
+        result = this.$v[part]
+        continue;
+      }
+      result = result[part]
+    }
+
+    return result
   },
   showError(field, errorName) {
     let path = 'validation.' + errorName
-    let params = this.$v[field].$params[errorName] || {}
+    let params = this.getVuelidateObject(field).$params[errorName] || {}
     params.fieldName = this.$t('fields.' + field);
     return { 'path': path, args: params }
   },
   hasError(field, errorName) {
-    if (this.$v[field].$dirty && !this.$v[field][errorName]) {
+    if (this.isDirty(field) && !this.getVuelidateObject(field)[errorName]) {
       return true;
     }
 
@@ -69,14 +95,13 @@ const Validator = {
       return Object.keys(this.validatorErrors).length > 0;
     }
 
-    if (!this.$v[field].$dirty) {
+    if (!this.isDirty(field)) {
       return false;
     }
 
-    if (this.$v[field].$invalid) {
+    if (this.isInvalid(field)) {
       return true;
     }
-
 
     return typeof this.validatorErrors[field] !== 'undefined' && Object.keys(this.validatorErrors[field]).length > 0;
   },
