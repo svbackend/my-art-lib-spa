@@ -56,6 +56,12 @@
           return;
         }
 
+        if (this.username === this.$store.state.user.username) {
+          this.user = this.$store.state.user;
+          this.getUserRecommendations();
+          return;
+        }
+
         this.$http.get('/users/byUsername/' + this.username)
           .then(response => {
             this.user = response.data;

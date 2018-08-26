@@ -22,6 +22,7 @@ export default new Vuex.Store({
             username: null,
             email: null,
             apiToken: null,
+            roles: [],
         }
     },
     mutations: {
