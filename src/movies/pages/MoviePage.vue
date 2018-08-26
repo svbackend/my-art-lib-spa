@@ -4,7 +4,7 @@
       <div class="movie-left column is-4">
         <img :src="posterUrl(movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl, 420, 620)" :alt="movie.title">
         <div class="action-buttons">
-          <a v-if="movie.isWatched === false" href="#!" @click="addToLibrary" class="button is-success">
+          <a v-if="movie.isWatched === false" @click="addToLibrary" class="button is-success">
             <i class="fa fa-plus"></i>&nbsp;{{ $t('movie.addToWatchedMovies') }}
           </a>
           <a v-else @click="removeFromLibrary" class="button is-danger">
