@@ -8,6 +8,7 @@ export default {
     search: 'Search',
     searchNoResults: 'Looks like we have not found any movies by your query "{query}"',
     edit: 'Edit',
+    save: 'Save',
   },
   validation: {
     required: 'This field is required!',
@@ -23,6 +24,9 @@ export default {
     password: 'Password',
     email: 'Email',
     usernamePlaceholder: 'Іван_Іванович-95',
+    movie: {
+      originalTitle: 'Original Title'
+    },
   },
   loginPage: {
     authorize: 'Sign In',
