@@ -7,6 +7,7 @@ export default {
     close: 'Close',
     search: 'Search',
     searchNoResults: 'Looks like we have not found any movies by your query "{query}"',
+    edit: 'Edit',
   },
   validation: {
     required: 'This field is required!',

@@ -10,6 +10,12 @@
           <a v-else @click="removeFromLibrary" class="button is-danger">
             <i class="fa fa-times"></i>&nbsp;{{ $t('movie.removeFromWatchedMovies') }}
           </a>
+          <router-link
+              v-if="$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1"
+              class="button is-primary"
+              :to="{ name: 'movie.edit', params: { id: movie.id } }">
+            {{ $t('common.edit') }}
+          </router-link>
         </div>
       </div>
       <div class="movie-right column">

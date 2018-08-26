@@ -56,3 +56,4 @@ let i18n = new VueI18n({
 })
 
 export default i18n
+export const locales = ['en', 'ru', 'uk', 'pl'];
