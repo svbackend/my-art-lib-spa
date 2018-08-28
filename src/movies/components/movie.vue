@@ -2,7 +2,7 @@
   <div class="movie">
     <div class="poster">
       <img :src="getPosterUrl(movie)" :alt="movie.title"/>
-      <div class="actions right">
+      <div v-if="$store.state.isUserLoggedIn === true" class="actions right">
         <a v-if="!movie.isWatched" class="addToLibrary button is-success is-small"
            @click="addToLibrary(movie, $event)">{{ $t('movie.addToWatchedMovies') }}
           &nbsp;
@@ -14,7 +14,7 @@
           <span class="icon is-medium"><i class="fa fa-times"></i></span>
         </a>
       </div>
-      <div class="actions left">
+      <div v-if="$store.state.isUserLoggedIn === true" class="actions left">
         <a v-show="movie.isWatched" class="addToLibrary button is-small"
            @click="openRateModal(movie, $event)">
           <span v-if="getVote(movie) > 0">{{ getVote(movie) }}</span>
