@@ -113,7 +113,7 @@
         <div class="column-actor column is-fullheight is-3-tablet is-3-desktop is-half-mobile" v-for="actor in movie.actors.slice(0, 4)">
           <div class="actor">
             <div class="poster">
-              <img :src="posterUrl(actor.photo, 260, 380)" :alt="actor.originalName"/>
+              <img :src="posterUrl(actor.photo, 260, 380)" :alt="actor.name"/>
             </div>
             <div class="information">
               <div class="title">

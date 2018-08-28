@@ -50,6 +50,8 @@ export default {
     rate: 'Rate',
     addRecommendation: 'Recommend',
     removeRecommendation: 'Remove recommendation',
+    recommendations: 'Recommendations',
+    recommendations_description: 'Want to recommend another movie similar to this? Use search field below',
   },
   rateModal: {
     yourVote: 'Your vote for this movie?',
