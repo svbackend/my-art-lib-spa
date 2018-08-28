@@ -77,6 +77,14 @@
           </p>
         </div>
       </div>
+
+      <div v-if="recommendations.length === 0" class="movie-recommendations-loading">
+        <hr>
+        <i class="fa fa-spinner fa-spin"></i>
+        {{ $t('movie.recommendations_loading') }}
+        <hr>
+      </div>
+
       <div class="movie-recommendations columns is-multiline is-flex">
         <div class="column-movie column is-fullheight is-3-tablet is-3-desktop is-half-mobile" v-for="(recommendedMovie, index) in recommendations">
           <div class="movie">
@@ -165,7 +173,13 @@
       getRecommendations(id) {
         this.$http.get(this.endpoint + id + '/recommendations')
           .then(response => {
-            this.recommendations = response.data.slice(0, 4)
+            if (response.data.length === 0) {
+              setTimeout(() => {
+                this.getRecommendations(id)
+              }, 5000);
+            } else {
+              this.recommendations = response.data.slice(0, 4)
+            }
           })
           .catch(error => {
             this.$router.push('/404');

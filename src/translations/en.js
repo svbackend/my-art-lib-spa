@@ -53,6 +53,7 @@ export default {
     recommendations: 'Recommendations',
     recommendations_description: 'Want to recommend another movie similar to this? Use search field below',
     actors: 'Actors',
+    recommendations_loading: 'We are currently looking for a recommendations for this movie, wait a bit or recommend movie for other people by yourself',
   },
   rateModal: {
     yourVote: 'Your vote for this movie?',
