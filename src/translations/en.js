@@ -52,6 +52,7 @@ export default {
     removeRecommendation: 'Remove recommendation',
     recommendations: 'Recommendations',
     recommendations_description: 'Want to recommend another movie similar to this? Use search field below',
+    actors: 'Actors',
   },
   rateModal: {
     yourVote: 'Your vote for this movie?',
