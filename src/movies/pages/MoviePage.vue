@@ -30,8 +30,8 @@
       </div>
     </div>
     <div class="movie-full">
-      <h2 class="title">Recommendations</h2>
-      <h3 class="subtitle">You can recommend movies similar to this</h3>
+      <h2 class="title">{{ $t('movie.recommendations') }}</h2>
+      <h3 class="subtitle">{{ $t('movie.recommendations_description') }}</h3>
       <div class="movie-recommendations-search">
         <div class="field has-addons">
           <div class="control has-icons-left is-large is-clearfix is-expanded">
@@ -107,6 +107,28 @@
           </div>
         </div>
       </div>
+
+      <h2 class="title">{{ $t('movie.actors') }}</h2>
+      <div class="movie-actors columns is-multiline is-flex">
+        <div class="column-actor column is-fullheight is-3-tablet is-3-desktop is-half-mobile" v-for="actor in movie.actors.slice(0, 4)">
+          <div class="actor">
+            <div class="poster">
+              <img :src="posterUrl(actor.photo, 260, 380)" :alt="actor.originalName"/>
+            </div>
+            <div class="information">
+              <div class="title">
+                <router-link
+                    active-class="is-active"
+                    class="link"
+                    :to="{ name: 'actor', params: { id: actor.id } }">
+                  {{ actor.name }}
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -133,36 +155,19 @@
       getMovie(id) {
         this.$http.get(this.endpoint + id)
           .then(response => {
-            console.log(response.data);
             this.movie = response.data
+            this.actors = this.movie.actors.reverse()
           })
           .catch(error => {
-            console.log('-----error-------');
-            console.log(error)
-            this.$router.push('/404');
-          })
-      },
-      getActors(id) {
-        this.$http.get(this.endpoint + id + '/actors')
-          .then(response => {
-            console.log(response.data);
-            this.actors = response.data
-          })
-          .catch(error => {
-            console.log('-----error-------');
-            console.log(error)
             this.$router.push('/404');
           })
       },
       getRecommendations(id) {
         this.$http.get(this.endpoint + id + '/recommendations')
           .then(response => {
-            console.log(response.data);
             this.recommendations = response.data.slice(0, 4)
           })
           .catch(error => {
-            console.log('-----error-------');
-            console.log(error)
             this.$router.push('/404');
           })
       },
@@ -171,7 +176,6 @@
       },
       loadData(id) {
         this.getMovie(id);
-        this.getActors(id);
         this.getRecommendations(id);
       },
       addRecommendation(recommendedMovie) {
@@ -198,8 +202,7 @@
             this.searchShowResults = true;
           })
           .catch(error => {
-            console.log('-----error-------');
-            console.log(error);
+
           })
       },
       addToLibrary() { return addToLibrary(this.movie); },
