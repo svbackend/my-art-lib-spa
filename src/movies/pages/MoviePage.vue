@@ -208,8 +208,8 @@
         removeRecommendation(this.movie, recommendedMovie)
       },
       findMovies() {
-        this.$http.post('/movies/search', {
-          query: this.searchQuery
+        this.$http.post('/movies/' + this.id + '/recommendations/search', {
+          query: this.searchQuery,
         })
           .then(response => {
             this.searchResults = response.data.data;
