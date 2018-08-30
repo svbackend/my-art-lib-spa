@@ -44,9 +44,7 @@
       getActorMovies(id) {
         this.$http.get('/actors/' + id + '/movies')
           .then(response => {
-            this.movies = response.data.data.slice(0, 4).map(actorMovies => {
-              return actorMovies.movie;
-            })
+            this.movies = response.data.data.slice(0, 4);
           })
           .catch(error => {
             console.log('error...')
