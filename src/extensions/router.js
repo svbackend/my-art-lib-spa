@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HomePage from './../pages/HomePage.vue'
 import NotFoundPage from './../pages/NotFoundPage.vue'
 import MoviePage from './../movies/pages/MoviePage.vue'
+import ActorPage from './../actors/pages/ActorPage.vue'
 import EditMoviePage from './../movies/pages/EditMoviePage.vue'
 import LoginPage from './../users/pages/LoginPage.vue'
 import LibraryPage from './../users/pages/LibraryPage.vue'
@@ -47,6 +48,12 @@ export default new Router({
       path: '/movie/:id/edit',
       name: 'movie.edit',
       component: EditMoviePage,
+      props: true,
+    },
+    {
+      path: '/actor/:id',
+      name: 'actor',
+      component: ActorPage,
       props: true,
     },
     {
