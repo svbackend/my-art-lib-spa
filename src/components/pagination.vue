@@ -1,8 +1,8 @@
 <template>
   <div class="pagination is-clearfix" v-if="totalPages > 1">
     <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">
-      <a v-if="hasPrev()" @click.prevent="changePage(prevPage)" class="pagination-previous">Previous</a>
-      <a v-if="hasNext()" @click.prevent="changePage(nextPage)" class="pagination-next">Next page</a>
+      <a v-if="hasPrev()" @click.prevent="changePage(prevPage)" class="pagination-previous">{{ $t('pagination.prev') }}</a>
+      <a v-if="hasNext()" @click.prevent="changePage(nextPage)" class="pagination-next">{{ $t('pagination.next') }}</a>
       <ul class="pagination-list">
         <li v-for="page in pages">
           <a @click.prevent="changePage(page)" :class="{ 'is-current': current === page }" class="pagination-link">

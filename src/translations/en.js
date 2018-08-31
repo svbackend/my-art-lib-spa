@@ -1,6 +1,6 @@
 export default {
   app: {
-    name: 'My Art Lib',
+    name: 'MyKino.TOP',
     shortDescription: 'Collect your own library of watched movies',
   },
   common: {
@@ -23,7 +23,7 @@ export default {
     username: 'Username',
     password: 'Password',
     email: 'Email',
-    usernamePlaceholder: 'Іван_Іванович-95',
+    usernamePlaceholder: 'John_Doe-95',
     movie: {
       originalTitle: 'Original Title'
     },
@@ -33,6 +33,10 @@ export default {
   },
   registrationPage: {
     register: 'Sign Up',
+  },
+  pagination: {
+    prev: 'Previous',
+    next: 'Next page'
   },
   users: {
     logout: 'Logout',
