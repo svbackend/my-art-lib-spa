@@ -1,7 +1,7 @@
 export default {
   app: {
     name: 'MyKino.TOP',
-    shortDescription: 'Collect your own library of watched movies',
+    shortDescription: 'Collect your own library of watched movies and get recommendation from other people',
   },
   common: {
     close: 'Close',

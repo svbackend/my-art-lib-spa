@@ -4,7 +4,10 @@
            :class="{'is-selected': ((tempValue >= rating) && tempValue != null), 'is-disabled': disabled}"
            @click="set(rating)" @mouseover="star_over(rating)" @mouseout="star_out">
       <input class="star-rating star-rating__checkbox" type="radio" :value="rating" :name="name"
-             v-model="actual_value" :disabled="disabled"/>★</label></div>
+             v-model="actual_value" :disabled="disabled"/>★</label>
+    <span style="vertical-align: middle;" v-if="tempValue">{{ tempValue }}</span>
+  </div>
+
 </template>
 
 <script>
