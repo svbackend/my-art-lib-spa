@@ -3,10 +3,13 @@
     <div class="columns">
       <div class="movie-left column is-2">
         <img src="//placehold.it/256x256" class="is-rounded">
+        <div class="action-buttons">
+          <router-link class="button is-primary" :to="{ name: 'profile.edit', params: {username: user.username} }" v-t="'common.edit'"></router-link>
+        </div>
       </div>
       <div class="movie-right column">
         <h1 class="title">{{ profile.first_name }} {{ profile.last_name }}</h1>
-        <h2 class="subtitle">{{ user.username }}</h2>
+        <h2 class="subtitle">{{ user.username }} ({{ profile.public_email }})</h2>
         <p class="movie__body">{{ profile.about }}</p>
       </div>
     </div>
@@ -32,8 +35,10 @@
   export default {
     props: ['username'],
     components: {moviesList},
+    metaInfo() { return { title: this.title } },
     data() {
       return {
+        title: 'Profile',
         user: {},
         profile: {},
         watchedMovies: [],
@@ -48,6 +53,7 @@
             this.profile = this.user.profile
             this.getUserWatchedMovies(this.user.id)
             this.getUserRecommendations(this.user.id)
+            this.title = this.$t('users.profile', { username: this.user.username })
           })
           .catch(error => {
             this.$router.push('/404');

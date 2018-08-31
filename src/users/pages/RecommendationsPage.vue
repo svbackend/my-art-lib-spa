@@ -1,5 +1,17 @@
 <template>
   <section class="section wrapper">
+    <nav v-if="user.username" class="breadcrumb is-large">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'profile', params: {username: user.username} }">
+            {{ $t('users.profile', { username: user.username }) }}
+          </router-link>
+        </li>
+        <li class="is-active">
+          <a>{{ $t('profilePage.recommendations') }}</a>
+        </li>
+      </ul>
+    </nav>
     <div v-if="pageLoaded === false" class="preloader is-centered is-center">
       <span class="icon is-large is-centered is-center"><i class="fa fa-spinner fa-spin fa-3x"></i></span>
     </div>

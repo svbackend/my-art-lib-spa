@@ -1,5 +1,17 @@
 <template>
   <section class="section wrapper">
+    <nav v-if="user.username" class="breadcrumb is-large">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'profile', params: {username: user.username} }">
+            {{ $t('users.profile', { username: user.username }) }}
+          </router-link>
+        </li>
+        <li class="is-active">
+          <a>{{ $t('profilePage.watchedMovies') }}</a>
+        </li>
+      </ul>
+    </nav>
     <movies-list :movies="movies"></movies-list>
     <pagination
         :current="currentPage"
@@ -27,29 +39,45 @@
     },
     methods: {
       getUserWatchedMovies(page = null) {
-        let id;
-
-        if (this.username === this.$store.state.user.username) {
-          id = this.$store.state.user.id
-        } else {
-          id = this.username
-        }
-
         this.movies = [];
 
         if (page !== null) {
           this.currentPage = page;
         }
 
+        if (this.username === this.$store.state.user.username) {
+          this.getUserWatchedMoviesByUserId(this.$store.state.user.id)
+        } else {
+          this.getUserWatchedMoviesByUsername(this.username)
+        }
+      },
+      getUserWatchedMoviesByUserId(id) {
+        this.user = this.$store.state.user;
+        this.loadMovies();
+      },
+      getUserWatchedMoviesByUsername(username) {
+        this.$http.get('/users/byUsername/' + username)
+          .then(response => {
+            this.user = response.data
+            this.loadMovies();
+          })
+          .catch(error => {
+            console.log('-----error-------');
+            console.log(error)
+            this.$router.push('/404');
+          })
+      },
+      loadMovies() {
         let offset = (this.currentPage * this.perPage) - this.perPage;
         let limit = this.perPage;
         let endpoint = '/users/{id}/watchedMovies'
+
+        let id = this.user.id;
 
         this.$http.get(endpoint.replace('{id}', id), {params: {offset: offset, limit: limit}})
           .then(response => {
             this.movies = response.data.data
             this.totalMovies = response.data.paging.total
-            console.log(response)
           })
           .catch(error => {
             console.log('-----error-------');

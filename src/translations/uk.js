@@ -10,6 +10,7 @@ export default {
     searchNoResults: 'Схоже ми не знайшли жодного фільму по вашому запиту: "{query}"',
     edit: 'Редагувати',
     save: 'Зберегти',
+    more: 'Більше...',
   },
   validation: {
     required: 'Це поле є обов\'язковим!',
@@ -18,7 +19,8 @@ export default {
     email: 'Введіть коректний емейл адрес',
     validUsername: 'Логін повинен складатись лише з букв, цифр та символів: -, _',
     _incorrect: 'Невірний Логін або Пароль, попробуйте ще раз',
-    _isUniqueError: 'Такий {fieldName} вже зареєстрований'
+    _isUniqueError: 'Такий {fieldName} вже зареєстрований',
+    validDate: 'Дата повинна бути в YYYY-MM-DD форматі',
   },
   fields: {
     username: 'Логін',
@@ -45,6 +47,8 @@ export default {
     registration: 'Реєстрація',
     my_library: 'Моя Колекція',
     my_recommendations: 'Мої рекомендації',
+    my_profile: 'Мій Профіль',
+    profile: '{username}',
   },
   movie: {
     addToWatchedMovies: 'Додати в колекцію',

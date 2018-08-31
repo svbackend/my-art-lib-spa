@@ -18,6 +18,7 @@ export default {
     maxLength: '{fieldName} is too long, max {max, plural, =1{1 characters} other{# characters}} long!',
     email: 'It is not a valid email address',
     validUsername: 'Username should contain only letters, numbers and symbols like - or _',
+    validDate: 'Date mast be in YYYY-MM-DD format',
     _incorrect: 'Username or Password is incorrect, try again',
     _isUniqueError: 'This {fieldName} already in use'
   },
@@ -47,6 +48,7 @@ export default {
     my_library: 'My Library',
     my_recommendations: 'My Recommendations',
     my_profile: 'My Profile',
+    profile: '{username}\'s profile',
   },
   movie: {
     addToWatchedMovies: 'Add to library',

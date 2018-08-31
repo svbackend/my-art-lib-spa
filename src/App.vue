@@ -1,8 +1,8 @@
 <script>
   export default {
     metaInfo: {
-      title: 'Default Title',
-      titleTemplate: '%s | my-art-lib',
+      title: 'Movies Recommendations',
+      titleTemplate: '%s | myKino.top',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
       ]

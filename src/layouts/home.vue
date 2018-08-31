@@ -17,6 +17,7 @@
       <footer class="footer">
         <div class="container">
           <div class="content has-text-centered">
+            <a href="https://www.themoviedb.org/"><img src="/src/assets/tmdb_small.png" alt="TMDb"></a>
             <div class="control level-item">
               <div class="tags has-addons">
                 <span class="tag is-dark">

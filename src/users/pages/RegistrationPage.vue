@@ -91,6 +91,7 @@
 
   export default {
     name: 'form-login',
+    metaInfo: { title: 'Registration' },
     data: () => ({
       submitStatus: '',
       email: '',

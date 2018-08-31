@@ -149,7 +149,7 @@ const Validator = {
     let error;
     for (error of errors) {
       if (error.path.contains('[') === true) {
-        this.validatorAddServerError(error);
+        this.addServerError(error);
       }
     }
   },

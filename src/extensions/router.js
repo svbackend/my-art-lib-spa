@@ -9,6 +9,7 @@ import LoginPage from './../users/pages/LoginPage.vue'
 import LibraryPage from './../users/pages/LibraryPage.vue'
 import RecommendationsPage from './../users/pages/RecommendationsPage.vue'
 import ProfilePage from './../users/pages/ProfilePage.vue'
+import EditProfilePage from './../users/pages/EditProfilePage.vue'
 import RegistrationPage from './../users/pages/RegistrationPage.vue'
 
 export default new Router({
@@ -67,6 +68,12 @@ export default new Router({
       path: '/u/:username/profile',
       name: 'profile',
       component: ProfilePage,
+      props: true,
+    },
+    {
+      path: '/u/:username/profile/edit',
+      name: 'profile.edit',
+      component: EditProfilePage,
       props: true,
     },
     {
