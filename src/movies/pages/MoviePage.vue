@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="movie-left column is-4">
         <img :src="posterUrl(movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl, 420, 620)" :alt="movie.title">
-        <div class="action-buttons">
+        <div class="action-buttons" v-if="$store.state.isUserLoggedIn === true">
           <a v-if="movie.isWatched === false" @click="addToLibrary" class="button is-success">
             <i class="fa fa-plus"></i>&nbsp;{{ $t('movie.addToWatchedMovies') }}
           </a>
@@ -31,8 +31,8 @@
     </div>
     <div class="movie-full">
       <h2 class="title">{{ $t('movie.recommendations') }}</h2>
-      <h3 class="subtitle">{{ $t('movie.recommendations_description') }}</h3>
-      <div class="movie-recommendations-search">
+      <h3 v-if="$store.state.isUserLoggedIn === true" class="subtitle">{{ $t('movie.recommendations_description') }}</h3>
+      <div v-if="$store.state.isUserLoggedIn === true" class="movie-recommendations-search">
         <div class="field has-addons">
           <div class="control has-icons-left is-large is-clearfix is-expanded">
             <input v-model="searchQuery"

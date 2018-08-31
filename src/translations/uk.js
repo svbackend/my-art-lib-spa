@@ -65,5 +65,12 @@ export default {
   },
   rateModal: {
     yourVote: 'Ваша оцінка цьому фільму?',
-  }
+  },
+  userRecommendationsPage: {
+    empty: 'Наразі тут немає рекомендацій. Щоб їх отримати - додайте будь ласка кілька фільмів до вашої колекції з оцінкою не менше ніж 7',
+  },
+  profilePage: {
+    watchedMovies: 'Переглянуті фільми',
+    recommendations: 'Рекомендовані фільми',
+  },
 }

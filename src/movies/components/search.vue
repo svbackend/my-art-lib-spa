@@ -25,12 +25,14 @@
           <div v-else v-for="movie in searchResults" class="search-results__movie column is-12">
             <div class="box search-results__movieBox">
 
+              <div v-if="$store.state.isUserLoggedIn === true" class="actions-buttons">
                 <a v-if="!movie.isWatched" @click="addToLibrary(movie, $event)" :title="$t('movie.addToWatchedMovies')">
                   <i class="fa fa-plus has-text-success"></i>
                 </a>
                 <a v-else @click="removeFromLibrary(movie, $event)" :title="$t('movie.removeFromWatchedMovies')">
                   <i class="fa fa-times has-text-danger"></i>
                 </a>
+              </div>
 
               <router-link
                   active-class="is-active"
