@@ -30,6 +30,13 @@ export default {
     movie: {
       originalTitle: 'Original Title'
     },
+    user: {
+      first_name: 'First name',
+      last_name: 'Last name',
+      birth_date: 'Birthday',
+      public_email: 'Public email',
+      about: 'About',
+    },
   },
   loginPage: {
     authorize: 'Sign In',
