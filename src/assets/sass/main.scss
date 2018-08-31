@@ -78,6 +78,14 @@ $vertical-form-max-width: 520px;
   }
 }
 
+.is-centered {
+  @include centered;
+}
+
+.preloader {
+  padding: 1rem 0;
+}
+
 section.search-field {
   @include tablet {
     max-width: $content-width;

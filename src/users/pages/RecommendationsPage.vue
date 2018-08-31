@@ -1,5 +1,11 @@
 <template>
   <section class="section wrapper">
+    <div v-if="pageLoaded === false" class="preloader is-centered is-center">
+      <span class="icon is-large is-centered is-center"><i class="fa fa-spinner fa-spin fa-3x"></i></span>
+    </div>
+    <div class="notification is-warning" v-if="pageLoaded && totalMovies === 0">
+      {{ $t('userRecommendationsPage.empty') }}
+    </div>
     <movies-list :movies="movies"></movies-list>
     <pagination
         :current="currentPage"
@@ -23,11 +29,13 @@
         movies: [],
         totalMovies: 0,
         perPage: 20,
-        currentPage: 1
+        currentPage: 1,
+        pageLoaded: false,
       }
     },
     methods: {
       getUserRecommendations(page = null) {
+        this.pageLoaded = false
         let id = this.user.id;
 
         this.movies = [];
@@ -44,6 +52,7 @@
           .then(response => {
             this.movies = response.data.data.filter(m => m.userWatchedMovie === null);
             this.totalMovies = response.data.paging.total
+            this.pageLoaded = true
           })
           .catch(error => {
             console.log('-----error-------');

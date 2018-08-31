@@ -16,7 +16,7 @@
           <div class="tabs is-right">
             <ul>
               <li class="is-active">
-                <router-link :to="{ name: 'home' }"><i class="fa fa-home"></i>&nbsp;Home</router-link>
+                <router-link :to="{ name: 'home' }"><i class="fa fa-home"></i>&nbsp;{{ $t('common.home') }}</router-link>
               </li>
               <li v-if="this.$store.state.isUserLoggedIn === true">
                 <router-link :to="{ name: 'library', params: {username: this.$store.state.user.username} }" v-t="'users.my_library'"></router-link>

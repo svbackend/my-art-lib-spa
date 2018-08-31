@@ -8,6 +8,7 @@ import EditMoviePage from './../movies/pages/EditMoviePage.vue'
 import LoginPage from './../users/pages/LoginPage.vue'
 import LibraryPage from './../users/pages/LibraryPage.vue'
 import RecommendationsPage from './../users/pages/RecommendationsPage.vue'
+import ProfilePage from './../users/pages/ProfilePage.vue'
 import RegistrationPage from './../users/pages/RegistrationPage.vue'
 
 export default new Router({
@@ -60,6 +61,12 @@ export default new Router({
       path: '/u/:username',
       name: 'library',
       component: LibraryPage,
+      props: true,
+    },
+    {
+      path: '/u/:username/profile',
+      name: 'profile',
+      component: ProfilePage,
       props: true,
     },
     {

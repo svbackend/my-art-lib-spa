@@ -4,11 +4,13 @@ export default {
     shortDescription: 'Collect your own library of watched movies and get recommendation from other people',
   },
   common: {
+    home: 'Home',
     close: 'Close',
     search: 'Search',
     searchNoResults: 'Looks like we have not found any movies by your query "{query}"',
     edit: 'Edit',
     save: 'Save',
+    more: 'More',
   },
   validation: {
     required: 'This field is required!',
@@ -61,5 +63,12 @@ export default {
   },
   rateModal: {
     yourVote: 'Your vote for this movie?',
-  }
+  },
+  userRecommendationsPage: {
+    empty: 'There\'s no recommendations at the moment. To get some - please add a few movies to your library with a score of no lower than 7',
+  },
+  profilePage: {
+    watchedMovies: 'Watched movies',
+    recommendations: 'Recommendations',
+  },
 }
