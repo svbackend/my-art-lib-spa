@@ -15,7 +15,7 @@
         <div class="navbar-end">
           <div class="tabs is-right">
             <ul>
-              <li class="is-active">
+              <li class="is-active is-hidden-mobile">
                 <router-link :to="{ name: 'home' }"><i class="fa fa-home"></i>&nbsp;{{ $t('common.home') }}</router-link>
               </li>
               <li v-if="this.$store.state.isUserLoggedIn === true">
@@ -23,6 +23,9 @@
               </li>
               <li v-if="this.$store.state.isUserLoggedIn === true">
                 <router-link :to="{ name: 'recommendations', params: {username: this.$store.state.user.username} }" v-t="'users.my_recommendations'"></router-link>
+              </li>
+              <li v-if="this.$store.state.isUserLoggedIn === true">
+                <router-link :to="{ name: 'profile', params: {username: this.$store.state.user.username} }" v-t="'users.my_profile'"></router-link>
               </li>
               <li v-if="this.$store.state.isUserLoggedIn === true">
                 <a @click="logout()" v-t="'users.logout'"></a>

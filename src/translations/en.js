@@ -10,7 +10,7 @@ export default {
     searchNoResults: 'Looks like we have not found any movies by your query "{query}"',
     edit: 'Edit',
     save: 'Save',
-    more: 'More',
+    more: 'More...',
   },
   validation: {
     required: 'This field is required!',
@@ -46,6 +46,7 @@ export default {
     registration: 'Registration',
     my_library: 'My Library',
     my_recommendations: 'My Recommendations',
+    my_profile: 'My Profile',
   },
   movie: {
     addToWatchedMovies: 'Add to library',
