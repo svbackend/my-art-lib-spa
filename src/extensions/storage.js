@@ -48,7 +48,7 @@ export default new Vuex.Store({
           state.user.id = user.id;
           state.user.username = user.username;
           state.user.email = user.email;
-          state.user.roles = user.roles;
+          state.user.roles = user.roles ? user.roles : [];
         },
         logout(state) {
           state.user.apiToken = null;
