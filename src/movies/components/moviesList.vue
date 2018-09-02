@@ -52,7 +52,6 @@
         this.modalIsActive = false
       },
       getUserVoteForMovie,
-      setUserVoteForMovie,
       updateVote(vote) {
         setUserVoteForMovie(this.modalMovie, vote)
         if (this.$store.state.isUserLoggedIn === true) {

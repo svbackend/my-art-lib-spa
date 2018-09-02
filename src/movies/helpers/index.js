@@ -21,6 +21,8 @@ export function getUserVoteForMovie(movie) {
   if (Vue.$store.state.isUserLoggedIn === true) {
     if (movie.userWatchedMovie) {
       vote = movie.userWatchedMovie.vote
+    } else {
+      movie.userWatchedMovie = {vote: vote};
     }
     return vote;
   }
@@ -102,6 +104,8 @@ export function removeFromLibrary(movie, event) {
   Vue.$http.delete(endpoint)
     .then(response => {
       movie.isWatched = false
+      movie.userWatchedMovie = null;
+      movie.guestWatchedMovie = null;
     })
     .catch(error => {
       console.log('-----error-------');

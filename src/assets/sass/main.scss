@@ -25,6 +25,16 @@ $vertical-form-max-width: 520px;
 @import "stars/index";
 @import "navbar/index";
 
+@import url('https://fonts.googleapis.com/css?family=Black+Ops+One');
+
+.navbar-brand a span.logo {
+  vertical-align: middle;
+  font-family: 'Black Ops One', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  color: #FFF;
+  font-size: 28px;
+}
+
 #app {
   // background: linear-gradient(#ff957e, #FFF);
   background: #EFF3F4;
@@ -43,10 +53,7 @@ $vertical-form-max-width: 520px;
 }
 
 .column-movie {
-  /*
   padding: 0;
-  float: left;
-  */
 }
 
 .movie {
@@ -62,11 +69,26 @@ $vertical-form-max-width: 520px;
       position: absolute;
       bottom: 1rem;
       float: left;
+
+      @include mobile {
+        float: none;
+        position: relative;
+        bottom: 0;
+      }
+
       &.right {
         right: 0.5rem;
+        @include mobile {
+          right: 0;
+          display: inline-block;
+        }
       }
       &.left {
         left: 0.5rem;
+        @include mobile {
+          left: 0;
+          display: inline-block;
+        }
       }
     }
   }
@@ -101,6 +123,9 @@ section.search-field {
     width: calc(100% - 1px);
     padding: .75rem;
     border-radius: 0;
+    .actions-buttons {
+      display: inline-block;
+    }
   }
 
   .search-results__movie:last-of-type {

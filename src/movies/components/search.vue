@@ -1,10 +1,7 @@
 <template>
   <section class="search-field is-centered is-center">
 
-    <div class="container has-text-centered">
-      <h1 class="title">
-        {{ $t('app.name') }}
-      </h1>
+    <div class="has-text-centered">
       <h2 class="subtitle">
         {{ $t('app.shortDescription') }}
       </h2>
