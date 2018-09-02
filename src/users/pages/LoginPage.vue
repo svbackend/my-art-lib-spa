@@ -109,8 +109,8 @@
         })
       },
       signIn(apiToken, userId) {
-        this.saveUser(userId)
         this.$store.dispatch('setApiToken', apiToken)
+        this.saveUser(userId)
         this.$router.push({name: 'home'})
       },
       saveUser(userId) {
