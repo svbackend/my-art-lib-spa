@@ -11,6 +11,7 @@
             <i class="fa fa-times"></i>&nbsp;{{ $t('movie.removeFromWatchedMovies') }}
           </a>
           <a v-if="movie.isWatched === true" @click="openModal" class="button">
+            <template v-if="userVote">{{userVote}}&nbsp;</template>
             <i class="fa fa-star has-text-danger"></i>
           </a>
           <router-link
@@ -142,7 +143,7 @@
       </div>
 
     </div>
-    <rate-modal v-if="modalIsActive === true" @close="closeModal" @updateVote="updateVote" :rating="getUserVoteForMovie(movie)"></rate-modal>
+    <rate-modal v-if="modalIsActive === true" @close="closeModal" @updateVote="updateVote" :rating="userVote"></rate-modal>
   </div>
 </template>
 
@@ -167,6 +168,7 @@
         timeToWaitHandler: null,
         loadRecommendationsHandler: null,
         modalIsActive: false,
+        vote: 0,
       }
     },
     methods: {
@@ -177,6 +179,7 @@
           .then(response => {
             this.movie = response.data
             this.actors = this.movie.actors.reverse()
+            this.vote = getUserVoteForMovie(this.movie)
           })
           .catch(error => {
             this.$router.push('/404');
@@ -244,17 +247,28 @@
           })
       },
       addToLibrary() { return addToLibrary(this.movie); },
-      removeFromLibrary() { return removeFromLibrary(this.movie); },
-      getUserVoteForMovie,
-      openModal(movie, index) {
+      removeFromLibrary() {
+        this.vote = 0;
+        return removeFromLibrary(this.movie);
+      },
+      openModal() {
         this.modalIsActive = true
       },
       closeModal() {
         this.modalIsActive = false
       },
       updateVote(vote) {
+        if (this.userVote === vote) {
+          return;
+        }
         setUserVoteForMovie(this.movie, vote)
+        this.vote = vote;
       },
+    },
+    computed: {
+      userVote() {
+        return this.vote;
+      }
     },
     beforeDestroy() {
       if (this.timeToWaitHandler) {

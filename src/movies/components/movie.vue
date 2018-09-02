@@ -17,7 +17,9 @@
       <div v-if="$store.state.isUserLoggedIn === true" class="actions left">
         <a v-show="movie.isWatched" class="addToLibrary button is-small" @click="openRateModal(movie)">
           <span class="is-hidden-mobile">
-            <span v-if="getVote(movie) > 0">{{ getVote(movie) }}</span>
+            <span v-if="getVote(movie) > 0">
+              {{ getVote(movie) }}&nbsp;<span class="icon is-medium"><i class="fa fa-star has-text-danger"></i></span>
+            </span>
             <span v-else>
               {{ $t('movie.rate') }}
               <span class="icon is-medium"><i class="fa fa-star has-text-danger"></i></span>
