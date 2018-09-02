@@ -10,6 +10,9 @@
           <a v-else @click="removeFromLibrary" class="button is-danger">
             <i class="fa fa-times"></i>&nbsp;{{ $t('movie.removeFromWatchedMovies') }}
           </a>
+          <a v-if="movie.isWatched === true" @click="openModal" class="button">
+            <i class="fa fa-star has-text-danger"></i>
+          </a>
           <router-link
               v-if="$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1"
               class="button is-primary"
@@ -139,16 +142,18 @@
       </div>
 
     </div>
+    <rate-modal v-if="modalIsActive === true" @close="closeModal" @updateVote="updateVote" :rating="getUserVoteForMovie(movie)"></rate-modal>
   </div>
 </template>
 
 <script>
-  import {getImageUrl, addRecommendation, removeRecommendation, addToLibrary, removeFromLibrary} from "@/movies/helpers";
+  import {getImageUrl, addRecommendation, removeRecommendation, addToLibrary, removeFromLibrary, getUserVoteForMovie, setUserVoteForMovie} from "@/movies/helpers";
   import Movie from '@/movies/components/movie'
+  import rateModal from '@/movies/components/rateModal'
 
   export default {
     props: ['id'],
-    components: {Movie},
+    components: {Movie, rateModal},
     data() {
       return {
         movie: {},
@@ -161,6 +166,7 @@
         timeToWait: 0,
         timeToWaitHandler: null,
         loadRecommendationsHandler: null,
+        modalIsActive: false,
       }
     },
     methods: {
@@ -185,6 +191,7 @@
               this.timeToWaitHandler = setInterval(() => {
                 this.timeToWait -= 1;
                 if (this.timeToWait === 0) {
+                  clearInterval(this.timeToWaitHandler);
                   this.timeToWaitHandler = null;
                 }
               }, 1000)
@@ -237,9 +244,26 @@
           })
       },
       addToLibrary() { return addToLibrary(this.movie); },
-      removeFromLibrary() { return removeFromLibrary(this.movie); }
+      removeFromLibrary() { return removeFromLibrary(this.movie); },
+      getUserVoteForMovie,
+      openModal(movie, index) {
+        this.modalIsActive = true
+      },
+      closeModal() {
+        this.modalIsActive = false
+      },
+      updateVote(vote) {
+        setUserVoteForMovie(this.movie, vote)
+      },
     },
-
+    beforeDestroy() {
+      if (this.timeToWaitHandler) {
+        clearInterval(this.timeToWaitHandler);
+      }
+      if (this.loadRecommendationsHandler) {
+        clearTimeout(this.loadRecommendationsHandler);
+      }
+    },
     created() {
       this.loadData(this.id)
     },
@@ -252,18 +276,7 @@
 </script>
 
 <style lang="scss">
-  @import "~bulma";
-
-  .movie {
-    position: relative;
-    margin: 0 auto;
-    padding: 50px 20px 20px;
-    h1.movie__title {
-      font-size: 140%;
-    }
-    &__body {
-      position: relative;
-      z-index: 1;
-    }
+  .movie-recommendations {
+    margin-top: 1.5rem;
   }
 </style>

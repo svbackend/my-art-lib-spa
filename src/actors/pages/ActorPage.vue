@@ -73,18 +73,5 @@
 </script>
 
 <style lang="scss">
-  @import "~bulma";
 
-  .movie {
-    position: relative;
-    margin: 0 auto;
-    padding: 50px 20px 20px;
-    h1.movie__title {
-      font-size: 140%;
-    }
-    &__body {
-      position: relative;
-      z-index: 1;
-    }
-  }
 </style>

@@ -27,6 +27,11 @@ $vertical-form-max-width: 520px;
 
 @import url('https://fonts.googleapis.com/css?family=Black+Ops+One');
 
+.main-content .movie {
+  max-width: 100%;
+  padding: 0.75rem;
+}
+
 .navbar-brand a span.logo {
   vertical-align: middle;
   font-family: 'Black Ops One', Helvetica, Arial, sans-serif;
@@ -93,7 +98,7 @@ $vertical-form-max-width: 520px;
     }
   }
   .information {
-    padding: 0.3rem;
+    padding: 0.3rem 0;
     .title {
       font-size: 1rem;
     }
@@ -156,6 +161,7 @@ section.search-field {
 /* Bulma template */
 html,body {
   background: #EFF3F4;
+  overflow-x: hidden;
 }
 .hero-body .container {
   max-width: 700px;

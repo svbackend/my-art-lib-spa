@@ -1,5 +1,8 @@
 <template>
   <section class="wrapper">
+    <div v-if="pageLoaded === false" class="preloader is-centered is-center">
+      <span class="icon is-large is-centered is-center"><i class="fa fa-spinner fa-spin fa-3x"></i></span>
+    </div>
     <movies-list :movies="movies"></movies-list>
     <pagination
         :current="currentPage"
@@ -31,6 +34,7 @@
         currentPage: 1,
         modalMovie: {},
         modalIsActive: false,
+        pageLoaded: false,
       }
     },
     created() {
@@ -40,6 +44,7 @@
     },
     methods: {
       getAllMovies(page = null) {
+        this.pageLoaded = false;
         this.movies = [];
         if (page !== null) {
           this.currentPage = page;
@@ -50,6 +55,7 @@
           .then(response => {
             this.movies = response.data.data;
             this.totalMovies = response.data.paging.total;
+            this.pageLoaded = true;
           })
           .catch(error => {
             console.log('-----error-------');
