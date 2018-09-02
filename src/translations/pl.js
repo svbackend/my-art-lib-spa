@@ -73,4 +73,7 @@ export default {
     watchedMovies: 'Oglądane filmy',
     recommendations: 'Polecane filmy',
   },
+  actorPage: {
+    movies: 'Filmy',
+  }
 }

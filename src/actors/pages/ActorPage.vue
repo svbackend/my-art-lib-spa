@@ -6,12 +6,12 @@
       </div>
       <div class="movie-right column">
         <h1 class="title">{{ actor.name }} ({{ actor.birthday | year }})</h1>
-        <h2 class="subtitle" v-if="actor.name !== actor.originalName">{{ movie.originalName }}</h2>
+        <h2 class="subtitle" v-if="actor.name !== actor.originalName">{{ actor.originalName }}</h2>
         <p class="movie__body">{{ actor.biography }}</p>
       </div>
     </div>
     <div class="movie-full">
-      <h2 class="title">{{ $t('actor.movies') }}</h2>
+      <h2 class="title">{{ $t('actorPage.movies') }}</h2>
       <movies-list :movies="movies"></movies-list>
     </div>
   </div>

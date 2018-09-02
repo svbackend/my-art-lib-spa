@@ -163,7 +163,7 @@ export function removeRecommendation(originalMovie, recommendedMovie) {
 
 export function getImageUrl(imageUrl, width = null, height = null) {
   // todo remove when backend will provide own urls to images
-  if (imageUrl === 'https://image.tmdb.org/t/p/original') {
+  if (!imageUrl || imageUrl === 'https://image.tmdb.org/t/p/original') {
     if (!width || !height) {
       return 'http://placehold.it/320x480'
     }

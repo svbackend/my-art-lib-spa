@@ -81,4 +81,7 @@ export default {
     watchedMovies: 'Watched movies',
     recommendations: 'Recommendations',
   },
+  actorPage: {
+    movies: 'Movies',
+  }
 }
