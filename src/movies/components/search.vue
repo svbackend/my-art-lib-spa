@@ -13,7 +13,7 @@
                type="search"
                :placeholder="$t('common.search') + '...'"
                class="input is-large is-fullwidth"
-               v-bind:class="{'search-field-withResults':(searchShowResults === true && searchResults.length > 0)}">
+               :class="{'search-field-withResults':(searchShowResults === true && searchResults.length > 0)}">
 
         <div v-if="searchShowResults" class="search-results columns is-gapless is-multiline">
           <div v-if="!searchResults.length" class="search-results-empty">
@@ -41,7 +41,12 @@
           </div>
         </div>
 
-        <span class="icon is-left"><i class="fa fa-search fa-lg"></i></span>
+        <span class="icon is-left">
+          <i v-if="!this.status" class="fa fa-search fa-lg"></i>
+          <i v-if="this.status === 'PENDING'" class="fa fa-spinner fa-spin fa-lg"></i>
+          <i v-if="this.status === 'OK'" class="fa fa-check has-text-success fa-lg"></i>
+          <i v-if="this.status === 'ERROR'" class="fa fa-times has-text-danger fa-lg"></i>
+        </span>
       </div>
       <p class="control">
         <button @click="findMovies()" class="button homepage-search-btn is-large">{{ $t('common.search') }}</button>
@@ -59,27 +64,28 @@
         searchQuery: '',
         searchShowResults: false,
         searchResults: [],
+        status: '',
       }
     },
     methods: {
       findMovies() {
+        this.status = 'PENDING'
         this.$http.post('/movies/search', {
           query: this.searchQuery
         })
           .then(response => {
             this.searchResults = response.data.data;
             this.searchShowResults = true;
+            this.status = 'OK'
+            setTimeout(() => {
+              this.status = '';
+            }, 3000)
           })
           .catch(error => {
+            this.status = 'ERROR'
             console.log('-----error-------');
             console.log(error);
           })
-      },
-      setSearchQuery(e) {
-        if (this.searchQuery.length > 1) {
-          return this.findMovies();
-        }
-        this.searchShowResults = false;
       },
       addToLibrary(movie, e) { return addToLibrary(movie, e) },
       removeFromLibrary(movie, e) { return removeFromLibrary(movie, e) },

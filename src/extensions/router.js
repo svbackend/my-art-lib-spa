@@ -83,5 +83,8 @@ export default new Router({
       props: true,
     },
   ],
-  mode: 'history'
+  mode: 'history',
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 });
