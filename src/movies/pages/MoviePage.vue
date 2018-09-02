@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="movie" v-if="movie.title">
+  <div class="movie" v-if="movie.originalTitle">
     <div class="columns">
       <div class="movie-left column is-4">
         <img :src="posterUrl(movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl, 420, 620)" :alt="movie.title">
@@ -82,6 +82,7 @@
         <hr>
         <i class="fa fa-spinner fa-spin"></i>
         {{ $t('movie.recommendations_loading') }}
+        <span v-if="timeToWait">({{ timeToWait }} secs)</span>
         <hr>
       </div>
 
@@ -157,10 +158,15 @@
         searchResults: [],
         searchShowResults: false,
         endpoint: '/movies/',
+        timeToWait: 0,
+        timeToWaitHandler: null,
+        loadRecommendationsHandler: null,
       }
     },
     methods: {
       getMovie(id) {
+        this.movie = {};
+        this.actors = [];
         this.$http.get(this.endpoint + id)
           .then(response => {
             this.movie = response.data
@@ -170,14 +176,25 @@
             this.$router.push('/404');
           })
       },
-      getRecommendations(id) {
+      getRecommendations(id, timeout = 10000) {
+        this.recommendations = [];
         this.$http.get(this.endpoint + id + '/recommendations')
           .then(response => {
             if (response.data.length === 0) {
-              setTimeout(() => {
-                this.getRecommendations(id)
-              }, 5000);
+              this.timeToWait = timeout / 1000
+              this.timeToWaitHandler = setInterval(() => {
+                this.timeToWait -= 1;
+                if (this.timeToWait === 0) {
+                  this.timeToWaitHandler = null;
+                }
+              }, 1000)
+
+              this.loadRecommendationsHandler = null
+              this.loadRecommendationsHandler = setTimeout(() => {
+                this.getRecommendations(id, (timeout/2))
+              }, timeout);
             } else {
+              this.timeToWait = 0
               this.recommendations = response.data.slice(0, 4)
             }
           })
