@@ -235,6 +235,9 @@
         })
       },
       updatePosterTmdb() {
+        if (!this.tmdbApiKey) {
+          return;
+        }
         let endpoint = 'https://api.themoviedb.org/3/movie/{id}?api_key=' + this.tmdbApiKey;
         endpoint =  endpoint.replace('{id}', this.payload.tmdb.id)
         this.$http.get(endpoint).then(response => {
