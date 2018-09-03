@@ -20,6 +20,12 @@
               :to="{ name: 'movie.edit', params: { id: movie.id } }">
             {{ $t('common.edit') }}
           </router-link>
+          <a v-if="$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1"
+             :href="'https://www.themoviedb.org/movie/' + movie.tmdb.id + '-title'"
+             class="button"
+             target="_blank">
+            tmdb
+          </a>
         </div>
       </div>
       <div class="movie-right column">

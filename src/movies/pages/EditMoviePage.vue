@@ -2,6 +2,20 @@
   <div class="form-movie-edit">
 
     <div class="field">
+      <p class="control">
+        <input class="input" type="text" v-model.trim="tmdbApiKey">
+      </p>
+      <label class="label has-text-left">IMG</label>
+      <p class="control">
+        <input class="input" type="text" placeholder="https://tesst.com/image.jpg" v-model.trim="poster">
+      </p>
+    </div>
+    <a @click="updatePoster" class="button">Update poster</a>
+    <a @click="updatePosterTmdb" class="button">Update poster tmdb</a>
+
+    <hr>
+
+    <div class="field">
       <label class="label has-text-left" v-t="'fields.movie.originalTitle'"></label>
       <p class="control">
         <input autofocus="autofocus" class="input" :class="{ 'is-success': $validator.isSuccess('originalTitle'), 'is-danger': $validator.isDanger('originalTitle') }" type="text" placeholder="Title" v-model.trim="originalTitle" @blur="$v.originalTitle.$touch()">
@@ -109,6 +123,8 @@
         releaseDate: '',
         translations: {},
         submitStatus: null,
+        poster: '',
+        tmdbApiKey: '',
       }
     },
     validations: {
@@ -190,6 +206,7 @@
           this.$http.get('/movies/' + id + '?language=' + locale)
             .then(response => {
               let data = response.data;
+              this.payload = data;
               this.payload[locale] = response;
 
               this.originalTitle = data.originalTitle;
@@ -206,6 +223,26 @@
             })
         }
       },
+      updatePoster() {
+        if (!this.poster) { return; }
+
+        this.$http.post('/movies/' + this.id + '/updatePoster', {
+          url: this.poster,
+        }).then(response => {
+          this.poster = ''
+        }).catch(error => {
+          this.poster = 'error'
+        })
+      },
+      updatePosterTmdb() {
+        let endpoint = 'https://api.themoviedb.org/3/movie/{id}?api_key=' + this.tmdbApiKey;
+        endpoint =  endpoint.replace('{id}', this.payload.tmdb.id)
+        this.$http.get(endpoint).then(response => {
+          this.poster = 'https://image.tmdb.org/t/p/original' + response.data.poster_path
+        }).catch(error => {
+          this.poster = 'error'
+        })
+      }
     },
     created() {
       this.loadData(this.id)
