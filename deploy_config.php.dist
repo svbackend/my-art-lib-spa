@@ -1,0 +1,7 @@
+<?php
+
+return [
+    'host' => 'example.com', // or ip
+    'login' => 'username', // ssh username
+    'deploy_path' => '/home/user/path/to/deploy',
+];
