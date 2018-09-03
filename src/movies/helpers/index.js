@@ -169,9 +169,9 @@ export function getImageUrl(imageUrl, width = null, height = null) {
   // todo remove when backend will provide own urls to images
   if (!imageUrl || imageUrl === 'https://image.tmdb.org/t/p/original') {
     if (!width || !height) {
-      return 'http://placehold.it/320x480'
+      return 'https://placehold.it/320x480'
     }
-    return 'http://placehold.it/' + width + 'x' + height;
+    return 'https://placehold.it/' + width + 'x' + height;
   }
 
   if (imageUrl.substring(0, 4) === 'http') {
