@@ -13,6 +13,7 @@ export default new Vuex.Store({
     ],
     state: {
         isUserLoggedIn: false,
+        locale: null,
         guest: {
             id: 0,
             token: null,
@@ -50,6 +51,13 @@ export default new Vuex.Store({
           state.user.email = user.email;
           state.user.roles = user.roles ? user.roles : [];
         },
+        setLocale(state, locale) {
+          state.locale = locale;
+          VueInstance.$http.defaults.params.language = locale;
+          if (locale === null) {
+            delete VueInstance.$http.defaults.params.language;
+          }
+        },
         logout(state) {
           state.user.apiToken = null;
           state.user.id = 0;
@@ -69,6 +77,9 @@ export default new Vuex.Store({
         },
         setUser({commit}, user) {
           commit('setUser', user);
+        },
+        setLocale({commit}, locale) {
+          commit('setLocale', locale);
         },
         logout({commit}) {
           commit('logout');

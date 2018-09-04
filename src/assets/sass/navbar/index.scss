@@ -18,11 +18,27 @@
         }
         a {
           color: #FFF;
-          opacity: .65;
+          opacity: .75;
           border: none;
           text-transform: uppercase;
           font-weight: 700;
           font-size: 12px;
+          &:hover {
+            opacity: 1;
+          }
+          &.image-shadow {
+            opacity: 1;
+          }
+        }
+        &.has-dropdown {
+          a {
+            float: left;
+          }
+          .navbar-dropdown {
+            a.navbar-item {
+              float: left;
+            }
+          }
         }
       }
     }

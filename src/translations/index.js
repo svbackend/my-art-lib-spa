@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import English from './en'
 import MessageFormat from 'messageformat'
+import store from '../extensions/storage'
 
 Vue.use(VueI18n)
 
@@ -14,7 +15,16 @@ const messages = {
 
 let defaultLocale = 'en'
 let locale = defaultLocale
-let userLocales = navigator.languages
+let userLocales = [];
+
+// browser locales add to userLocales (through cycle because concat() not working with navigator.languages as well as navigator.languages.unshift('en'))
+for (let browserLocale of navigator.languages) {
+  userLocales.push(browserLocale);
+}
+
+if (store.state.locale !== null) {
+  userLocales.unshift(store.state.locale)
+}
 
 let lang;
 for (lang of userLocales) {
@@ -55,5 +65,12 @@ let i18n = new VueI18n({
   messages,
 })
 
+export function getCurrentLocale() {
+  if (store.state.locale === null) {
+    return locale
+  }
+
+  return store.state.locale
+}
 export default i18n
 export const locales = ['en', 'ru', 'uk', 'pl'];
