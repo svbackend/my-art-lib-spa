@@ -16,7 +16,7 @@ host($config['host'])
 
 set('rsync', [
     'exclude' => [
-        '.node_modules',
+        'node_modules',
         '.git',
         'deploy.php',
         'deploy_config.php',
