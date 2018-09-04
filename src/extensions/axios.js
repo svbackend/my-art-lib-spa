@@ -3,6 +3,7 @@ import store from './storage'
 import { apiHost } from './../config.js'
 import VueInstance from '@/main'
 import router from '@/extensions/router'
+import { getCurrentLocale } from '@/translations'
 
 let axiosConfig = {
   baseURL: apiHost + '/api',
@@ -22,6 +23,10 @@ if (store.state.user.apiToken !== null) {
   axiosConfig.params = {
     api_token: store.state.user.apiToken
   };
+}
+
+if (store.state.locale !== null) {
+  axiosConfig.params.language = getCurrentLocale()
 }
 
 let axiosInstance = axios.create(axiosConfig);
