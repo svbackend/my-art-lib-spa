@@ -62,7 +62,7 @@
 
         this.$http.get(endpoint.replace('{id}', id), {params: {offset: offset, limit: limit}})
           .then(response => {
-            this.movies = response.data.data.filter(m => m.userWatchedMovie === null);
+            this.movies = response.data.data
             this.totalMovies = response.data.paging.total
             this.pageLoaded = true
           })

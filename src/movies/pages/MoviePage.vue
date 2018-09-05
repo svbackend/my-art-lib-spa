@@ -192,10 +192,15 @@
           })
       },
       getRecommendations(id, timeout = 10000) {
+        if (timeout <= 1000) {
+          this.clearTimeouts()
+          return;
+        }
+
         this.recommendations = [];
-        this.$http.get(this.endpoint + id + '/recommendations')
+        this.$http.get(this.endpoint + id + '/recommendations?limit=4')
           .then(response => {
-            if (response.data.length === 0) {
+            if (response.data.data.length === 0) {
               this.timeToWait = timeout / 1000
               this.timeToWaitHandler = setInterval(() => {
                 this.timeToWait -= 1;
@@ -211,11 +216,11 @@
               }, timeout);
             } else {
               this.timeToWait = 0
-              this.recommendations = response.data.slice(0, 4)
+              this.recommendations = response.data.data
             }
           })
           .catch(error => {
-            this.$router.push('/404');
+            //this.$router.push('/404');
           })
       },
       posterUrl(imageUrl, width = null, height = null) {
@@ -270,6 +275,14 @@
         setUserVoteForMovie(this.movie, vote)
         this.vote = vote;
       },
+      clearTimeouts() {
+        if (this.timeToWaitHandler) {
+          clearInterval(this.timeToWaitHandler);
+        }
+        if (this.loadRecommendationsHandler) {
+          clearTimeout(this.loadRecommendationsHandler);
+        }
+      }
     },
     computed: {
       userVote() {
@@ -277,12 +290,7 @@
       }
     },
     beforeDestroy() {
-      if (this.timeToWaitHandler) {
-        clearInterval(this.timeToWaitHandler);
-      }
-      if (this.loadRecommendationsHandler) {
-        clearTimeout(this.loadRecommendationsHandler);
-      }
+      this.clearTimeouts()
     },
     created() {
       this.loadData(this.id)
