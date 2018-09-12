@@ -4,28 +4,40 @@
       <div class="movie-left column is-4">
         <img :src="posterUrl(movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl, 420, 620)" :alt="movie.title">
         <div class="action-buttons" v-if="$store.state.isUserLoggedIn === true">
-          <a v-if="movie.isWatched === false" @click="addToLibrary" class="button is-success">
-            <i class="fa fa-plus"></i>&nbsp;{{ $t('movie.addToWatchedMovies') }}
-          </a>
-          <a v-else @click="removeFromLibrary" class="button is-danger">
-            <i class="fa fa-times"></i>&nbsp;{{ $t('movie.removeFromWatchedMovies') }}
-          </a>
-          <a v-if="movie.isWatched === true" @click="openModal" class="button">
-            <template v-if="userVote">{{userVote}}&nbsp;</template>
-            <i class="fa fa-star has-text-danger"></i>
-          </a>
-          <router-link
-              v-if="$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1"
-              class="button is-primary"
-              :to="{ name: 'movie.edit', params: { id: movie.id } }">
-            {{ $t('common.edit') }}
-          </router-link>
-          <a v-if="$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1"
-             :href="'https://www.themoviedb.org/movie/' + movie.tmdb.id + '-title'"
-             class="button"
-             target="_blank">
-            tmdb
-          </a>
+          <p>
+            <a v-if="movie.isWatched === false" @click="addToLibrary" class="button is-success">
+              <i class="fa fa-plus"></i>&nbsp;{{ $t('movie.addToWatchedMovies') }}
+            </a>
+            <a v-else @click="removeFromLibrary" class="button is-danger">
+              <i class="fa fa-times"></i>&nbsp;{{ $t('movie.removeFromWatchedMovies') }}
+            </a>
+            <a v-if="movie.isWatched === true" @click="openModal" class="button">
+              <template v-if="userVote">{{userVote}}&nbsp;</template>
+              <i class="fa fa-star has-text-danger"></i>
+            </a>
+          </p>
+          <p v-if="movie.isWatched === false">
+            <a v-if="movie.userInterestedMovie === null" @click="addToInterested" class="button is-primary">
+              <i class="fa fa-history"></i>&nbsp;{{ $t('movie.addToInterestedMovies') }}
+            </a>
+            <a v-else @click="removeFromInterested" class="button is-danger">
+              <i class="fa fa-history"></i>&nbsp;{{ $t('movie.removeFromInterestedMovies') }}
+            </a>
+          </p>
+          <p>
+            <router-link
+                v-if="$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1"
+                class="button is-primary"
+                :to="{ name: 'movie.edit', params: { id: movie.id } }">
+              {{ $t('common.edit') }}
+            </router-link>
+            <a v-if="$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1"
+               :href="'https://www.themoviedb.org/movie/' + movie.tmdb.id + '-title'"
+               class="button"
+               target="_blank">
+              tmdb
+            </a>
+          </p>
         </div>
       </div>
       <div class="movie-right column">
@@ -257,7 +269,32 @@
 
           })
       },
-      addToLibrary() { return addToLibrary(this.movie); },
+      addToInterested() {
+        this.$http.post('/users/interestedMovies', {
+          movie_id: this.movie.id,
+        })
+          .then(response => {
+            this.movie.userInterestedMovie = response.data;
+          })
+          .catch(error => {
+            this.movie.userInterestedMovie = null;
+          })
+      },
+      removeFromInterested() {
+        this.$http.delete('/users/interestedMovies/' + this.movie.userInterestedMovie.id)
+          .then(response => {
+            this.movie.userInterestedMovie = null;
+          })
+          .catch(error => {
+
+          })
+      },
+      addToLibrary() {
+        if (this.movie.userInterestedMovie) {
+          this.removeFromInterested();
+        }
+        return addToLibrary(this.movie);
+      },
       removeFromLibrary() {
         this.vote = 0;
         return removeFromLibrary(this.movie);

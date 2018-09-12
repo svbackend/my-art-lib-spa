@@ -55,6 +55,7 @@ export default {
     my_library: 'My Library',
     my_recommendations: 'My Recommendations',
     my_profile: 'My Profile',
+    my_wishlist: 'My Wishlist',
     profile: '{username}\'s profile',
   },
   movie: {
@@ -70,6 +71,8 @@ export default {
     recommendations_description: 'Want to recommend another movie similar to this? Use search field below',
     actors: 'Actors',
     recommendations_loading: 'We are currently looking for a recommendations for this movie, wait a bit or recommend movie for other people by yourself',
+    addToInterestedMovies: 'I\'ll watch this movie later',
+    removeFromInterestedMovies: 'I\'ll not watch this movie',
   },
   rateModal: {
     yourVote: 'Your vote for this movie?',

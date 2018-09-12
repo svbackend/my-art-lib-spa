@@ -48,6 +48,7 @@ export default {
     my_library: 'Moja kolekcja',
     my_recommendations: 'Moje rekomendacje',
     my_profile: 'Mój profil',
+    my_wishlist: 'Moja lista życzeń',
     profile: '{username}',
   },
   movie: {
@@ -62,6 +63,8 @@ export default {
     recommendations_description: 'Czy chcesz polecić coś podobnego do innych? Użyj wyszukiwania poniżej',
     actors: 'Aktorzy',
     recommendations_loading: 'Szukamy rekomendacji dla tego filmu, czekaj chwilę lub dodaj swoją rekomendację',
+    addToInterestedMovies: 'Obejrzę ten film później',
+    removeFromInterestedMovies: 'Nie będę oglądać',
   },
   rateModal: {
     yourVote: 'Twoja ocena tego filmu?',

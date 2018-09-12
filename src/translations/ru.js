@@ -48,6 +48,7 @@ export default {
     my_library: 'Моя Коллекция',
     my_recommendations: 'Мои Рекомендации',
     my_profile: 'Мой Профиль',
+    my_wishlist: 'Мой список желаний',
     profile: '{username}',
   },
   movie: {
@@ -62,6 +63,8 @@ export default {
     recommendations_description: 'Хотите порекомендовать другим что-то похожее? Используйте поиск ниже',
     actors: 'Актёры',
     recommendations_loading: 'Мы ищем рекомендации к этому фильму, подождите минутку, или добавьте свою рекомендацию',
+    addToInterestedMovies: 'Хочу посмотреть',
+    removeFromInterestedMovies: 'Не буду смотреть',
   },
   rateModal: {
     yourVote: 'Ваша оценка этому фильму?',

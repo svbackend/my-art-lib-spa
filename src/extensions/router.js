@@ -82,6 +82,12 @@ export default new Router({
       component: RecommendationsPage,
       props: true,
     },
+    {
+      path: '/u/:username/wishlist',
+      name: 'wishlist',
+      component: RecommendationsPage,
+      props: true,
+    },
   ],
   mode: 'history',
   scrollBehavior (to, from, savedPosition) {

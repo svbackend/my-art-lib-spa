@@ -34,6 +34,9 @@
                 <router-link :to="{ name: 'recommendations', params: {username: this.$store.state.user.username} }" v-t="'users.my_recommendations'"></router-link>
               </li>
               <li v-if="this.$store.state.isUserLoggedIn === true">
+                <router-link :to="{ name: 'wishlist', params: {username: this.$store.state.user.username} }" v-t="'users.my_wishlist'"></router-link>
+              </li>
+              <li v-if="this.$store.state.isUserLoggedIn === true">
                 <router-link :to="{ name: 'profile', params: {username: this.$store.state.user.username} }" v-t="'users.my_profile'"></router-link>
               </li>
 
