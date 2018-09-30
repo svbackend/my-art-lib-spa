@@ -72,9 +72,13 @@ export default {
   userRecommendationsPage: {
     empty: 'Jak dotąd nie ma zaleceń. Aby je otrzymać, dodaj kilka filmów do swojej kolekcji z oceną co najmniej 7',
   },
+  userWishlistPage: {
+    empty: 'Jak dotąd nie ma filmów. W tej sekcji znajdziesz filmy, które chcesz obejrzeć',
+  },
   profilePage: {
     watchedMovies: 'Oglądane filmy',
     recommendations: 'Polecane filmy',
+    wishlist: 'Wishlist',
   },
   actorPage: {
     movies: 'Filmy',

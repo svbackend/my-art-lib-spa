@@ -2,14 +2,14 @@
   <div class="movie" v-if="user.profile">
     <div class="columns">
       <div class="movie-left column is-2">
-        <img src="//placehold.it/256x256" class="is-rounded">
+        <img src="/src/assets/user/default.png" class="is-rounded">
         <div class="action-buttons">
           <router-link class="button is-primary" :to="{ name: 'profile.edit', params: {username: user.username} }" v-t="'common.edit'"></router-link>
         </div>
       </div>
       <div class="movie-right column">
         <h1 class="title">{{ profile.first_name }} {{ profile.last_name }}</h1>
-        <h2 class="subtitle">{{ user.username }} ({{ profile.public_email }})</h2>
+        <h2 class="subtitle">{{ user.username }} {{ profile.public_email ? '(' + profile.public_email + ')' : '' }}</h2>
         <p class="movie__body">{{ profile.about }}</p>
       </div>
     </div>

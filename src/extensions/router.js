@@ -11,6 +11,7 @@ import RecommendationsPage from './../users/pages/RecommendationsPage.vue'
 import ProfilePage from './../users/pages/ProfilePage.vue'
 import EditProfilePage from './../users/pages/EditProfilePage.vue'
 import RegistrationPage from './../users/pages/RegistrationPage.vue'
+import WishlistPage from './../users/pages/WishlistPage.vue'
 
 export default new Router({
   routes: [
@@ -85,7 +86,7 @@ export default new Router({
     {
       path: '/u/:username/wishlist',
       name: 'wishlist',
-      component: RecommendationsPage,
+      component: WishlistPage,
       props: true,
     },
   ],

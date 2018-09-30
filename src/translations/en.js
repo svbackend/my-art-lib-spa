@@ -80,9 +80,13 @@ export default {
   userRecommendationsPage: {
     empty: 'There\'s no recommendations at the moment. To get some - please add a few movies to your library with a score of no lower than 7',
   },
+  userWishlistPage: {
+    empty: 'There\'s no movies at the moment. This section will contain the movies you are want to watch',
+  },
   profilePage: {
     watchedMovies: 'Watched movies',
     recommendations: 'Recommendations',
+    wishlist: 'Wishlist',
   },
   actorPage: {
     movies: 'Movies',

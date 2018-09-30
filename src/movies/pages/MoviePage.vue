@@ -212,22 +212,27 @@
         this.recommendations = [];
         this.$http.get(this.endpoint + id + '/recommendations?limit=4')
           .then(response => {
-            if (response.data.data.length === 0) {
+            if (response.data.paging.total === 0) {
               this.timeToWait = timeout / 1000
               this.timeToWaitHandler = setInterval(() => {
                 this.timeToWait -= 1;
-                if (this.timeToWait === 0) {
+                if (this.timeToWait <= 1) {
                   clearInterval(this.timeToWaitHandler);
                   this.timeToWaitHandler = null;
                 }
               }, 1000)
 
+              clearTimeout(this.loadRecommendationsHandler)
               this.loadRecommendationsHandler = null
+              if (timeout < 5000){
+                this.clearTimeouts()
+                return;
+              }
               this.loadRecommendationsHandler = setTimeout(() => {
                 this.getRecommendations(id, (timeout/2))
               }, timeout);
             } else {
-              this.timeToWait = 0
+              this.clearTimeouts()
               this.recommendations = response.data.data
             }
           })
@@ -313,6 +318,7 @@
         this.vote = vote;
       },
       clearTimeouts() {
+        this.timeToWait = 0
         if (this.timeToWaitHandler) {
           clearInterval(this.timeToWaitHandler);
         }
