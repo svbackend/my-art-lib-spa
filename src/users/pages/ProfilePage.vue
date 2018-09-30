@@ -22,7 +22,7 @@
     </div>
     <div class="movie-full">
       <h2 class="title">{{ $t('profilePage.watchedMovies') }}</h2>
-      <h3 class="subtitle">
+      <h3 class="subtitle" v-if="watchedMoviesTotal > 4">
         <router-link :to="{ name: 'library', params: {username: user.username} }" v-t="'common.more'"></router-link>
       </h3>
       <div class="notification is-warning" v-if="watchedMoviesTotal === 0">
@@ -31,7 +31,7 @@
       <movies-list :movies="watchedMovies"></movies-list>
 
       <h2 class="title">{{ $t('profilePage.recommendations') }}</h2>
-      <h3 class="subtitle">
+      <h3 class="subtitle" v-if="recommendationsTotal > 4">
         <router-link :to="{ name: 'recommendations', params: {username: user.username} }" v-t="'common.more'"></router-link>
       </h3>
       <div class="notification is-warning" v-if="recommendationsTotal === 0">
