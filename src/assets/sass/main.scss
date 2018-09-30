@@ -9,6 +9,11 @@ $navbar-item-hover-background-color: rgba(255,255,255,.03);
 
 // Colors
 $dark: #121e31;
+$orange: #ff9800;
+
+.has-text-orange {
+  color: $orange;
+}
 
 @import '~bulma/bulma';
 
@@ -101,6 +106,9 @@ $vertical-form-max-width: 520px;
     padding: 0.3rem 0;
     .title {
       font-size: 1rem;
+    }
+    .owner-rating {
+      display: inline-block;
     }
   }
 }
