@@ -10,7 +10,14 @@
       <div class="movie-right column">
         <h1 class="title">{{ profile.first_name }} {{ profile.last_name }}</h1>
         <h2 class="subtitle">{{ user.username }} {{ profile.public_email ? '(' + profile.public_email + ')' : '' }}</h2>
-        <p class="movie__body">{{ profile.about }}</p>
+        <p class="movie__body">
+          <template v-if="profile.about">
+            {{ profile.about }}
+          </template>
+          <template v-else>
+            <span class="has-text-danger">{{ $t('profilePage.emptyAbout', {username: username}) }}</span>
+          </template>
+        </p>
       </div>
     </div>
     <div class="movie-full">

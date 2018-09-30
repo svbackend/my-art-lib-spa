@@ -12,6 +12,9 @@
         </li>
       </ul>
     </nav>
+    <div class="notification is-warning" v-if="totalMovies === 0">
+      {{ $t('userLibraryPage.empty') }}
+    </div>
     <movies-list :movies="movies"></movies-list>
     <pagination
         :current="currentPage"

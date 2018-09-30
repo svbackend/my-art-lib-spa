@@ -90,6 +90,7 @@ export default {
     watchedMovies: 'Watched movies',
     recommendations: 'Recommendations',
     wishlist: 'Wishlist',
+    emptyAbout: 'User {username} did not provide any further information',
   },
   actorPage: {
     movies: 'Movies',

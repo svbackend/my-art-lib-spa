@@ -82,6 +82,7 @@ export default {
     watchedMovies: 'Oglądane filmy',
     recommendations: 'Polecane filmy',
     wishlist: 'Wishlist',
+    emptyAbout: 'Użytkownik {username} nie podał żadnych dalszych informacji',
   },
   actorPage: {
     movies: 'Filmy',
