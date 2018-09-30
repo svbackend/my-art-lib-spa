@@ -75,6 +75,9 @@ export default {
   userWishlistPage: {
     empty: 'Jak dotąd nie ma filmów. W tej sekcji znajdziesz filmy, które chcesz obejrzeć',
   },
+  userLibraryPage: {
+    empty: 'Jak dotąd nie ma filmów. Ta sekcja zawiera filmy, które już oglądałeś.',
+  },
   profilePage: {
     watchedMovies: 'Oglądane filmy',
     recommendations: 'Polecane filmy',

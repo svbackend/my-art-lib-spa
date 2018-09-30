@@ -83,6 +83,9 @@ export default {
   userWishlistPage: {
     empty: 'There\'s no movies at the moment. This section will contain the movies you are want to watch',
   },
+  userLibraryPage: {
+    empty: 'There\'s no movies at the moment. This section will contain movies that you have already watched.',
+  },
   profilePage: {
     watchedMovies: 'Watched movies',
     recommendations: 'Recommendations',
