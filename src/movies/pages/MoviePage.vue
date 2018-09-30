@@ -54,13 +54,13 @@
     <div class="movie-full">
       <h2 class="title">{{ $t('movie.recommendations') }}</h2>
       <h3 v-if="$store.state.isUserLoggedIn === true" class="subtitle">{{ $t('movie.recommendations_description') }}</h3>
-      <div v-if="$store.state.isUserLoggedIn === true" class="movie-recommendations-search">
+      <div v-if="$store.state.isUserLoggedIn === true" class="movie-recommendations-search search-field">
         <div class="field has-addons">
           <div class="control has-icons-left is-large is-clearfix is-expanded">
             <input v-model="searchQuery"
                    type="search"
                    :placeholder="$t('common.search') + '...'"
-                   class="input is-large is-fullwidth"
+                   class="input search-field is-fullwidth"
                    :class="{'search-field-withResults':(searchShowResults === true && searchResults.length > 0)}">
 
             <div v-if="searchShowResults" class="search-results columns is-gapless is-multiline">
@@ -92,10 +92,10 @@
               </div>
             </div>
 
-            <span class="icon is-left"><i class="fa fa-search fa-lg"></i></span>
+            <span class="icon is-left search-left-icon"><i class="fa fa-search fa-lg"></i></span>
           </div>
           <p class="control">
-            <button @click="findMovies()" class="button homepage-search-btn is-large">{{ $t('common.search') }}</button>
+            <button @click="findMovies()" class="button search-btn">{{ $t('common.search') }}</button>
           </p>
         </div>
       </div>
