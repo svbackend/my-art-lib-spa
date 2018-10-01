@@ -44,7 +44,7 @@ task('deploy:prepare', function () {
 
 task('cleanup', function () {
     runLocally("unlink .env.json");
-    runLocally("cp .env.old .env.json");
+    runLocally("mv .env.old .env.json");
     runLocally("unlink index.html");
     runLocally("mv old_index.html index.html");
 });
