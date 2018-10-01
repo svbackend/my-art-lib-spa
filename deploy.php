@@ -37,7 +37,7 @@ task('deploy:prepare', function () {
     $id = time();
     runLocally("cp index.html old_index.html");
     runLocally("cp .env.json .env.old");
-    runLocally("cp .env.dist .env");
+    runLocally("cp .env.json.dist .env.json");
     runLocally("sed -i 's/build.js/build.js\?v={$id}/g' index.html");
     runLocally('npm run build');
 });
