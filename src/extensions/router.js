@@ -12,6 +12,7 @@ import ProfilePage from './../users/pages/ProfilePage.vue'
 import EditProfilePage from './../users/pages/EditProfilePage.vue'
 import RegistrationPage from './../users/pages/RegistrationPage.vue'
 import WishlistPage from './../users/pages/WishlistPage.vue'
+import MovieRecommendationsPage from './../movies/pages/MovieRecommendationsPage'
 
 export default new Router({
   routes: [
@@ -87,6 +88,12 @@ export default new Router({
       path: '/u/:username/wishlist',
       name: 'wishlist',
       component: WishlistPage,
+      props: true,
+    },
+    {
+      path: '/movie/:id/recommendations',
+      name: 'movie.recommendations',
+      component: MovieRecommendationsPage,
       props: true,
     },
   ],

@@ -53,6 +53,9 @@
     </div>
     <div class="movie-full">
       <h2 class="title">{{ $t('movie.recommendations') }}</h2>
+      <h3 class="subtitle" v-if="moviesRecommendationsTotal > 4">
+        <router-link :to="{ name: 'movie.recommendations', params: {id: movie.id} }" v-t="'common.more'"></router-link>
+      </h3>
       <h3 v-if="$store.state.isUserLoggedIn === true" class="subtitle">{{ $t('movie.recommendations_description') }}</h3>
       <div v-if="$store.state.isUserLoggedIn === true" class="movie-recommendations-search search-field">
         <div class="field has-addons">
@@ -212,6 +215,7 @@
         this.recommendations = [];
         this.$http.get(this.endpoint + id + '/recommendations?limit=4')
           .then(response => {
+            this.moviesRecommendationsTotal = response.data.paging.total;
             if (response.data.paging.total === 0) {
               this.timeToWait = timeout / 1000
               this.timeToWaitHandler = setInterval(() => {
