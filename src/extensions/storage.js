@@ -61,6 +61,7 @@ export default new Vuex.Store({
         logout(state) {
           state.user.apiToken = null;
           state.user.id = 0;
+          state.user.username = null;
 
           state.guest.token = null;
           state.guest.id = 0;

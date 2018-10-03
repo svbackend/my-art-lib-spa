@@ -10,7 +10,8 @@ let axiosConfig = {
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
-  }
+  },
+  params: {},
 };
 
 if (store.state.guest.token !== null) {
