@@ -190,6 +190,7 @@
         loadRecommendationsHandler: null,
         modalIsActive: false,
         vote: 0,
+        moviesRecommendationsTotal: 0,
       }
     },
     methods: {
