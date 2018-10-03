@@ -49,7 +49,7 @@
           .catch(error => {
             console.log('error...')
             console.log(error)
-            this.$router.push('/404');
+            //this.$router.push('/404');
           })
       },
       photoUrl(imageUrl, width = null, height = null) {

@@ -81,7 +81,7 @@
             this.watchedMoviesTotal = response.data.paging.total
           })
           .catch(error => {
-            this.$router.push('/404');
+            //this.$router.push('/404');
           })
       },
       getUserRecommendations(id) {
@@ -91,7 +91,7 @@
             this.recommendationsTotal = response.data.paging.total
           })
           .catch(error => {
-            this.$router.push('/404');
+            //this.$router.push('/404');
           })
       },
       loadData(username) {

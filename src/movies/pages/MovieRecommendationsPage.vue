@@ -1,5 +1,5 @@
 <template lang="html">
-  <section>
+  <section class="section wrapper">
       <h2 class="title">{{ $t('movie.recommendations') }}</h2>
 
       <div v-if="totalMovies === 0 && pageLoaded === false" class="movie-recommendations-loading">
@@ -80,6 +80,7 @@
 
         this.$http.get(endpoint.replace('{id}', this.id), {params: {offset: offset, limit: limit}})
           .then(response => {
+            this.recommendations = []
             this.recommendations = response.data.data
             this.totalMovies = response.data.paging.total
             this.pageLoaded = true
@@ -87,7 +88,7 @@
           .catch(error => {
             console.log('-----error-------');
             console.log(error)
-            this.$router.push('/404');
+            //this.$router.push('/404');
           })
       },
       posterUrl(imageUrl, width = null, height = null) {
