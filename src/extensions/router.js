@@ -12,6 +12,7 @@ import ProfilePage from './../users/pages/ProfilePage.vue'
 import EditProfilePage from './../users/pages/EditProfilePage.vue'
 import RegistrationPage from './../users/pages/RegistrationPage.vue'
 import WishlistPage from './../users/pages/WishlistPage.vue'
+import ConfirmEmail from './../users/pages/ConfirmEmail.vue'
 import MovieRecommendationsPage from './../movies/pages/MovieRecommendationsPage'
 
 export default new Router({
@@ -41,6 +42,12 @@ export default new Router({
       path: '/registration',
       name: 'registration',
       component: RegistrationPage,
+    },
+    {
+      path: '/confirmEmail/:token',
+      name: 'confirmEmail',
+      component: ConfirmEmail,
+      props: true,
     },
     {
       path: '/movie/:id',
