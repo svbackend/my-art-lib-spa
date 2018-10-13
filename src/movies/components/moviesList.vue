@@ -42,10 +42,6 @@
         if (this.movies[this.modalMovieIndex].userWatchedMovie === null) {
           this.movies[this.modalMovieIndex].userWatchedMovie = {};
         }
-
-        if (this.movies[this.modalMovieIndex].guestWatchedMovie === null) {
-          this.movies[this.modalMovieIndex].guestWatchedMovie = {};
-        }
       },
       closeModal() {
         this.modalMovie = {}
@@ -53,12 +49,9 @@
       },
       getUserVoteForMovie,
       updateVote(vote) {
-        setUserVoteForMovie(this.modalMovie, vote)
-        if (this.$store.state.isUserLoggedIn === true) {
-          this.movies[this.modalMovieIndex].userWatchedMovie.vote = vote;
-        } else {
-          this.movies[this.modalMovieIndex].guestWatchedMovie.vote = vote;
-        }
+        setUserVoteForMovie(this.modalMovie, vote);
+        this.modalMovie.userWatchedMovie.vote = vote;
+        this.movies[this.modalMovieIndex].userWatchedMovie.vote = vote;
       },
     }
   }

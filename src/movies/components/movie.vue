@@ -3,7 +3,7 @@
     <div class="poster">
       <img :src="getPosterUrl(movie)" :alt="movie.title"/>
       <div v-if="$store.state.isUserLoggedIn === true" class="actions right">
-        <a v-if="!movie.isWatched" class="addToLibrary button is-success is-small"
+        <a v-if="isWatched() === false" class="addToLibrary button is-success is-small"
            @click="addToLibrary(movie, $event)">{{ $t('movie.addToWatchedMovies') }}
           &nbsp;
           <span class="icon is-medium"><i class="fa fa-plus"></i></span>
@@ -15,10 +15,10 @@
         </a>
       </div>
       <div v-if="$store.state.isUserLoggedIn === true" class="actions left">
-        <a v-show="movie.isWatched" class="addToLibrary button is-small" @click="openRateModal(movie)">
+        <a v-show="isWatched()" class="addToLibrary button is-small" @click="openRateModal(movie)">
           <span class="is-hidden-mobile">
-            <span v-if="getVote(movie) > 0">
-              {{ getVote(movie) }}&nbsp;<span class="icon is-medium"><i class="fa fa-star has-text-danger"></i></span>
+            <span v-if="getVote > 0">
+              {{ getVote }}&nbsp;<span class="icon is-medium"><i class="fa fa-star has-text-danger"></i></span>
             </span>
             <span v-else>
               {{ $t('movie.rate') }}
@@ -26,8 +26,8 @@
             </span>
           </span>
           <span class="is-hidden-tablet">
-            <span v-if="getVote(movie) > 0">
-              <span>{{ getVote(movie) }}</span>
+            <span v-if="getVote > 0">
+              <span>{{ getVote }}</span>
               <span class="icon is-medium"><i class="fa fa-star has-text-danger"></i></span>
             </span>
             <span v-else>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import {getUserVoteForMovie, addToLibrary, removeFromLibrary, getImageUrl} from '@/movies/helpers/index'
+  import {getUserVoteForMovie, addToLibrary, removeFromLibrary, getImageUrl, isWatched} from '@/movies/helpers/index'
   export default {
     name: "movie",
     props: {
@@ -75,12 +75,15 @@
       openRateModal(movie) {
         this.$emit('openRateModal', movie, this.index)
       },
-      getVote(movie) {
-        return getUserVoteForMovie(movie)
-      },
       addToLibrary(movie, e) { return addToLibrary(movie, e) },
       removeFromLibrary(movie, e) { return removeFromLibrary(movie, e) },
-    }
+      isWatched() { return isWatched(this.movie) },
+    },
+    computed: {
+      getVote() {
+        return getUserVoteForMovie(this.movie)
+      },
+    },
   }
 </script>
 
