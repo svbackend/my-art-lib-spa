@@ -192,5 +192,4 @@ export function getImageUrl(imageUrl, width = null, height = null) {
   }
 
   return newPosterUrl
-
 }
