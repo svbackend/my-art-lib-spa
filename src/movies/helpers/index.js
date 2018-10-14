@@ -1,17 +1,6 @@
 import Vue from '@/main'
 import {apiHost} from './../../config.js'
 
-export function isWatched(movie) {
-  if (movie.isWatched === true) {
-    return true;
-  }
-  if (movie.userWatchedMovie !== null && movie.userWatchedMovie.id) {
-    return true;
-  }
-
-  return false;
-}
-
 export function mergeGuestMovies() {
   if (!Vue.$store.state.guest.token) {
     return;
@@ -29,8 +18,17 @@ export function mergeGuestMovies() {
 export function getUserVoteForMovie(movie) {
   let vote = 0;
 
-  if (movie.userWatchedMovie && movie.userWatchedMovie.vote) {
-    vote = movie.userWatchedMovie.vote
+  if (Vue.$store.state.isUserLoggedIn === true) {
+    if (movie.userWatchedMovie) {
+      vote = movie.userWatchedMovie.vote
+    } else {
+      movie.userWatchedMovie = {vote: vote};
+    }
+    return vote;
+  }
+
+  if (movie.guestWatchedMovie) {
+    vote = movie.guestWatchedMovie.vote
   }
 
   return vote;
@@ -67,6 +65,9 @@ export function addToLibrary(movie) {
 
   if (Vue.$store.state.isUserLoggedIn === true) {
     endpoint = '/users/watchedMovies';
+  } else {
+    endpoint = '/guests/{token}/watchedMovies';
+    endpoint = endpoint.replace('{token}', Vue.$store.state.guest.token);
   }
   Vue.$http.post(endpoint, {
     movie: {
@@ -77,17 +78,15 @@ export function addToLibrary(movie) {
     }
   })
     .then(response => {
-      movie.userWatchedMovie = {};
-      movie.userWatchedMovie.id = 0;
-      movie.userWatchedMovie.vote = 0;
-      movie.isWatched = true;
+      movie.isWatched = true
     })
 }
 
 export function removeFromLibrary(movie, event) {
-  let movieId = movie.id;
+  console.log(movie)
+  let movieId = movie.id
 
-  if (movie.userWatchedMovie && movie.userWatchedMovie.id) {
+  if (movie.userWatchedMovie && typeof movie.userWatchedMovie.id !== 'undefined') {
     movieId = movie.userWatchedMovie.id;
   }
 
@@ -104,10 +103,9 @@ export function removeFromLibrary(movie, event) {
 
   Vue.$http.delete(endpoint)
     .then(response => {
-      movie.isWatched = false;
-      movie.userWatchedMovie = {};
-      movie.userWatchedMovie.id = 0;
-      movie.userWatchedMovie.vote = 0;
+      movie.isWatched = false
+      movie.userWatchedMovie = null;
+      movie.guestWatchedMovie = null;
     })
     .catch(error => {
       console.log('-----error-------');

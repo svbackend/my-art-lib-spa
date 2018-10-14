@@ -36,8 +36,6 @@ export default {
       birth_date: 'Birthday',
       public_email: 'Public email',
       about: 'About',
-      old_password: 'Old password',
-      new_password: 'New password',
     },
   },
   loginPage: {
@@ -87,14 +85,6 @@ export default {
   },
   userLibraryPage: {
     empty: 'There\'s no movies at the moment. This section will contain movies that you have already watched.',
-  },
-  editProfilePage: {
-    title: 'Edit profile information',
-  },
-  editPasswordPage: {
-    title: 'Change password',
-    success: 'Password successfully changed!',
-    error: 'Check is your old password correct?',
   },
   profilePage: {
     watchedMovies: 'Watched movies',

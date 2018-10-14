@@ -10,7 +10,6 @@ import LibraryPage from './../users/pages/LibraryPage.vue'
 import RecommendationsPage from './../users/pages/RecommendationsPage.vue'
 import ProfilePage from './../users/pages/ProfilePage.vue'
 import EditProfilePage from './../users/pages/EditProfilePage.vue'
-import EditPasswordPage  from './../users/pages/EditPasswordPage.vue'
 import RegistrationPage from './../users/pages/RegistrationPage.vue'
 import WishlistPage from './../users/pages/WishlistPage.vue'
 import ConfirmEmail from './../users/pages/ConfirmEmail.vue'
@@ -84,12 +83,6 @@ export default new Router({
       path: '/u/:username/profile/edit',
       name: 'profile.edit',
       component: EditProfilePage,
-      props: true,
-    },
-    {
-      path: '/u/:username/password/edit',
-      name: 'password.edit',
-      component: EditPasswordPage,
       props: true,
     },
     {

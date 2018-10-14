@@ -1,13 +1,5 @@
 <template lang="html">
-  <div class="page-content form-movie-edit">
-
-    <h4 class="title">
-      {{ $t('editProfilePage.title') }}
-      &nbsp;/&nbsp;
-      <router-link :to="{ name: 'password.edit', paramrs: { username: this.username } }">
-        <i class="fa fa-key"></i>&nbsp;{{ $t('editPasswordPage.title') }}
-      </router-link>
-    </h4>
+  <div class="form-movie-edit">
 
     <div class="field">
       <label class="label has-text-left" v-t="'fields.user.first_name'"></label>
