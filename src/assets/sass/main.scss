@@ -32,11 +32,6 @@ $vertical-form-max-width: 520px;
 
 @import url('https://fonts.googleapis.com/css?family=Black+Ops+One');
 
-.main-content .movie {
-  max-width: 100%;
-  padding: 0.75rem;
-}
-
 .navbar-brand a span.logo {
   vertical-align: middle;
   font-family: 'Black Ops One', Helvetica, Arial, sans-serif;
@@ -60,6 +55,14 @@ $vertical-form-max-width: 520px;
   padding-bottom: 1rem;
   max-width: 100%;
   margin: auto;
+  .movie {
+    max-width: 100%;
+    padding: 0.75rem;
+  }
+  .page-content {
+    max-width: 100%;
+    padding: 0.75rem;
+  }
 }
 
 .column-movie {
