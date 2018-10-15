@@ -77,6 +77,8 @@
 
         let id = this.user.id;
 
+        this.movies = [];
+
         this.$http.get(endpoint.replace('{id}', id), {params: {offset: offset, limit: limit}})
           .then(response => {
             this.movies = response.data.data

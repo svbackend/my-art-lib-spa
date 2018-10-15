@@ -4,6 +4,7 @@ import HomePage from './../pages/HomePage.vue'
 import NotFoundPage from './../pages/NotFoundPage.vue'
 import MoviePage from './../movies/pages/MoviePage.vue'
 import ActorPage from './../actors/pages/ActorPage.vue'
+import ActorMoviesPage from './../actors/pages/ActorMoviesPage.vue'
 import EditMoviePage from './../movies/pages/EditMoviePage.vue'
 import LoginPage from './../users/pages/LoginPage.vue'
 import LibraryPage from './../users/pages/LibraryPage.vue'
@@ -66,6 +67,12 @@ export default new Router({
       path: '/actor/:id',
       name: 'actor',
       component: ActorPage,
+      props: true,
+    },
+    {
+      path: '/actor/:id/movies',
+      name: 'actor.movies',
+      component: ActorMoviesPage,
       props: true,
     },
     {

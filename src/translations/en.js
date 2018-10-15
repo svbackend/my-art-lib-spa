@@ -11,6 +11,7 @@ export default {
     edit: 'Edit',
     save: 'Save',
     more: 'More...',
+    loading: 'Loading...',
   },
   validation: {
     required: 'This field is required!',

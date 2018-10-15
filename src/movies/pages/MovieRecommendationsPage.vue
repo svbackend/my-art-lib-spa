@@ -67,8 +67,8 @@
     },
     methods: {
       getRecommendations(page = null) {
-        this.pageLoaded = false
-        this.movies = [];
+        this.pageLoaded = false;
+        this.recommendations = [];
 
         if (page !== null) {
           this.currentPage = page;
@@ -80,7 +80,6 @@
 
         this.$http.get(endpoint.replace('{id}', this.id), {params: {offset: offset, limit: limit}})
           .then(response => {
-            this.recommendations = []
             this.recommendations = response.data.data
             this.totalMovies = response.data.paging.total
             this.pageLoaded = true

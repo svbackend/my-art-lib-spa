@@ -12,6 +12,9 @@
     </div>
     <div class="movie-full">
       <h2 class="title">{{ $t('actorPage.movies') }}</h2>
+      <h3 class="subtitle" v-if="moviesTotal > 4">
+        <router-link :to="{ name: 'actor.movies', params: {id: actor.id} }" v-t="'common.more'"></router-link>
+      </h3>
       <movies-list :movies="movies"></movies-list>
     </div>
   </div>
@@ -29,6 +32,7 @@
       return {
         actor: {},
         movies: [],
+        moviesTotal: 0,
       }
     },
     methods: {
@@ -42,9 +46,10 @@
           })
       },
       getActorMovies(id) {
-        this.$http.get('/actors/' + id + '/movies')
+        this.$http.get('/actors/' + id + '/movies?limit=4')
           .then(response => {
-            this.movies = response.data.data.slice(0, 4);
+            this.movies = response.data.data;
+            this.moviesTotal = response.data.paging.total;
           })
           .catch(error => {
             console.log('error...')
