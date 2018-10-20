@@ -65,6 +65,7 @@ export default {
     recommendations_loading: 'Szukamy rekomendacji dla tego filmu, czekaj chwilę lub dodaj swoją rekomendację',
     addToInterestedMovies: 'Obejrzę ten film później',
     removeFromInterestedMovies: 'Nie będę oglądać',
+    recommended_times: 'polecan',
   },
   rateModal: {
     yourVote: 'Twoja ocena tego filmu?',

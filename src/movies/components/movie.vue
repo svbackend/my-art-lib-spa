@@ -49,6 +49,9 @@
         <div class="owner-rating" v-if="movie.ownerWatchedMovie && movie.ownerWatchedMovie.vote > 0">
             {{ movie.ownerWatchedMovie.vote }}<span class="icon"><i class="fa fa-star has-text-orange"></i></span>
         </div>
+        <div class="times-recommended" v-if="movie.rate && movie.rate > 0">
+          {{ movie.rate }}<span class="icon"><i class="fa fa-thumbs-up has-text-success"></i></span><span class="is-hidden-mobile" v-t="'movie.recommended_times'"></span>
+        </div>
       </div>
     </div>
   </div>

@@ -65,6 +65,7 @@ export default {
     recommendations_loading: 'Мы ищем рекомендации к этому фильму, подождите минутку, или добавьте свою рекомендацию',
     addToInterestedMovies: 'Хочу посмотреть',
     removeFromInterestedMovies: 'Не буду смотреть',
+    recommended_times: 'рекомендаций',
   },
   rateModal: {
     yourVote: 'Ваша оценка этому фильму?',

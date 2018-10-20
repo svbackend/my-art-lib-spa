@@ -65,6 +65,7 @@ export default {
     recommendations_loading: 'Ми наразі шукаємо рекомендації до цього фільму, зачекайте трішки, або добавте свою рекомендацію',
     addToInterestedMovies: 'Хочу переглянути',
     removeFromInterestedMovies: 'Не буду дивитись',
+    recommended_times: 'рекомендацій',
   },
   rateModal: {
     yourVote: 'Ваша оцінка цьому фільму?',
