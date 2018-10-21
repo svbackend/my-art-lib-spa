@@ -12,7 +12,10 @@
         </li>
       </ul>
     </nav>
-    <div class="notification is-warning" v-if="totalMovies === 0">
+    <div v-if="pageLoaded === false" class="preloader is-centered is-center">
+      <span class="icon is-large is-centered is-center"><i class="fa fa-spinner fa-spin fa-3x"></i></span>
+    </div>
+    <div class="notification is-warning" v-if="totalMovies === 0 && pageLoaded === true">
       {{ $t('userLibraryPage.empty') }}
     </div>
     <movies-list :movies="movies"></movies-list>
@@ -37,12 +40,14 @@
         movies: [],
         totalMovies: 0,
         perPage: 20,
-        currentPage: 1
+        currentPage: 1,
+        pageLoaded: false,
       }
     },
     methods: {
       getUserWatchedMovies(page = null) {
         this.movies = [];
+        this.pageLoaded = false;
 
         if (page !== null) {
           this.currentPage = page;
@@ -83,6 +88,7 @@
           .then(response => {
             this.movies = response.data.data
             this.totalMovies = response.data.paging.total
+            this.pageLoaded = true;
           })
           .catch(error => {
             console.log('-----error-------');
