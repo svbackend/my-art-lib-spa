@@ -24,7 +24,12 @@
       </p>
     </div>
 
-    <label class="label has-text-left" v-t="'fields.password'"></label>
+    <label class="label has-text-left">
+      {{ $t('fields.password') }}
+      <router-link :to="{ name: 'password.forgot', params: {username: username} }">
+        {{ $t('users.forgot_password') }}
+      </router-link>
+    </label>
     <div class="field has-addons">
       <p class="control is-expanded has-icons-left has-icons-right">
         <input class="input"

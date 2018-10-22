@@ -50,6 +50,7 @@ export default {
     my_profile: 'Mój profil',
     my_wishlist: 'Moja lista życzeń',
     profile: '{username}',
+    forgot_password: 'Zapomniales haslo?',
   },
   movie: {
     addToWatchedMovies: 'Dodaj do kolekcji',

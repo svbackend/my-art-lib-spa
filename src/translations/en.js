@@ -60,6 +60,7 @@ export default {
     my_profile: 'My Profile',
     my_wishlist: 'My Wishlist',
     profile: '{username}\'s profile',
+    forgot_password: 'Forgot password?',
   },
   movie: {
     addToWatchedMovies: 'Add to library',
@@ -106,5 +107,16 @@ export default {
   },
   actorPage: {
     movies: 'Movies',
-  }
+  },
+  forgotPasswordPage: {
+    success: 'Done!',
+    error: 'We can\'t send recovery token, looks like this email is not connected to any of our users',
+    sendRecoveryEmail: 'Send recovery email',
+    emailSent: 'Your password recovery email sent successfully. Please check your inbox',
+    tokenAlreadySent: 'Your password recovery email was sent early. Please check your inbox',
+  },
+  recoverPasswordPage: {
+    success: 'Your password successfully changed!',
+    error: 'Something went wrong.. Try again later please',
+  },
 }

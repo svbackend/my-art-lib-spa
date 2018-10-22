@@ -15,6 +15,8 @@ import EditPasswordPage  from './../users/pages/EditPasswordPage.vue'
 import RegistrationPage from './../users/pages/RegistrationPage.vue'
 import WishlistPage from './../users/pages/WishlistPage.vue'
 import ConfirmEmail from './../users/pages/ConfirmEmail.vue'
+import ForgotPasswordPage from './../users/pages/ForgotPasswordPage.vue'
+import RecoverPasswordPage from './../users/pages/RecoverPasswordPage.vue'
 import MovieRecommendationsPage from './../movies/pages/MovieRecommendationsPage'
 
 export default new Router({
@@ -49,6 +51,18 @@ export default new Router({
       path: '/confirmEmail/:token',
       name: 'confirmEmail',
       component: ConfirmEmail,
+      props: true,
+    },
+    {
+      path: '/forgotPassword',
+      name: 'password.forgot',
+      component: ForgotPasswordPage,
+      props: true,
+    },
+    {
+      path: '/recoverPassword/:token',
+      name: 'password.recover',
+      component: RecoverPasswordPage,
       props: true,
     },
     {

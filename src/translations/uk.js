@@ -50,6 +50,7 @@ export default {
     my_profile: 'Мій Профіль',
     my_wishlist: 'Мій список бажань',
     profile: '{username}',
+    forgot_password: 'Забули пароль?',
   },
   movie: {
     addToWatchedMovies: 'Додати в колекцію',
