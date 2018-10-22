@@ -127,11 +127,10 @@
             password: this.password,
           }
         }).then(response => {
-          this.sendAuthRequest(response);
+          this.sendAuthRequest();
           this.$validator.clearErrors();
           this.$v.$touch()
           this.submitStatus = 'OK'
-          this.$router.push({name: 'home'});
         }).catch(error => {
           if (error.response.status === 500) {
             return this.showServerError();
@@ -139,7 +138,7 @@
           return this.showErrors(error.response.data);
         })
       },
-      sendAuthRequest(registrationResponse) {
+      sendAuthRequest() {
         this.$http.post('/auth/login', {
           credentials: {
             username: this.username,
@@ -148,6 +147,7 @@
         }).then(response => {
           this.$store.dispatch('setUser', response.data);
           this.$store.dispatch('setApiToken', response.data.api_token);
+          this.$router.push({name: 'home'});
         }).catch(error => {
           if (error.response.status === 500) {
             return this.showServerError();
