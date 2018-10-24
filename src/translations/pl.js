@@ -88,5 +88,16 @@ export default {
   },
   actorPage: {
     movies: 'Filmy',
-  }
+  },
+  forgotPasswordPage: {
+    success: 'Done!',
+    error: 'We can\'t send recovery token, looks like this email is not connected to any of our users',
+    sendRecoveryEmail: 'Send recovery email',
+    emailSent: 'Your password recovery email sent successfully. Please check your inbox',
+    tokenAlreadySent: 'Your password recovery email was sent early. Please check your inbox',
+  },
+  recoverPasswordPage: {
+    success: 'Your password successfully changed!',
+    error: 'Something went wrong.. Try again later please',
+  },
 }

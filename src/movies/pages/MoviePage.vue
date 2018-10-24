@@ -143,6 +143,9 @@
       </div>
 
       <h2 class="title">{{ $t('movie.actors') }}</h2>
+      <h3 class="subtitle" v-if="actorsTotal > 4">
+        <router-link :to="{ name: 'movie.actors', params: {id: movie.id} }" v-t="'common.more'"></router-link>
+      </h3>
       <div class="movie-actors columns is-multiline is-flex">
         <div class="column-actor column is-fullheight is-3-tablet is-3-desktop is-half-mobile" v-for="actor in movie.actors.slice(0, 4)">
           <div class="actor">
@@ -191,6 +194,7 @@
         modalIsActive: false,
         vote: 0,
         moviesRecommendationsTotal: 0,
+        actorsTotal: 0,
       }
     },
     methods: {
@@ -201,6 +205,7 @@
           .then(response => {
             this.movie = response.data
             this.actors = this.movie.actors.reverse()
+            this.actorsTotal = this.actors.length
             this.vote = getUserVoteForMovie(this.movie)
           })
           .catch(error => {
