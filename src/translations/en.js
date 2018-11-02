@@ -39,7 +39,10 @@ export default {
       about: 'About',
       old_password: 'Old password',
       new_password: 'New password',
+      your_country: 'Country',
+      your_country_description: 'Country where you are living, you will receive notifications about release dates of movies which is in your wishlist. If your country not in the list - just select one which closest to you',
     },
+    select_country: 'Select country',
   },
   loginPage: {
     authorize: 'Sign In',

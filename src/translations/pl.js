@@ -30,6 +30,7 @@ export default {
     movie: {
       originalTitle: 'Oryginalny tytuł'
     },
+    select_country: 'Select country',
   },
   loginPage: {
     authorize: 'Autoryzacja',

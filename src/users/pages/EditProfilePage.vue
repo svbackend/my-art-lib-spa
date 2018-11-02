@@ -30,6 +30,25 @@
     </div>
 
     <div class="field">
+      <label class="label has-text-left" v-t="'fields.user.your_country'"></label>
+
+      <div class="control has-icons-left">
+        <div class="select">
+          <select v-model.lazy="country_code">
+            <option value="" selected>{{ $t('fields.select_country') }}</option>
+            <option v-for="country in countries" :value="country.code">{{ country.name }}</option>
+          </select>
+        </div>
+        <div class="icon is-small is-left">
+          <i class="fa fa-globe"></i>
+        </div>
+      </div>
+      <p class="help">
+        <span v-t="'fields.user.your_country_description'"></span>
+      </p>
+    </div>
+
+    <div class="field">
       <label class="label has-text-left" v-t="'fields.user.birth_date'"></label>
       <p class="control">
         <input class="input" :class="{ 'is-success': $validator.isSuccess('birth_date'), 'is-danger': $validator.isDanger('birth_date') }" type="text" placeholder="YYYY-MM-DD" v-model.trim="birth_date" @blur="$v.birth_date.$touch()">
@@ -90,7 +109,9 @@
         last_name: '',
         birth_date: '',
         about: '',
-        public_email: ''
+        public_email: '',
+        country_code: '',
+        countries: [],
       }
     },
     validations: {
@@ -128,6 +149,7 @@
             birth_date: this.birth_date ? moment(this.birth_date).format('YYYY-MM-DD') : '',
             about: this.about,
             public_email: this.public_email,
+            country_code: this.country_code,
           }
         }).then(response => {
           this.$validator.clearErrors();
@@ -149,16 +171,22 @@
           this.$router.push('/404');
         }
 
-          this.$http.get('/users/byUsername/' + username)
-            .then(response => {
-              let profile = response.data.profile;
-              this.id = response.data.id;
-              this.first_name = profile.first_name;
-              this.last_name = profile.last_name;
-              this.birth_date = profile.birth_date ? moment(profile.birth_date).format('YYYY-MM-DD') : '';
-              this.public_email = profile.public_email;
-              this.about = profile.about;
-            })
+        this.$http.get('/countries')
+          .then(response => {
+            this.countries = response.data
+          })
+
+        this.$http.get('/users/byUsername/' + username)
+          .then(response => {
+            let profile = response.data.profile;
+            this.id = response.data.id;
+            this.first_name = profile.first_name;
+            this.last_name = profile.last_name;
+            this.birth_date = profile.birth_date ? moment(profile.birth_date).format('YYYY-MM-DD') : '';
+            this.public_email = profile.public_email;
+            this.about = profile.about;
+            this.country_code = profile.country_code ? profile.country_code : '';
+          })
       },
     },
     created() {
