@@ -172,7 +172,7 @@
 </template>
 
 <script>
-  import {getImageUrl, addRecommendation, removeRecommendation, addToLibrary, removeFromLibrary, getUserVoteForMovie, setUserVoteForMovie} from "@/movies/helpers";
+  import {getImageUrl, addRecommendation, removeRecommendation, addToLibrary, removeFromLibrary, getUserVoteForMovie, setUserVoteForMovie, removeFromInterested} from "@/movies/helpers";
   import Movie from '@/movies/components/movie'
   import rateModal from '@/movies/components/rateModal'
 
@@ -296,18 +296,9 @@
           })
       },
       removeFromInterested() {
-        this.$http.delete('/users/interestedMovies/' + this.movie.userInterestedMovie.id)
-          .then(response => {
-            this.movie.userInterestedMovie = null;
-          })
-          .catch(error => {
-
-          })
+        removeFromInterested(this.movie)
       },
       addToLibrary() {
-        if (this.movie.userInterestedMovie) {
-          this.removeFromInterested();
-        }
         return addToLibrary(this.movie);
       },
       removeFromLibrary() {

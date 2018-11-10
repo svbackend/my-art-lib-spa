@@ -79,6 +79,7 @@ export function addToLibrary(movie) {
   })
     .then(response => {
       movie.isWatched = true
+      removeFromInterested(movie)
     })
 }
 
@@ -162,6 +163,19 @@ export function removeRecommendation(originalMovie, recommendedMovie) {
   })
     .then(response => {
       recommendedMovie.userRecommendedMovie = null
+    })
+}
+
+export function removeFromInterested(movie) {
+  if (!movie.userInterestedMovie || !movie.userInterestedMovie.id) {
+    return;
+  }
+  Vue.$http.delete('/users/interestedMovies/' + movie.userInterestedMovie.id)
+    .then(response => {
+      movie.userInterestedMovie = null;
+    })
+    .catch(error => {
+
     })
 }
 
