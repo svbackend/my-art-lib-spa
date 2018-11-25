@@ -38,6 +38,15 @@
         {{ $t('userRecommendationsPage.empty') }}
       </div>
       <movies-list :movies="recommendations"></movies-list>
+
+      <h2 class="title">{{ $t('profilePage.wishlist') }}</h2>
+      <h3 class="subtitle" v-if="wishlistTotal > 4">
+        <router-link :to="{ name: 'wishlist', params: {username: user.username} }" v-t="'common.more'"></router-link>
+      </h3>
+      <div class="notification is-warning" v-if="wishlistTotal === 0">
+        {{ $t('userWishlistPage.empty') }}
+      </div>
+      <movies-list :movies="wishlist"></movies-list>
     </div>
   </div>
 </template>
@@ -58,6 +67,8 @@
         watchedMoviesTotal: 0,
         recommendations: [],
         recommendationsTotal: 0,
+        wishlist: [],
+        wishlistTotal: 0,
       }
     },
     methods: {
@@ -68,6 +79,7 @@
             this.profile = this.user.profile
             this.getUserWatchedMovies(this.user.id)
             this.getUserRecommendations(this.user.id)
+            this.getWishlist(this.user.id)
             this.title = this.$t('users.profile', { username: this.user.username })
           })
           .catch(error => {
@@ -89,6 +101,16 @@
           .then(response => {
             this.recommendations = response.data.data
             this.recommendationsTotal = response.data.paging.total
+          })
+          .catch(error => {
+            //this.$router.push('/404');
+          })
+      },
+      getWishlist(id) {
+        this.$http.get('/users/' + id + '/interestedMovies?limit=4')
+          .then(response => {
+            this.wishlist = response.data.data
+            this.wishlistTotal = response.data.paging.total
           })
           .catch(error => {
             //this.$router.push('/404');
