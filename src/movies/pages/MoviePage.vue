@@ -43,10 +43,16 @@
       <div class="movie-right column">
         <h1 class="title">{{ movie.title }} ({{ movie.releaseDate | year }})</h1>
         <h2 class="subtitle" v-if="movie.title !== movie.originalTitle">{{ movie.originalTitle }}</h2>
+        <div class="tags" v-if="releaseDate !== null">
+          {{ $t('movie.releaseDate', {'country': releaseDate.country.name}) }}: {{ releaseDate.date | date }}
+        </div>
+        <div class="tags" v-else-if="movie.releaseDate">
+          {{ $t('movie.releaseDate', {'country': 'USA'}) }}: {{ movie.releaseDate | date }}
+        </div>
         <div class="tags">
-      <span class="tag is-dark" v-for="genre in movie.genres">
-        {{ genre.name }}
-      </span>
+          <span class="tag is-dark" v-for="genre in movie.genres">
+            {{ genre.name }}
+          </span>
         </div>
         <p class="movie__body">{{ movie.overview }}</p>
       </div>
@@ -195,6 +201,7 @@
         vote: 0,
         moviesRecommendationsTotal: 0,
         actorsTotal: 0,
+        releaseDate: null,
       }
     },
     methods: {
@@ -256,6 +263,7 @@
       loadData(id) {
         this.getMovie(id);
         this.getRecommendations(id);
+        this.loadReleaseDate(id);
       },
       addRecommendation(recommendedMovie) {
         addRecommendation(this.movie, recommendedMovie)
@@ -326,6 +334,25 @@
         if (this.loadRecommendationsHandler) {
           clearTimeout(this.loadRecommendationsHandler);
         }
+      },
+      loadReleaseDate(id) {
+        if (this.$store.state.isUserLoggedIn === false) {
+          return;
+        }
+
+        if (!this.$store.state.user.country_code) {
+          return;
+        }
+
+        const countryCode = this.$store.state.user.country_code;
+        this.$http.get(this.endpoint + id + "/releaseDate/" + countryCode)
+                .then(response => {
+                  this.releaseDate = response.data;
+                })
+                .catch(error => {
+                  // todo
+                  console.log(error)
+                })
       }
     },
     computed: {
