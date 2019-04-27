@@ -81,6 +81,7 @@ export default {
     addToInterestedMovies: 'I\'ll watch this movie later',
     removeFromInterestedMovies: 'I\'ll not watch this movie',
     recommended_times: 'recommendations',
+    releaseDate: 'Release date in {country}',
   },
   rateModal: {
     yourVote: 'Your vote for this movie?',

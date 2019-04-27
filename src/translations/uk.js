@@ -68,6 +68,7 @@ export default {
     addToInterestedMovies: 'Хочу переглянути',
     removeFromInterestedMovies: 'Не буду дивитись',
     recommended_times: 'рекомендацій',
+    releaseDate: 'Дата випуску в {country}',
   },
   rateModal: {
     yourVote: 'Ваша оцінка цьому фільму?',

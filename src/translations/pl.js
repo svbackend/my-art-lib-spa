@@ -68,6 +68,7 @@ export default {
     addToInterestedMovies: 'Obejrzę ten film później',
     removeFromInterestedMovies: 'Nie będę oglądać',
     recommended_times: 'polecan',
+    releaseDate: 'Data wydania w {country}',
   },
   rateModal: {
     yourVote: 'Twoja ocena tego filmu?',
