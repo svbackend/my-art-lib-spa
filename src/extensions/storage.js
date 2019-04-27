@@ -24,6 +24,7 @@ export default new Vuex.Store({
             email: null,
             apiToken: null,
             roles: [],
+            country_code: null,
         }
     },
     mutations: {
@@ -50,6 +51,7 @@ export default new Vuex.Store({
           state.user.username = user.username;
           state.user.email = user.email;
           state.user.roles = user.roles ? user.roles : [];
+          state.user.country_code = user.profile.country_code;
         },
         setLocale(state, locale) {
           state.locale = locale;
@@ -62,6 +64,7 @@ export default new Vuex.Store({
           state.user.apiToken = null;
           state.user.id = 0;
           state.user.username = null;
+          state.user.country_code = null;
 
           state.guest.token = null;
           state.guest.id = 0;
