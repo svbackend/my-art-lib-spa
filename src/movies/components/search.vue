@@ -22,7 +22,7 @@
           <div v-else v-for="movie in searchResults" class="search-results__movie column is-12">
             <div class="box search-results__movieBox">
 
-              <div v-if="$store.state.isUserLoggedIn === true" class="actions-buttons">
+              <div v-if="$store.state.isUserLoggedIn === true && movie.id" class="actions-buttons">
                 <a v-if="!movie.isWatched" @click="addToLibrary(movie, $event)" :title="$t('movie.addToWatchedMovies')">
                   <i class="fa fa-plus has-text-success"></i>
                 </a>
@@ -31,12 +31,21 @@
                 </a>
               </div>
 
-              <router-link
-                  active-class="is-active"
-                  class="link"
-                  :to="{ name: 'movie', params: { id: movie.id } }">
+              <div v-if="!movie.id" class="actions-buttons">
+                <a href="#!"><i class="fa fa-spin fa-spinner"></i></a>
+              </div>
+
+              <template v-if="movie.id">
+                <router-link
+                        active-class="is-active"
+                        class="link"
+                        :to="{ name: 'movie', params: { id: movie.id } }">
+                  {{ movie.title }} ({{ movie.releaseDate | year }})
+                </router-link>
+              </template>
+              <template v-else>
                 {{ movie.title }} ({{ movie.releaseDate | year }})
-              </router-link>
+              </template>
             </div>
           </div>
         </div>
@@ -79,7 +88,10 @@
             this.status = 'OK'
             setTimeout(() => {
               this.status = '';
-            }, 3000)
+              if (this.searchResults.filter((m) => { return !m.id }).length > 0) {
+                this.findMovies();
+              }
+            }, 2000)
           })
           .catch(error => {
             this.status = 'ERROR'
