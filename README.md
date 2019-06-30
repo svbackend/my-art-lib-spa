@@ -1,8 +1,6 @@
 ## Frontend / [Backend](https://github.com/svbackend/my-art-lib)
 
-VueJS Web App for sharing watched movies
-
-![Screen of the homepage](http://i.imgur.com/FUUUM8t.png)
+[MyKino.top](https://mykino.top): VueJS Web App for sharing watched movies and get recommendations from other people
 
 ## Build Setup
 
