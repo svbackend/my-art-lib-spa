@@ -3,6 +3,32 @@
     <div v-if="pageLoaded === false" class="preloader is-centered is-center">
       <span class="icon is-large is-centered is-center"><i class="fa fa-spinner fa-spin fa-3x"></i></span>
     </div>
+    <div class="filters columns">
+      <div class="filter-year column columns">
+        <div class="field column">
+          <div class="control">
+            <input type="number" v-model="filters.yf" class="input">
+          </div>
+        </div>
+        <div class="field column">
+          <div class="control">
+            <input type="number" v-model="filters.yt" class="input">
+          </div>
+        </div>
+      </div>
+      <div class="filter-genres column">
+        <div class="select is-multiple">
+          <select multiple size="3">
+            <option value="Argentina">Argentina</option>
+            <option value="Bolivia">Bolivia</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Brazil">Brazil</option>
+          </select>
+        </div>
+      </div>
+    </div>
     <movies-list :movies="movies"></movies-list>
     <pagination
         :current="currentPage"
@@ -35,6 +61,14 @@
         modalMovie: {},
         modalIsActive: false,
         pageLoaded: false,
+        filters: {
+          yf: 2008,
+          yt: 2050,
+          rf: 7,
+          rt: 10,
+          g: [5, 7, 17],
+          gt: 'AND'
+        }
       }
     },
     created() {
@@ -51,7 +85,7 @@
         }
         let offset = (this.currentPage * this.perPage) - this.perPage;
         let limit = this.perPage;
-        this.$http.get(this.endpoint, {params: {offset: offset, limit: limit}})
+        this.$http.get(this.endpoint, {params: {offset: offset, limit: limit, ...this.filters}})
           .then(response => {
             this.movies = response.data.data;
             this.totalMovies = response.data.paging.total;
