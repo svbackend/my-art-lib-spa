@@ -11,6 +11,7 @@ import { VueExtendLayout, layout } from 'vue-extend-layout'
 import i18n from './translations'
 import validator from '@/extensions/validator'
 import moment from 'moment'
+import Multiselect from 'vue-multiselect'
 
 require('./assets/sass/main.scss')
 
@@ -20,6 +21,7 @@ Vue.use(RouterComponent)
 Vue.use(Vuelidate)
 Vue.use(VueExtendLayout)
 Vue.use(Meta)
+Vue.use(Multiselect)
 
 sync(store, router)
 
