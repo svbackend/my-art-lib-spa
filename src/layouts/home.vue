@@ -10,8 +10,10 @@
         </div>
       </section>
 
-      <section class="container main-content">
-        <router-view></router-view>
+      <section class="section">
+        <div class="container">
+          <router-view></router-view>
+        </div>
       </section>
 
       <footer class="footer">

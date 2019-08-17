@@ -1,8 +1,5 @@
 <template>
-  <section class="wrapper">
-    <div v-if="pageLoaded === false" class="preloader is-centered is-center">
-      <span class="icon is-large is-centered is-center"><i class="fa fa-spinner fa-spin fa-3x"></i></span>
-    </div>
+  <section class="section-homepage">
     <div class="filters columns">
       <div class="filter-year column">
         <label class="label">Release year (from - to)</label>
@@ -31,23 +28,62 @@
       <div class="filter-genres column">
         <label class="label">Genres</label>
         <multiselect
-          v-model="filters.g"
+          v-model="selectedGenres"
           :options="genres"
           :multiple="true"
           :clear-on-select="false" :searchable="false"
-          :close-on-select="false" :custom-label="genreLabel" placeholder="Genres" label="genre_name" track-by="genre_id" :preselect-first="false">
+          :close-on-select="false" :custom-label="genreLabel" placeholder="Genres" label="genre_name"
+          track-by="genre_id" :preselect-first="false">
+          <template slot="selection" slot-scope="{ values, remove, isOpen }">
+            <template v-if="values.length > 0">
+              <div class="multiselect__tags-wrap">
+                <span class="multiselect__tag">
+                    <span>{{ values[0].genre_name }}</span>
+                    <i @click="remove(values[0])" aria-hidden="true" tabindex="1" class="multiselect__tag-icon"></i>
+                  </span>
+              </div>
+              <div class="multiselect__tags-wrap" v-if="values.length > 1">
+                <span class="multiselect__tag">
+                    <span>{{(values.length-1) }} more..</span>
+                  </span>
+              </div>
+            </template>
+          </template>
         </multiselect>
       </div>
 
-      <div class="filter-buttons column">
-        <div class="field">
-          <div class="control">
-            <button id="doublebutton-0" name="doublebutton-0" class="button is-success">Apply filter</button>
-            <button id="doublebutton2-0" name="doublebutton2-0" class="button is-danger">Reset</button>
-          </div>
-        </div>
+      <div class="filter-actors column">
+        <label class="label">Actors</label>
+        <multiselect
+          v-model="selectedGenres"
+          :options="genres"
+          :multiple="true"
+          :clear-on-select="false" :searchable="false"
+          :close-on-select="false" :custom-label="genreLabel" placeholder="Genres" label="genre_name"
+          track-by="genre_id" :preselect-first="false">
+          <template slot="selection" slot-scope="{ values, remove, isOpen }">
+            <template v-if="values.length > 0">
+              <div class="multiselect__tags-wrap">
+                <span class="multiselect__tag">
+                    <span>{{ values[0].genre_name }}</span>
+                    <i @click="remove(values[0])" aria-hidden="true" tabindex="1" class="multiselect__tag-icon"></i>
+                  </span>
+              </div>
+              <div class="multiselect__tags-wrap" v-if="values.length > 1">
+                <span class="multiselect__tag">
+                    <span>{{(values.length-1) }} more..</span>
+                  </span>
+              </div>
+            </template>
+          </template>
+        </multiselect>
       </div>
     </div>
+
+    <div v-if="pageLoaded === false" class="preloader is-centered is-center">
+      <span class="icon is-large is-centered is-center"><i class="fa fa-spinner fa-spin fa-3x"></i></span>
+    </div>
+
     <movies-list :movies="movies"></movies-list>
     <pagination
       :current="currentPage"
@@ -75,6 +111,7 @@
       return {
         movies: [],
         genres: [],
+        selectedGenres: [],
         endpoint: '/movies',
         isUserLoggedIn: false,
         totalMovies: 0,
@@ -112,8 +149,16 @@
                 genre_name: genre.name
               }
             });
+
+            this.selectedGenres = [];
+            for (let genre of this.genres) {
+              if (this.filters.g.indexOf(genre.genre_id) !== -1) {
+                this.selectedGenres.push(genre)
+              }
+            }
           })
-          .catch(error => {})
+          .catch(error => {
+          })
       },
       getAllMovies(page = null) {
         this.pageLoaded = false;
@@ -135,15 +180,24 @@
           })
       },
       genreLabel(option) {
-        console.log(option.genre_name)
         return option.genre_name
       }
-    }
+    },
+    watch: {
+      filters: {
+        handler: function(val, oldVal) {
+          console.log("Something changed in filter")
+        },
+        deep: true
+      }
+    },
   }
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss">
-
+  .filters .input {
+    height: 2.70em;
+  }
 </style>

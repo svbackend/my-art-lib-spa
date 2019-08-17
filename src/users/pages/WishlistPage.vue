@@ -1,5 +1,5 @@
 <template>
-  <section class="section wrapper">
+  <section class="section-wishlist">
     <nav v-if="user.username" class="breadcrumb is-large">
       <ul>
         <li>

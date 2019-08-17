@@ -15,6 +15,8 @@ $orange: #ff9800;
   color: $orange;
 }
 
+$section-padding: 1.5rem 1.5rem;
+
 @import '~bulma/bulma';
 
 // Custom variables
@@ -49,12 +51,7 @@ $vertical-form-max-width: 520px;
   background-color: transparent;
 }
 
-.main-content {
-  flex: 1;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  max-width: 100%;
-  margin: auto;
+section.section {
   .movie {
     max-width: 100%;
     padding: 0.75rem;

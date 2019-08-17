@@ -1,5 +1,5 @@
 <template>
-  <section class="section wrapper">
+  <section class="section-confirm-email">
     <div v-if="status === 'PENDING'" class="preloader is-centered is-center">
       <span class="icon is-large is-centered is-center"><i class="fa fa-spinner fa-spin fa-3x"></i></span>
     </div>
