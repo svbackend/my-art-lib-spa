@@ -1,28 +1,48 @@
 <template>
   <section class="section-homepage">
     <div class="filters columns">
-      <div class="filter-year column">
+      <div class="filter-year column" :class="{ 'is-hidden-mobile': !isFilterVisible }">
         <label class="label">Release year (from - to)</label>
         <div class="field has-addons">
           <div class="control">
-            <input v-model="filters.yf" class="input" placeholder="placeholder" type="text">
+            <input v-model="filters.yf" class="input" placeholder="From" type="text">
           </div>
           <div class="control">
-            <input v-model="filters.yt" class="input" placeholder="placeholder" type="text">
+            <input v-model="filters.yt" class="input" placeholder="To" type="text">
           </div>
         </div>
       </div>
 
-      <div class="filter-rating column">
-        <label class="label">Rating (from - to)</label>
+      <div class="filter-rating column" :class="{ 'is-hidden-mobile': !isFilterVisible }">
+        <label class="label">Rating (min - max)</label>
         <div class="field has-addons">
           <div class="control">
-            <input v-model="filters.rf" class="input" placeholder="placeholder" type="text">
+            <input v-model="filters.rf" class="input" placeholder="Min (1)" type="text">
           </div>
           <div class="control">
-            <input v-model="filters.rt" class="input" placeholder="placeholder" type="text">
+            <input v-model="filters.rt" class="input" placeholder="Max (10)" type="text">
           </div>
         </div>
+      </div>
+
+      <div class="filter-actors column" :class="{ 'is-hidden-mobile': !isFilterVisible }">
+        <label class="label">Actors</label>
+        <multiselect
+          v-model="selectedActors"
+          :options="actors"
+          :searchable="true"
+          :multiple="true" :limit="1" :limit-text="limitText"
+          :clear-on-select="false"
+          :loading="isLoadingActors"
+          :internal-search="false"
+          :close-on-select="false" placeholder="Type to search" label="actor_name"
+          track-by="actor_id" :preselect-first="false" @search-change="findActors">
+        </multiselect>
+        <p class="help">
+          <bswitch v-model="filters.at" :true-value="'AND'" :false-value="'OR'"></bswitch>
+          <label v-if="actorsFilterType === 'OR'">At least 1 in list</label>
+          <label v-else>Every in list</label>
+        </p>
       </div>
 
       <div class="filter-genres column">
@@ -30,54 +50,23 @@
         <multiselect
           v-model="selectedGenres"
           :options="genres"
-          :multiple="true"
+          :multiple="true" :limit="1" :limit-text="limitText"
           :clear-on-select="false" :searchable="false"
           :close-on-select="false" :custom-label="genreLabel" placeholder="Genres" label="genre_name"
           track-by="genre_id" :preselect-first="false">
-          <template slot="selection" slot-scope="{ values, remove, isOpen }">
-            <template v-if="values.length > 0">
-              <div class="multiselect__tags-wrap">
-                <span class="multiselect__tag">
-                    <span>{{ values[0].genre_name }}</span>
-                    <i @click="remove(values[0])" aria-hidden="true" tabindex="1" class="multiselect__tag-icon"></i>
-                  </span>
-              </div>
-              <div class="multiselect__tags-wrap" v-if="values.length > 1">
-                <span class="multiselect__tag">
-                    <span>{{(values.length-1) }} more..</span>
-                  </span>
-              </div>
-            </template>
-          </template>
         </multiselect>
+        <p class="help">
+          <bswitch v-model="filters.gt" :true-value="'AND'" :false-value="'OR'"></bswitch>
+          <label v-if="genresFilterType === 'OR'">At least 1 in list</label>
+          <label v-else>Every in list</label>
+
+          <span class="pull-right is-hidden-tablet">
+            <bswitch v-model="isFilterVisible"></bswitch>
+            <label>Show all filters</label>
+          </span>
+        </p>
       </div>
 
-      <div class="filter-actors column">
-        <label class="label">Actors</label>
-        <multiselect
-          v-model="selectedGenres"
-          :options="genres"
-          :multiple="true"
-          :clear-on-select="false" :searchable="false"
-          :close-on-select="false" :custom-label="genreLabel" placeholder="Genres" label="genre_name"
-          track-by="genre_id" :preselect-first="false">
-          <template slot="selection" slot-scope="{ values, remove, isOpen }">
-            <template v-if="values.length > 0">
-              <div class="multiselect__tags-wrap">
-                <span class="multiselect__tag">
-                    <span>{{ values[0].genre_name }}</span>
-                    <i @click="remove(values[0])" aria-hidden="true" tabindex="1" class="multiselect__tag-icon"></i>
-                  </span>
-              </div>
-              <div class="multiselect__tags-wrap" v-if="values.length > 1">
-                <span class="multiselect__tag">
-                    <span>{{(values.length-1) }} more..</span>
-                  </span>
-              </div>
-            </template>
-          </template>
-        </multiselect>
-      </div>
     </div>
 
     <div v-if="pageLoaded === false" class="preloader is-centered is-center">
@@ -98,9 +87,10 @@
   import Pagination from '@/components/pagination'
   import moviesList from '@/movies/components/moviesList'
   import Multiselect from 'vue-multiselect'
+  import bswitch from '@/components/bswitch'
 
   export default {
-    components: {moviesList, Pagination, Multiselect},
+    components: {bswitch, moviesList, Pagination, Multiselect},
     props: {
       page: {
         default: 1,
@@ -112,28 +102,31 @@
         movies: [],
         genres: [],
         selectedGenres: [],
-        endpoint: '/movies',
-        isUserLoggedIn: false,
+        actors: [],
+        selectedActors: [],
+        isLoadingActors: false,
+        loadingActorsTimer: null,
+        isFilterVisible: false,
         totalMovies: 0,
         perPage: 20,
         currentPage: 1,
         modalMovie: {},
-        modalIsActive: false,
         pageLoaded: false,
         filters: {
-          yf: 2008,
-          yt: 2050,
+          yf: (new Date()).getFullYear() - 5,
+          yt: null,
           rf: 7,
-          rt: 10,
+          rt: null,
           g: [5, 7, 17],
-          gt: 'AND'
+          gt: 'AND',
+          a: null,
+          at: 'AND',
         }
       }
     },
     created() {
       this.currentPage = this.page;
       this.getAllMovies(this.page);
-      this.isUserLoggedIn = this.$store.state.isUserLoggedIn;
       this.getGenres();
     },
     methods: {
@@ -143,7 +136,7 @@
         }
         this.$http.get('/genres')
           .then(response => {
-            this.genres = response.data.map((genre) => {
+            this.genres = response.data.data.map((genre) => {
               return {
                 genre_id: genre.id,
                 genre_name: genre.name
@@ -168,7 +161,7 @@
         }
         let offset = (this.currentPage * this.perPage) - this.perPage;
         let limit = this.perPage;
-        this.$http.get(this.endpoint, {params: {offset: offset, limit: limit, ...this.filters}})
+        this.$http.get('/movies', {params: {offset: offset, limit: limit, ...this.filters}})
           .then(response => {
             this.movies = response.data.data;
             this.totalMovies = response.data.paging.total;
@@ -181,20 +174,82 @@
       },
       genreLabel(option) {
         return option.genre_name
+      },
+      limitText(count) {
+        return `${count} more..`
+      },
+      findActors(query) {
+        this.isLoadingActors = true
+
+        if (this.loadingActorsTimer !== null) {
+          clearTimeout(this.loadingActorsTimer)
+          this.loadingActorsTimer = null
+        }
+
+        this.loadingActorsTimer = setTimeout(() => {
+          this.isLoadingActors = true
+          this.$http.get('/actors/search', {params: {n: query}})
+            .then(response => {
+              this.actors = response.data.data.map((actor) => {
+                let name = actor.originalName
+                if (actor.hasOwnProperty('name') && actor.name !== actor.originalName) {
+                  name = actor.name
+                }
+                return {
+                  actor_id: actor.id,
+                  actor_name: name
+                }
+              })
+            })
+            .catch(err => {
+              console.log('findActors error:')
+              console.log(err)
+            })
+            .finally(() => {
+              this.isLoadingActors = false;
+              clearTimeout(this.loadingActorsTimer);
+              this.loadingActorsTimer = null;
+            })
+        }, 750)
+      },
+      clearAll() {
+        this.actors = []
+      }
+    },
+    computed: {
+      genresFilterType: function () {
+        return this.filters.gt
+      },
+      actorsFilterType: function () {
+        return this.filters.at
       }
     },
     watch: {
       filters: {
-        handler: function(val, oldVal) {
-          console.log("Something changed in filter")
+        handler: function (val, oldVal) {
+          if (this.pageLoaded === false) return
+          console.log('reloading')
+          this.getAllMovies()
         },
         deep: true
-      }
+      },
+      selectedGenres: {
+        handler: function (val, oldVal) {
+          this.filters.g = val.map((genre) => {
+            return genre.genre_id
+          })
+        }
+      },
+      selectedActors: {
+        handler: function (val, oldVal) {
+          this.filters.a = val.map((actor) => {
+            return actor.actor_id
+          })
+        }
+      },
     },
   }
 </script>
-
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss">
   .filters .input {

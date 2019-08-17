@@ -10,14 +10,20 @@ $navbar-item-hover-background-color: rgba(255,255,255,.03);
 // Colors
 $dark: #121e31;
 $orange: #ff9800;
+$primary: #024453;
 
 .has-text-orange {
   color: $orange;
 }
 
+.has-text-centered-v {
+  vertical-align: middle;
+}
+
 $section-padding: 1.5rem 1.5rem;
 
 @import '~bulma/bulma';
+@import '~vue-multiselect/dist/vue-multiselect.min.css';
 
 // Custom variables
 $content-width: 800px;
@@ -31,6 +37,7 @@ $vertical-form-max-width: 520px;
 
 @import "stars/index";
 @import "navbar/index";
+@import "switch/index";
 
 @import url('https://fonts.googleapis.com/css?family=Black+Ops+One');
 
@@ -339,4 +346,15 @@ span.search-left-icon {
       margin: 0;
     }
   }
+}
+
+.multiselect__tag {
+  background: $primary;
+  .multiselect__tag-icon:after {
+    color: rgba(255,255,255,.75);
+  }
+}
+
+label.switch {
+  margin-left: 1px;
 }

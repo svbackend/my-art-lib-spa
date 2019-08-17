@@ -5,8 +5,13 @@ Vue.mixin({
     // todo idk what is going on here but this method called multiple times
     // and the problem here is that sometimes this.$v or $t are not defined
     // so I need to check these params in setters in order to not overwrite property by undefined value
-    Validator.setVuelidate(this.$v)
-    Validator.setI18n(this.$t)
+    if (this.$v) {
+      Validator.setVuelidate(this.$v)
+    }
+
+    if (this.$t) {
+      Validator.setI18n(this.$t)
+    }
   }
 });
 
@@ -14,9 +19,7 @@ const Validator = {
   $v: null,
   $t: function (path) { return path; },
   setVuelidate(Vuelidate) {
-    if (Vuelidate) {
-      this.$v = Vuelidate;
-    }
+    this.$v = Vuelidate;
   },
   setI18n(I18n) {
     // todo I hope I will find the way to remove this
@@ -25,7 +28,6 @@ const Validator = {
     } catch (e) {
       return;
     }
-
     this.$t = I18n;
   },
   // Properties
