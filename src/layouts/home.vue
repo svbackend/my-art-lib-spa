@@ -17,21 +17,7 @@
       </section>
 
       <footer class="footer">
-        <div class="container">
-          <div class="content has-text-centered">
-            <a href="https://www.themoviedb.org/"><img src="/src/assets/tmdb_small.png" alt="TMDb"></a>
-            <div class="control level-item">
-              <div class="tags has-addons">
-                <span class="tag is-dark">
-                  <a class="has-text-white" href="https://github.com/svbackend/my-art-lib" target="_blank">Backend</a>
-                </span>
-                <span class="tag is-info">
-                  <a class="has-text-white" href="https://github.com/svbackend/my-art-lib-spa" target="_blank">Frontend</a>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <footer-content></footer-content>
       </footer>
     </section>
   </div>
@@ -40,10 +26,11 @@
 <script>
   import Navigation from "@/components/navigation"
   import Search from "@/movies/components/search"
+  import FooterContent from "@/components/footer"
   import App from "@/App"
   export default {
     name: 'home',
     extends: App,
-    components: {Navigation, Search},
+    components: {FooterContent, Navigation, Search},
   }
 </script>
