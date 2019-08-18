@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="movie-left column is-2">
         <img src="/src/assets/user/default.png" class="is-rounded">
-        <div class="action-buttons">
+        <div class="action-buttons" v-if="$store.state.user.isUserLoggedIn && $store.state.user.id === user.id">
           <router-link class="button is-primary" :to="{ name: 'profile.edit', params: {username: user.username} }" v-t="'common.edit'"></router-link>
         </div>
       </div>

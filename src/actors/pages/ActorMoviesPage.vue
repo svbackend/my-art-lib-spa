@@ -1,5 +1,5 @@
 <template lang="html">
-  <section class="section wrapper">
+  <section class="section-actor-movies">
     <h2 class="title">{{ $t('actorPage.movies') }}</h2>
 
     <div v-if="pageLoaded === false" class="preloader is-centered is-center">

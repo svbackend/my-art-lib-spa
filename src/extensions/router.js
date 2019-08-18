@@ -98,14 +98,14 @@ export default new Router({
     },
     {
       path: '/u/:username',
-      name: 'library',
-      component: LibraryPage,
+      name: 'profile',
+      component: ProfilePage,
       props: true,
     },
     {
-      path: '/u/:username/profile',
-      name: 'profile',
-      component: ProfilePage,
+      path: '/u/:username/watched',
+      name: 'library',
+      component: LibraryPage,
       props: true,
     },
     {

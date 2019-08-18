@@ -73,6 +73,15 @@
       <span class="icon is-large is-centered is-center"><i class="fa fa-spinner fa-spin fa-3x"></i></span>
     </div>
 
+    <div v-if="pageLoaded === true && !movies.length" class="notification is-warning">
+      {{ $t('homePage.empty', {
+          filters: filters,
+          actors: selectedActors.reduce((list, actor) => { list + (actor.actor_name + ", ") }, ''),
+          genres: selectedGenres.reduce((list, genre) => { list + (genre.genre_name + ", ") }, '')
+        })
+      }}
+    </div>
+
     <movies-list :movies="movies"></movies-list>
     <pagination
       :current="currentPage"
@@ -112,19 +121,14 @@
         currentPage: 1,
         modalMovie: {},
         pageLoaded: false,
-        filters: {
-          yf: (new Date()).getFullYear() - 5,
-          yt: null,
-          rf: 7,
-          rt: null,
-          g: [5, 7, 17],
-          gt: 'AND',
-          a: null,
-          at: 'AND',
-        }
+        filters: {}
       }
     },
     created() {
+      this.filters = Object.assign({}, this.$store.state.filters);
+      this.selectedActors = this.filters.selectedActors
+      delete this.filters['selectedActors'];
+
       this.currentPage = this.page;
       this.getAllMovies(this.page);
       this.getGenres();
@@ -179,6 +183,10 @@
         return `${count} more..`
       },
       findActors(query) {
+        if (query && query.length < 3) {
+          return;
+        }
+
         this.isLoadingActors = true
 
         if (this.loadingActorsTimer !== null) {
@@ -228,7 +236,9 @@
       filters: {
         handler: function (val, oldVal) {
           if (this.pageLoaded === false) return
-          console.log('reloading')
+          this.filters.selectedActors = this.selectedActors
+          this.$store.dispatch('setFilters', this.filters);
+          delete this.filters['selectedActors']
           this.getAllMovies()
         },
         deep: true

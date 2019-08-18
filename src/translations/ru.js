@@ -54,7 +54,7 @@ export default {
     forgot_password: 'Забыли пароль?',
   },
   movie: {
-    addToWatchedMovies: 'Добавить в коллекцию',
+    addToWatchedMovies: 'К просмотренным',
     removeFromWatchedMovies: 'Удалить с колекции',
     removeFromWatchedMoviesShort: 'Удалить',
     addedToWatchedMovies: 'Просмотрено',
@@ -102,4 +102,7 @@ export default {
     success: 'Ваш пароль успешно изменён!',
     error: 'Ваш токен похоже устарел либо уже не активный',
   },
+  homePage: {
+    empty: 'За указанными параметрами фильтрации мы не нашли ни одного фильма {actors} {genres}'
+  }
 }
