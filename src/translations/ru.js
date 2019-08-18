@@ -103,6 +103,23 @@ export default {
     error: 'Ваш токен похоже устарел либо уже не активный',
   },
   homePage: {
-    empty: 'За указанными параметрами фильтрации мы не нашли ни одного фильма {actors} {genres}'
+    empty: "Мы не нашли ни одного фильма за указанными фильтрами.",
+    emptySuggestion: "Вы можете сами изменить параметры поиска либо",
+    emptyResetFilter: "сбросить фильтр",
+  },
+  filters: {
+    from: 'От',
+    to: 'До',
+    movieYear: 'Год выпуска (от - до)',
+    movieRating: 'Рейтинг (от - до)',
+    movieActors: 'Актёры',
+    movieGenres: 'Жанры',
+    everyInList: 'Каждый из списка',
+    atLeastOneInList: 'Хотя бы 1 из списка',
+    andMore: 'И ещё {n}',
+    typeToSearch: 'Пишите для поиска',
+    showAllFilters: 'Показать все фильтры',
+    noResult: 'Ничего не найдено, попробуйте изменить запрос',
+    noOptions: 'Список пустой.',
   }
 }

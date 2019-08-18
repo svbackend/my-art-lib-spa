@@ -7,7 +7,7 @@ export default {
     home: 'Home',
     close: 'Close',
     search: 'Search',
-    searchNoResults: 'Looks like we have not found any movies by your query "{query}"',
+    searchNoResults: 'Looks like we did not found any movies by your query "{query}"',
     edit: 'Edit',
     save: 'Save',
     more: 'More...',
@@ -123,4 +123,24 @@ export default {
     success: 'Your password successfully changed!',
     error: 'Your token is expired or already disabled',
   },
+  homePage: {
+    empty: "We didn't found any movies by your filtration params.",
+    emptySuggestion: "You can either change filter manually or",
+    emptyResetFilter: "reset filter",
+  },
+  filters: {
+    from: 'From',
+    to: 'To',
+    movieYear: 'Release year (from - to)',
+    movieRating: 'Rating (min - max)',
+    movieActors: 'Actors',
+    movieGenres: 'Genres',
+    everyInList: 'Every in list',
+    atLeastOneInList: 'At least 1 in list',
+    andMore: '{n} more..',
+    typeToSearch: 'Type to search',
+    showAllFilters: 'Show all filters',
+    noResult: 'No elements found. Consider changing the search query.',
+    noOptions: 'List is empty.',
+  }
 }

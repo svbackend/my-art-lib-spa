@@ -2,19 +2,19 @@
   <section class="section-homepage">
     <div class="filters columns">
       <div class="filter-year column" :class="{ 'is-hidden-mobile': !isFilterVisible }">
-        <label class="label">Release year (from - to)</label>
+        <label class="label">{{ $t('filters.movieYear') }}</label>
         <div class="field has-addons">
           <div class="control">
-            <input v-model="filters.yf" class="input" placeholder="From" type="text">
+            <input v-model="filters.yf" class="input" :placeholder="$t('filters.from')" type="text">
           </div>
           <div class="control">
-            <input v-model="filters.yt" class="input" placeholder="To" type="text">
+            <input v-model="filters.yt" class="input" :placeholder="$t('filters.to')" type="text">
           </div>
         </div>
       </div>
 
       <div class="filter-rating column" :class="{ 'is-hidden-mobile': !isFilterVisible }">
-        <label class="label">Rating (min - max)</label>
+        <label class="label">{{ $t('filters.movieRating') }}</label>
         <div class="field has-addons">
           <div class="control">
             <input v-model="filters.rf" class="input" placeholder="Min (1)" type="text">
@@ -26,43 +26,43 @@
       </div>
 
       <div class="filter-actors column" :class="{ 'is-hidden-mobile': !isFilterVisible }">
-        <label class="label">Actors</label>
+        <label class="label">{{ $t('filters.movieActors') }}</label>
         <multiselect
           v-model="selectedActors"
           :options="actors"
           :searchable="true"
-          :multiple="true" :limit="1" :limit-text="limitText"
+          :multiple="true" :limit="1" :limit-text="limitText" :noResult="$t('filters.noResult')" :noOptions="$t('filters.noOptions')"
           :clear-on-select="false"
           :loading="isLoadingActors"
           :internal-search="false"
-          :close-on-select="false" placeholder="Type to search" label="actor_name"
+          :close-on-select="false" :placeholder="$t('filters.typeToSearch')" label="actor_name"
           track-by="actor_id" :preselect-first="false" @search-change="findActors">
         </multiselect>
         <p class="help">
           <bswitch v-model="filters.at" :true-value="'AND'" :false-value="'OR'"></bswitch>
-          <label v-if="actorsFilterType === 'OR'">At least 1 in list</label>
-          <label v-else>Every in list</label>
+          <label v-if="actorsFilterType === 'OR'">{{ $t('filters.atLeastOneInList') }}</label>
+          <label v-else>{{ $t('filters.everyInList') }}</label>
         </p>
       </div>
 
       <div class="filter-genres column">
-        <label class="label">Genres</label>
+        <label class="label">{{ $t('filters.movieGenres') }}</label>
         <multiselect
           v-model="selectedGenres"
           :options="genres"
           :multiple="true" :limit="1" :limit-text="limitText"
           :clear-on-select="false" :searchable="false"
-          :close-on-select="false" :custom-label="genreLabel" placeholder="Genres" label="genre_name"
+          :close-on-select="false" :custom-label="genreLabel" :placeholder="$t('filters.movieGenres')" label="genre_name"
           track-by="genre_id" :preselect-first="false">
         </multiselect>
         <p class="help">
           <bswitch v-model="filters.gt" :true-value="'AND'" :false-value="'OR'"></bswitch>
-          <label v-if="genresFilterType === 'OR'">At least 1 in list</label>
-          <label v-else>Every in list</label>
+          <label v-if="genresFilterType === 'OR'">{{ $t('filters.atLeastOneInList') }}</label>
+          <label v-else>{{ $t('filters.everyInList') }}</label>
 
           <span class="pull-right is-hidden-tablet">
             <bswitch v-model="isFilterVisible"></bswitch>
-            <label>Show all filters</label>
+            <label>{{ $t('filters.showAllFilters') }}</label>
           </span>
         </p>
       </div>
@@ -75,11 +75,12 @@
 
     <div v-if="pageLoaded === true && !movies.length" class="notification is-warning">
       {{ $t('homePage.empty', {
-          filters: filters,
-          actors: selectedActors.reduce((list, actor) => { list + (actor.actor_name + ", ") }, ''),
-          genres: selectedGenres.reduce((list, genre) => { list + (genre.genre_name + ", ") }, '')
+          // 'filters': filters,
+          // 'actors': selectedActors.reduce((list, actor) => { return list + "" + (actor.actor_name + ", ") }, ''),
+          // 'genres': selectedGenres.reduce((list, genre) => { return list + "" + (genre.genre_name + ", ") }, '')
         })
       }}
+      {{ $t('homePage.emptySuggestion') }} <a href="#!" @click="resetFilter">{{ $t('homePage.emptyResetFilter') }}</a>
     </div>
 
     <movies-list :movies="movies"></movies-list>
@@ -121,11 +122,20 @@
         currentPage: 1,
         modalMovie: {},
         pageLoaded: false,
-        filters: {}
+        filters: {
+          yf: Number,
+          yt: Number,
+          rf: Number,
+          rt: Number,
+          g: Array,
+          gt: 'AND',
+          a: Array,
+          at: 'AND',
+        }
       }
     },
     created() {
-      this.filters = Object.assign({}, this.$store.state.filters);
+      this.filters = Object.assign({}, this.$store.state.filters)
       this.selectedActors = this.filters.selectedActors
       delete this.filters['selectedActors'];
 
@@ -180,7 +190,7 @@
         return option.genre_name
       },
       limitText(count) {
-        return `${count} more..`
+        return this.$t('filters.andMore', {n: count})
       },
       findActors(query) {
         if (query && query.length < 3) {
@@ -220,8 +230,22 @@
             })
         }, 750)
       },
-      clearAll() {
-        this.actors = []
+      resetFilter() {
+        this.selectedGenres = []
+        this.selectedActors = []
+        this.filters = {
+          yf: null,
+            yt: null,
+            rf: null,
+            rt: null,
+            g: [],
+            gt: 'AND',
+            a: [],
+            at: 'AND',
+        }
+        let filtersCopy = Object.assign({}, this.filters)
+        this.$store.dispatch('setFilters', filtersCopy);
+        this.$forceUpdate()
       }
     },
     computed: {
@@ -237,7 +261,8 @@
         handler: function (val, oldVal) {
           if (this.pageLoaded === false) return
           this.filters.selectedActors = this.selectedActors
-          this.$store.dispatch('setFilters', this.filters);
+          let filtersCopy = Object.assign({}, this.filters)
+          this.$store.dispatch('setFilters', filtersCopy);
           delete this.filters['selectedActors']
           this.getAllMovies()
         },

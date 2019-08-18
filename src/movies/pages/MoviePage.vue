@@ -131,8 +131,8 @@
                 <img
                   :src="posterUrl(recommendedMovie.posterUrl ? recommendedMovie.posterUrl : recommendedMovie.originalPosterUrl, 260, 380)"
                   :alt="recommendedMovie.title"/>
-                <div v-if="$store.state.isUserLoggedIn === true" class="actions right">
-                  <a v-if="recommendedMovie.userRecommendedMovie === null" @click="addRecommendation(recommendedMovie)"
+                <div class="actions right">
+                  <a v-if="!$store.state.isUserLoggedIn || recommendedMovie.userRecommendedMovie === null" @click="addRecommendation(recommendedMovie)"
                      class="addRecommendation button is-success is-small">{{ $t('movie.addRecommendation') }}
                     &nbsp;
                     <span class="icon is-medium"><i class="fa fa-thumbs-up"></i></span>
@@ -292,6 +292,10 @@
         this.loadReleaseDate(id);
       },
       addRecommendation(recommendedMovie) {
+        if (this.$store.state.isUserLoggedIn === false) {
+          this.$router.push({name: 'registration'})
+          return;
+        }
         addRecommendation(this.movie, recommendedMovie)
 
         for (let recommendation of this.recommendations) {

@@ -2,7 +2,7 @@
   <div class="movie">
     <div class="poster">
       <img :src="getPosterUrl(movie)" :alt="movie.title"/>
-      <div v-if="$store.state.isUserLoggedIn === true" class="actions right">
+      <div class="actions right">
         <a v-if="!movie.isWatched" class="addToLibrary button is-success is-small"
            @click="addToLibrary(movie, $event)">{{ $t('movie.addToWatchedMovies') }}
           &nbsp;
@@ -41,16 +41,17 @@
     <div class="information">
       <div class="title">
         <router-link
-            active-class="is-active"
-            class="link"
-            :to="{ name: 'movie', params: { id: movie.id } }">
+          active-class="is-active"
+          class="link"
+          :to="{ name: 'movie', params: { id: movie.id } }">
           {{ movie.title }} ({{ movie.releaseDate | year }})
         </router-link>
         <div class="owner-rating" v-if="movie.ownerWatchedMovie && movie.ownerWatchedMovie.vote > 0">
-            {{ movie.ownerWatchedMovie.vote }}<span class="icon"><i class="fa fa-star has-text-orange"></i></span>
+          {{ movie.ownerWatchedMovie.vote }}<span class="icon"><i class="fa fa-star has-text-orange"></i></span>
         </div>
         <div class="times-recommended" v-if="movie.rate && movie.rate > 0">
-          {{ movie.rate }}<span class="icon"><i class="fa fa-thumbs-up has-text-success"></i></span><span class="is-hidden-mobile" v-t="'movie.recommended_times'"></span>
+          {{ movie.rate }}<span class="icon"><i class="fa fa-thumbs-up has-text-success"></i></span><span
+          class="is-hidden-mobile" v-t="'movie.recommended_times'"></span>
         </div>
       </div>
     </div>
@@ -59,6 +60,7 @@
 
 <script>
   import {getUserVoteForMovie, addToLibrary, removeFromLibrary, getImageUrl} from '@/movies/helpers/index'
+
   export default {
     name: "movie",
     props: {
@@ -81,8 +83,16 @@
       getVote(movie) {
         return getUserVoteForMovie(movie)
       },
-      addToLibrary(movie, e) { return addToLibrary(movie, e) },
-      removeFromLibrary(movie, e) { return removeFromLibrary(movie, e) },
+      addToLibrary(movie, e) {
+        if (this.$store.state.isUserLoggedIn === false) {
+          this.$router.push({name: 'registration'})
+          return
+        }
+        return addToLibrary(movie, e)
+      },
+      removeFromLibrary(movie, e) {
+        return removeFromLibrary(movie, e)
+      },
     }
   }
 </script>

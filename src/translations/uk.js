@@ -54,7 +54,7 @@ export default {
     forgot_password: 'Забули пароль?',
   },
   movie: {
-    addToWatchedMovies: 'Додати в колекцію',
+    addToWatchedMovies: 'До переглянутих',
     removeFromWatchedMovies: 'Видалити з колекції',
     removeFromWatchedMoviesShort: 'Видалити',
     addedToWatchedMovies: 'Переглянуто',
@@ -102,4 +102,24 @@ export default {
     success: 'Ваш пароль успішно змінено!',
     error: 'Схоже що ваш токен вже не актуальний',
   },
+  homePage: {
+    empty: "Ми не найшли жодного фільму за вказаними параметрами.",
+    emptySuggestion: "Ви можете самі змінити параметри пошуку або",
+    emptyResetFilter: "скинути фільтр",
+  },
+  filters: {
+    from: 'Від',
+    to: 'До',
+    movieYear: 'Рік випуску (від - до)',
+    movieRating: 'Рейтинг (від - до)',
+    movieActors: 'Актори',
+    movieGenres: 'Жанри',
+    everyInList: 'Кожен з списку',
+    atLeastOneInList: 'Хоча би 1 з списку',
+    andMore: 'І ще {n}',
+    typeToSearch: 'Пишіть для пошуку',
+    showAllFilters: 'Показати всі фільтри',
+    noResult: 'Нічого не найдено, попробуйте змінити запит',
+    noOptions: 'Список порожній.',
+  }
 }
