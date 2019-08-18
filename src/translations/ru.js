@@ -115,10 +115,10 @@ export default {
     movieActors: 'Актёры',
     movieGenres: 'Жанры',
     everyInList: 'Каждый из списка',
-    atLeastOneInList: 'Хотя бы 1 из списка',
+    atLeastOneInList: 'Любой из списка',
     andMore: 'И ещё {n}',
     typeToSearch: 'Пишите для поиска',
-    showAllFilters: 'Показать все фильтры',
+    showAllFilters: 'Все фильтры',
     noResult: 'Ничего не найдено, попробуйте изменить запрос',
     noOptions: 'Список пустой.',
   }
