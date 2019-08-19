@@ -5,24 +5,24 @@
         <div class="movie-left column is-4">
           <img :src="posterUrl(movie.posterUrl ? movie.posterUrl : movie.originalPosterUrl, 420, 620)"
                :alt="movie.title">
-          <div class="action-buttons" v-if="$store.state.isUserLoggedIn === true">
+          <div class="action-buttons">
             <p>
-              <a v-if="movie.isWatched === false" @click="addToLibrary" class="button is-success">
+              <a v-if="$store.state.isUserLoggedIn === false || movie.isWatched === false" @click="addToLibrary" class="button is-success">
                 <i class="fa fa-plus"></i>&nbsp;{{ $t('movie.addToWatchedMovies') }}
               </a>
-              <a v-else @click="removeFromLibrary" class="button is-danger">
+              <a v-else-if="movie.isWatched === false" @click="removeFromLibrary" class="button is-danger">
                 <i class="fa fa-times"></i>&nbsp;{{ $t('movie.removeFromWatchedMovies') }}
               </a>
-              <a v-if="movie.isWatched === true" @click="openModal" class="button">
+              <a v-if="$store.state.isUserLoggedIn === true && movie.isWatched === true" @click="openModal" class="button">
                 <template v-if="userVote">{{userVote}}&nbsp;</template>
                 <i class="fa fa-star has-text-danger"></i>
               </a>
             </p>
-            <p v-if="movie.isWatched === false">
-              <a v-if="movie.userInterestedMovie === null" @click="addToInterested" class="button is-primary">
+            <p v-if="$store.state.isUserLoggedIn === false || movie.isWatched === false">
+              <a v-if="$store.state.isUserLoggedIn === false || movie.userInterestedMovie === null" @click="addToInterested" class="button is-primary">
                 <i class="fa fa-history"></i>&nbsp;{{ $t('movie.addToInterestedMovies') }}
               </a>
-              <a v-else @click="removeFromInterested" class="button is-danger">
+              <a v-else-if="movie.userInterestedMovie !== null" @click="removeFromInterested" class="button is-danger">
                 <i class="fa fa-history"></i>&nbsp;{{ $t('movie.removeFromInterestedMovies') }}
               </a>
             </p>
@@ -323,6 +323,10 @@
           })
       },
       addToInterested() {
+        if (this.$store.state.isUserLoggedIn === false) {
+          this.$router.push({name: 'registration'})
+          return;
+        }
         this.$http.post('/users/interestedMovies', {
           movie_id: this.movie.id,
         })
@@ -337,6 +341,10 @@
         removeFromInterested(this.movie)
       },
       addToLibrary() {
+        if (this.$store.state.isUserLoggedIn === false) {
+          this.$router.push({name: 'registration'})
+          return;
+        }
         return addToLibrary(this.movie);
       },
       removeFromLibrary() {
