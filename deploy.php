@@ -49,6 +49,8 @@ task('cleanup', function () {
     runLocally("mv old_index.html index.html");
 });
 
+fail('rsync', 'cleanup');
+
 task('deploy', [
     'deploy:prepare',
     'rsync',
