@@ -2,10 +2,7 @@
   <div class="movie" v-if="user.profile">
     <div class="columns">
       <div class="movie-left column is-2">
-        <img src="/src/assets/user/default.png" class="is-rounded">
-        <div class="action-buttons" v-if="$store.state.user.isUserLoggedIn && $store.state.user.id === user.id">
-          <router-link class="button is-primary" :to="{ name: 'profile.edit', params: {username: user.username} }" v-t="'common.edit'"></router-link>
-        </div>
+        <img src="/src/assets/user/default.png" class="is-rounded" alt="Default profile photo">
       </div>
       <div class="movie-right column">
         <h1 class="title">{{ profile.first_name }} {{ profile.last_name }}</h1>
@@ -18,6 +15,11 @@
             <span class="has-text-danger">{{ $t('profilePage.emptyAbout', {username: username}) }}</span>
           </template>
         </p>
+        <div class="action-buttons hero-buttons is-pulled-left" v-if="$store.state.isUserLoggedIn">
+          <router-link v-if="$store.state.user.id === user.id" class="button is-primary" :to="{ name: 'profile.edit', params: {username: user.username} }" v-t="'common.edit'"></router-link>
+          <router-link v-if="isModerator()" class="button is-primary" :to="{ name: 'empty.movies' }" v-t="'common.translations'"></router-link>
+          <a v-if="isAdmin()" class="button is-primary" @click="switchModer">Switch role ({{ user.roles.toString() }})</a>
+        </div>
       </div>
     </div>
     <div class="movie-full">
@@ -116,9 +118,30 @@
             //this.$router.push('/404');
           })
       },
+      switchModer() {
+        if (this.user.roles.indexOf('ROLE_MODER') === -1) {
+          this.user.roles.push('ROLE_MODER')
+        } else {
+          this.user.roles = ['ROLE_USER']
+        }
+        this.$http.post('/users/' + this.user.id + '/roles', {roles: this.user.roles})
+          .then(response => {
+
+          })
+          .catch(error => {
+            alert(error)
+            //this.$router.push('/404');
+          })
+      },
       loadData(username) {
         this.getUser(username);
       },
+      isModerator() {
+        return this.$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1 || this.$store.state.user.roles.indexOf('ROLE_MODER') !== -1
+      },
+      isAdmin() {
+        return this.$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1
+      }
     },
     created() {
       this.loadData(this.username)

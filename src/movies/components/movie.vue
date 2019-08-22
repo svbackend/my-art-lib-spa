@@ -44,7 +44,7 @@
           active-class="is-active"
           class="link"
           :to="{ name: 'movie', params: { id: movie.id } }">
-          {{ movie.title }} ({{ movie.releaseDate | year }})
+          {{ movie.title ? movie.title : movie.originalTitle }} ({{ movie.releaseDate | year }})
         </router-link>
         <div class="owner-rating" v-if="movie.ownerWatchedMovie && movie.ownerWatchedMovie.vote > 0">
           {{ movie.ownerWatchedMovie.vote }}<span class="icon"><i class="fa fa-star has-text-orange"></i></span>

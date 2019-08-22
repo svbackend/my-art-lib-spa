@@ -28,12 +28,12 @@
             </p>
             <p>
               <router-link
-                v-if="$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1"
+                v-if="isModerator()"
                 class="button is-primary"
                 :to="{ name: 'movie.edit', params: { id: movie.id } }">
                 {{ $t('common.edit') }}
               </router-link>
-              <a v-if="$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1"
+              <a v-if="isAdmin()"
                  :href="'https://www.themoviedb.org/movie/' + movie.tmdb.id + '-title'"
                  class="button"
                  target="_blank">
@@ -391,6 +391,12 @@
             // todo
             console.log(error)
           })
+      },
+      isModerator() {
+        return this.$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1 || this.$store.state.user.roles.indexOf('ROLE_MODER') !== -1
+      },
+      isAdmin() {
+        return this.$store.state.user.roles.indexOf('ROLE_ADMIN') !== -1
       }
     },
     computed: {

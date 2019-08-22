@@ -19,7 +19,6 @@
     components: {rateModal, Movie},
     props: {
       movies: {
-        default: [],
         type: Array
       }
     },

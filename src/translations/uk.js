@@ -11,6 +11,7 @@ export default {
     edit: 'Редагувати',
     save: 'Зберегти',
     more: 'Більше...',
+    translations: 'Переклади',
   },
   validation: {
     required: 'Це поле є обов\'язковим!',

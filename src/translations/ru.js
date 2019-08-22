@@ -11,6 +11,7 @@ export default {
     edit: 'Редактировать',
     save: 'Сохранить',
     more: 'Больше...',
+    translations: 'Переводы',
   },
   validation: {
     required: 'Это поле является обязательным!',

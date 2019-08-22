@@ -12,6 +12,7 @@ export default {
     save: 'Save',
     more: 'More...',
     loading: 'Loading...',
+    translations: 'Translations',
   },
   validation: {
     required: 'This field is required!',

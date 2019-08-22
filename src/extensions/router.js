@@ -19,6 +19,7 @@ import ConfirmEmail from './../users/pages/ConfirmEmail.vue'
 import ForgotPasswordPage from './../users/pages/ForgotPasswordPage.vue'
 import RecoverPasswordPage from './../users/pages/RecoverPasswordPage.vue'
 import MovieRecommendationsPage from './../movies/pages/MovieRecommendationsPage'
+import EmptyTransPage from "@/users/pages/EmptyTransPage";
 
 export default new Router({
   routes: [
@@ -136,6 +137,12 @@ export default new Router({
       path: '/movie/:id/recommendations',
       name: 'movie.recommendations',
       component: MovieRecommendationsPage,
+      props: true,
+    },
+    {
+      path: '/empty/movies',
+      name: 'empty.movies',
+      component: EmptyTransPage,
       props: true,
     },
   ],
