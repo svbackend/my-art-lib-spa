@@ -1,43 +1,28 @@
 <script>
+  import {apiHost} from "@/config";
+
   export default {
     metaInfo: {
-      title: 'Movies Recommendations',
-      titleTemplate: '%s | myKino.top',
+      title: 'Movie Catalog with crowd based recommendations',
+      titleTemplate: '%s | MyKino.top',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      ],
+      link: [
+        { rel: 'dns-prefetch', href: apiHost }
       ]
     },
     data () {
       return {
-        guest: {},
         user: {},
       }
     },
     created() {
-      if (this.loadUser() === false) {
-        this.loadGuestSession();
-      }
+      const html = document.documentElement;
+      html.setAttribute('lang', this.$t('seo.lang'));
+      this.loadUser()
     },
     methods: {
-      loadGuestSession() {
-        let guest = this.$store.state.guest;
-
-        if (guest.token !== null) {
-          //todo somehow check is guest session not expired yet and maybe load new one
-          this.guest = guest;
-          return;
-        }
-
-        this.$http.post('/guests')
-          .then(response => {
-            this.guest = response.data;
-            this.$store.dispatch('setGuest', this.guest);
-          })
-          .catch(error => {
-            console.log('-----error-------');
-            console.log(error);
-          })
-      },
       loadUser() {
         let user = this.$store.state.user;
 

@@ -207,8 +207,27 @@
   } from "@/movies/helpers";
   import Movie from '@/movies/components/movie'
   import rateModal from '@/movies/components/rateModal'
-
+  import moment from 'moment';
   export default {
+    metaInfo() {
+      let releaseDateFull = moment(String(this.movie.releaseDate)).format('DD.MM.YYYY');
+      let releaseDateYear = moment(String(this.movie.releaseDate)).format('YYYY');
+      return {
+        title: this.$t('seo.movie.title', {t: this.movie.title, ot: this.movie.originalTitle, y: releaseDateYear}),
+        meta: [
+          {description: this.$t('seo.movie.description', {t: this.movie.title, ot: this.movie.originalTitle, y: releaseDateYear})},
+          {keywords: this.$t('seo.movie.keywords', {t: this.movie.title, ot: this.movie.originalTitle, y: releaseDateYear})},
+          {property: 'og:title', content: this.$t('seo.movie.title', {t: this.movie.title, ot: this.movie.originalTitle, y: releaseDateYear})},
+          {property: 'og:type', content: 'video.movie'},
+          {property: 'og:url', content: 'https://mykino.top' + this.$route.fullPath},
+          {property: 'og:site_name', content: this.$t('seo.name')},
+          {property: 'og:description', content: this.$t('seo.movie.description', {t: this.movie.title, ot: this.movie.originalTitle, y: releaseDateYear})},
+          {property: 'video:duration', content: this.movie.runtime ? this.movie.runtime : 94*60},
+          {property: 'video:release_date', content: releaseDateFull},
+          {property: 'image', content: this.posterUrl(this.movie.posterUrl ? this.movie.posterUrl : this.movie.originalPosterUrl)},
+        ],
+      }
+    },
     props: ['id'],
     components: {Movie, rateModal},
     data() {

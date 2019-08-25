@@ -31,7 +31,8 @@
           v-model="selectedActors"
           :options="actors"
           :searchable="true"
-          :multiple="true" :limit="1" :limit-text="limitText" :noResult="$t('filters.noResult')" :noOptions="$t('filters.noOptions')"
+          :multiple="true" :limit="1" :limit-text="limitText" :noResult="$t('filters.noResult')"
+          :noOptions="$t('filters.noOptions')"
           :clear-on-select="false"
           :loading="isLoadingActors"
           :internal-search="false"
@@ -52,7 +53,8 @@
           :options="genres"
           :multiple="true" :limit="1" :limit-text="limitText"
           :clear-on-select="false" :searchable="false"
-          :close-on-select="false" :custom-label="genreLabel" :placeholder="$t('filters.movieGenres')" label="genre_name"
+          :close-on-select="false" :custom-label="genreLabel" :placeholder="$t('filters.movieGenres')"
+          label="genre_name"
           track-by="genre_id" :preselect-first="false">
         </multiselect>
         <p class="help">
@@ -74,12 +76,7 @@
     </div>
 
     <div v-if="pageLoaded === true && !movies.length" class="notification is-warning">
-      {{ $t('homePage.empty', {
-          // 'filters': filters,
-          // 'actors': selectedActors.reduce((list, actor) => { return list + "" + (actor.actor_name + ", ") }, ''),
-          // 'genres': selectedGenres.reduce((list, genre) => { return list + "" + (genre.genre_name + ", ") }, '')
-        })
-      }}
+      {{ $t('homePage.empty') }}
       {{ $t('homePage.emptySuggestion') }} <a href="#!" @click="resetFilter">{{ $t('homePage.emptyResetFilter') }}</a>
     </div>
 
@@ -100,6 +97,20 @@
   import bswitch from '@/components/bswitch'
 
   export default {
+    metaInfo() {
+      return {
+        title: this.$t('seo.title'),
+        meta: [
+          {description: this.$t('seo.description')},
+          {keywords: this.$t('seo.keywords')},
+          {property: 'og:title', content: this.$t('seo.title')},
+          {property: 'og:type', content: 'website'},
+          {property: 'og:url', content: 'https://mykino.top'},
+          {property: 'og:site_name', content: this.$t('seo.name')},
+          {property: 'og:description', content: this.$t('seo.description')},
+        ],
+      }
+    },
     components: {bswitch, moviesList, Pagination, Multiselect},
     props: {
       page: {
@@ -235,13 +246,13 @@
         this.selectedActors = []
         this.filters = {
           yf: null,
-            yt: null,
-            rf: null,
-            rt: null,
-            g: [],
-            gt: 'AND',
-            a: [],
-            at: 'AND',
+          yt: null,
+          rf: null,
+          rt: null,
+          g: [],
+          gt: 'AND',
+          a: [],
+          at: 'AND',
         }
         let filtersCopy = Object.assign({}, this.filters)
         this.$store.dispatch('setFilters', filtersCopy);
