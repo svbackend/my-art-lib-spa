@@ -10,6 +10,11 @@ export default {
       description: '{t} {y} / {ot} {y} watch online in english or {t} {y} download in good quality torrent, reviews, actors, recommendations, similar movies',
       keywords: 'Watch movie, download film, reviews, {t} ({y}), {ot} ({y}), recommendations, similar movies, actors',
     },
+    actor: {
+      title: '{n} biography',
+      description: '{n} biography, photos, best roles, best movies',
+      keywords: 'Biography, information, movies',
+    },
   },
   app: {
     name: 'MyKino.TOP',

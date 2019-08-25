@@ -26,6 +26,21 @@
   import moviesList from '@/movies/components/moviesList'
 
   export default {
+    metaInfo() {
+      return {
+        title: this.$t('seo.actor.title', {n: this.actor.name}),
+        meta:
+          [
+            {description: this.$t('seo.actor.description', {n: this.actor.name})},
+            {keywords: this.$t('seo.actor.keywords', {n: this.actor.name})},
+            {property: 'og:title', content: this.$t('seo.actor.title', {n: this.actor.name})},
+            {property: 'og:url', content: 'https://mykino.top' + this.$route.fullPath},
+            {property: 'og:site_name', content: this.$t('seo.name')},
+            {property: 'og:description', content: this.$t('seo.actor.description', {n: this.actor.name})},
+            {property: 'image', content: this.photoUrl(this.actor.photo)},
+          ]
+      }
+    },
     props: ['id'],
     components: {moviesList},
     data() {
